@@ -21,7 +21,8 @@ local LoginFrame = Instance.new("Frame")
 local PasswordBox = Instance.new("TextBox")
 local LoginButton = Instance.new("TextButton")
 local LoadingFrame = Instance.new("Frame")
-local LoadingCircle = Instance.new("ImageLabel")
+local LoadingBackground = Instance.new("Frame")
+local LoadingBar = Instance.new("Frame")
 
 ScreenGui.Parent = game.CoreGui
 
@@ -74,12 +75,16 @@ LoadingFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 LoadingFrame.Visible = false
 addUICorner(LoadingFrame, 10)
 
-LoadingCircle.Parent = LoadingFrame
-LoadingCircle.BackgroundTransparency = 1
-LoadingCircle.Size = UDim2.new(0.8, 0, 0.8, 0)
-LoadingCircle.Position = UDim2.new(0.1, 0, 0.1, 0)
-LoadingCircle.Image = "rbxassetid://6034976865" -- Circular ring image
-LoadingCircle.ImageColor3 = Color3.fromRGB(111, 106, 155) -- Purple color
+LoadingBackground.Parent = LoadingFrame
+LoadingBackground.BackgroundColor3 = Color3.fromRGB(13, 13, 13)
+LoadingBackground.Size = UDim2.new(0.8, 0, 0.1, 0)
+LoadingBackground.Position = UDim2.new(0.1, 0, 0.45, 0)
+addUICorner(LoadingBackground, 5)
+
+LoadingBar.Parent = LoadingBackground
+LoadingBar.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
+LoadingBar.Size = UDim2.new(0, 0, 1, 0)
+addUICorner(LoadingBar, 5)
 
 -- Main Frame
 Frame.Parent = ScreenGui
@@ -268,7 +273,7 @@ LoginButton.MouseButton1Click:Connect(function()
         LoadingFrame.Visible = true
 
         -- Loading animation
-        local loadingTween = tweenService:Create(LoadingCircle, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, true), {Rotation = 360})
+        local loadingTween = tweenService:Create(LoadingBar, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, true), {Size = UDim2.new(1, 0, 1, 0)})
         loadingTween:Play()
 
         wait(5) -- Simulate loading time
