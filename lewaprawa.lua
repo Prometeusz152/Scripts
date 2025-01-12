@@ -84,7 +84,7 @@ InfoLabel.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
 InfoLabel.BorderSizePixel = 0 -- Remove the border
 InfoLabel.Position = UDim2.new(0, 0, 0, -50) -- Adjust position to be aligned with the frame
 InfoLabel.Size = UDim2.new(1, 0, 0, 50) -- Adjust size to be slightly larger in height
-InfoLabel.Text = "ethereal. 0.2\n" .. plr.Name -- Display "ethereal. 0.1" and player name
+InfoLabel.Text = "ethereal. 0.3\n" .. plr.Name -- Display "ethereal. 0.1" and player name
 InfoLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 InfoLabel.TextSize = 14 -- Set the text size to a smaller value
 InfoLabel.TextWrapped = true -- Wrap text to fit within the label
@@ -94,6 +94,20 @@ InfoLabel.Font = Enum.Font.GothamBold -- Change font to GothamBold
 InfoLabel.TextStrokeTransparency = 1 -- Remove text stroke
 InfoLabel.Visible = false -- Hide InfoLabel initially
 
+local padding = Instance.new("UIPadding")
+padding.Parent = InfoLabel
+padding.PaddingLeft = UDim.new(0, 10) -- Adjust the value to move the text to the right
+
+-- Add Avatar Image
+local AvatarImage = Instance.new("ImageLabel")
+AvatarImage.Parent = Frame
+AvatarImage.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+AvatarImage.BorderSizePixel = 0
+AvatarImage.Position = UDim2.new(0, 5, 0, -45) -- Position to the left of the text
+AvatarImage.Size = UDim2.new(0, 30, 0, 30) -- Adjust size as needed
+AvatarImage.Image = "rbxthumb://type=AvatarHeadShot&id=" .. plr.UserId .. "&w=420&h=420" -- Load player's avatar
+addUICorner(AvatarImage, 10) -- Add rounded corners to the avatar image
+AvatarImage.Visible = false -- Hide AvatarImage initially
 
 local speedHackConnection
 local function toggleSpeedHack()
