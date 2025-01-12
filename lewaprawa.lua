@@ -39,6 +39,7 @@ PasswordBox.Size = UDim2.new(0.8, 0, 0.3, 0)
 PasswordBox.PlaceholderText = "Enter Password"
 PasswordBox.Text = ""
 PasswordBox.TextScaled = true
+PasswordBox.TextSize = 10
 PasswordBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 addUICorner(PasswordBox, 10)
 
@@ -47,6 +48,7 @@ LoginButton.BackgroundColor3 = Color3.fromRGB(128, 0, 128)
 LoginButton.Position = UDim2.new(0.1, 0, 0.6, 0)
 LoginButton.Size = UDim2.new(0.8, 0, 0.3, 0)
 LoginButton.Text = "Zaloguj się"
+LoginButton.TextSize = 10
 LoginButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 LoginButton.TextScaled = true
 addUICorner(LoginButton, 10)
@@ -79,11 +81,12 @@ addUICorner(Frame, 10)
 -- Info Label
 InfoLabel.Parent = Frame
 InfoLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-InfoLabel.Position = UDim2.new(0, 0, 0, -35) -- Adjust position to be above the frame
+InfoLabel.Position = UDim2.new(0, 5, 0, -35) -- Adjust position to be above the frame
 InfoLabel.Size = UDim2.new(1, 0, 0, 40) -- Adjust size to be slightly smaller than the frame
 InfoLabel.Text = "ethereal. 0.1\n" .. plr.Name -- Display "ethereal. 0.1" and player name
 InfoLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 InfoLabel.TextScaled = true
+InfoLabel.TextSize = 12
 InfoLabel.TextWrapped = true -- Wrap text to fit within the label
 InfoLabel.TextXAlignment = Enum.TextXAlignment.Left -- Align text to the left
 InfoLabel.TextYAlignment = Enum.TextYAlignment.Top -- Align text to the top
