@@ -42,20 +42,20 @@ PasswordBox.TextSize = 13
 PasswordBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 PasswordBox.TextXAlignment = Enum.TextXAlignment.Left -- Align text to the left
 addUICorner(PasswordBox, 10)
-PasswordBox.TextXOffset = 10 -- Add padding to the left
 
 LoginButton.Parent = LoginFrame
 LoginButton.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
 LoginButton.Position = UDim2.new(0.1, 0, 0.6, 0)
 LoginButton.Size = UDim2.new(0.8, 0, 0.3, 0)
 LoginButton.Text = "Zaloguj się"
-LoginButton.TextColor3 = Color3.fromRGB(33, 33, 33)
-LoginButton.TextSize = 12 -- Set the text size to a smaller value
+LoginButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+LoginButton.TextSize = 14 -- Set the text size to a smaller value
 LoginButton.TextWrapped = true -- Ensure text wraps if necessary
 LoginButton.TextXAlignment = Enum.TextXAlignment.Center -- Align text to the center horizontally
 LoginButton.TextYAlignment = Enum.TextYAlignment.Center -- Align text to the center vertically
 addUICorner(LoginButton, 10)
 
+-- Main Frame
 Frame.Parent = ScreenGui
 Frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 Frame.Position = UDim2.new(0.5, -100, 0.5, -50)
@@ -131,7 +131,7 @@ local noclipConnection
 local function toggleNoclip()
     getgenv().settings.noclip = not getgenv().settings.noclip
     if getgenv().settings.noclip then
-        NoclipButton.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
+        NoclipButton.BackgroundColor3 = Color3.fromRGB(111, 106, 155) -- Purple color when active
         noclipConnection = runService.Stepped:Connect(function()
             if plr.Character then
                 for _, child in pairs(plr.Character:GetDescendants()) do
@@ -142,7 +142,7 @@ local function toggleNoclip()
             end
         end)
     else
-        NoclipButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100) 
+        NoclipButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100) -- Default color when inactive
         if noclipConnection then
             noclipConnection:Disconnect()
             noclipConnection = nil
@@ -153,6 +153,7 @@ end
 SpeedHackButton.MouseButton1Click:Connect(toggleSpeedHack)
 NoclipButton.MouseButton1Click:Connect(toggleNoclip)
 
+-- Login functionality
 LoginButton.MouseButton1Click:Connect(function()
     if PasswordBox.Text == "sigma" and plr.Name == "LearnHow_ToHustle" then
         LoginFrame.Visible = false
