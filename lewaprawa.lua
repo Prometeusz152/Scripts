@@ -42,7 +42,6 @@ PasswordBox.TextSize = 13
 PasswordBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 PasswordBox.TextXAlignment = Enum.TextXAlignment.Left -- Align text to the left
 addUICorner(PasswordBox, 10)
-PasswordBox.TextXOffset = 40 -- Add padding to the left
 
 LoginButton.Parent = LoginFrame
 LoginButton.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
@@ -93,12 +92,11 @@ InfoLabel.TextXAlignment = Enum.TextXAlignment.Left -- Align text to the left
 InfoLabel.TextYAlignment = Enum.TextYAlignment.Center -- Align text to the center vertically
 InfoLabel.Font = Enum.Font.GothamBold -- Change font to GothamBold
 InfoLabel.TextStrokeTransparency = 1 -- Remove text stroke
-InfoLabel.TextXOffset = 40 -- Add padding to the left
 
 -- Add Avatar Image
 local AvatarImage = Instance.new("ImageLabel")
 AvatarImage.Parent = ScreenGui
-AvatarImage.BackgroundColor3 = Color3.fromRGB(34, 34, 34)
+AvatarImage.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 AvatarImage.BorderSizePixel = 0
 AvatarImage.Position = UDim2.new(0.5, -80, 0.5, -80) -- Position to the left of the text
 AvatarImage.Size = UDim2.new(0, 30, 0, 30) -- Adjust size as needed
