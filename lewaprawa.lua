@@ -57,7 +57,7 @@ LoginButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 LoginButton.TextSize = 14 -- Set the text size to a smaller value
 LoginButton.TextWrapped = true -- Ensure text wraps if necessary
 LoginButton.TextXAlignment = Enum.TextXAlignment.Center -- Align text to the center horizontally
-LoginButton.TextYAlignment = Enum.TextYAlignment.Center -- Align text to the center vertically
+LoginButton.TextYAlignment = Enum.TextXAlignment.Center -- Align text to the center vertically
 addUICorner(LoginButton, 10)
 
 -- Main Frame
@@ -81,8 +81,8 @@ ScrollingFrame.BorderSizePixel = 0 -- Remove border
 
 SpeedHackButton.Parent = ScrollingFrame
 SpeedHackButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-SpeedHackButton.Position = UDim2.new(0.5, 0, 0.1, 0) -- Move button to the right
-SpeedHackButton.Size = UDim2.new(0.3, 0, 0.1, 0) -- Adjust width and height of the button
+SpeedHackButton.Position = UDim2.new(0.55, 0, 0.1, 0) -- Move button to the right
+SpeedHackButton.Size = UDim2.new(0.35, 0, 0.1, 0) -- Adjust width and height of the button
 SpeedHackButton.Text = "Toggle SpeedHack"
 SpeedHackButton.BorderColor3 = Color3.fromRGB(70, 70, 70) -- Add border color
 SpeedHackButton.BorderSizePixel = 1 -- Add border size
@@ -90,8 +90,8 @@ addUICorner(SpeedHackButton, 10)
 
 SpeedHackCheckbox.Parent = SpeedHackButton
 SpeedHackCheckbox.BackgroundColor3 = Color3.fromRGB(80, 80, 80) -- Darker color for checkbox
-SpeedHackCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
-SpeedHackCheckbox.Size = UDim2.new(0.15, 0, 0.8, 0) -- Make checkbox slightly wider
+SpeedHackCheckbox.Position = UDim2.new(0.8, 0, 0.1, 0)
+SpeedHackCheckbox.Size = UDim2.new(0.15, 0, 0.8, 0) -- Make checkbox square
 SpeedHackCheckbox.Text = ""
 SpeedHackCheckbox.BorderColor3 = Color3.fromRGB(50, 50, 50) -- Add border color to checkbox
 SpeedHackCheckbox.BorderSizePixel = 1 -- Add border size to checkbox
@@ -99,8 +99,8 @@ addUICorner(SpeedHackCheckbox, 10)
 
 NoclipButton.Parent = ScrollingFrame
 NoclipButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-NoclipButton.Position = UDim2.new(0.5, 0, 0.3, 0) -- Move button to the right
-NoclipButton.Size = UDim2.new(0.3, 0, 0.1, 0) -- Adjust width and height of the button
+NoclipButton.Position = UDim2.new(0.55, 0, 0.25, 0) -- Move button to the right
+NoclipButton.Size = UDim2.new(0.35, 0, 0.1, 0) -- Adjust width and height of the button
 NoclipButton.Text = "Toggle Noclip"
 NoclipButton.BorderColor3 = Color3.fromRGB(70, 70, 70) -- Add border color
 NoclipButton.BorderSizePixel = 1 -- Add border size
@@ -108,8 +108,8 @@ addUICorner(NoclipButton, 10)
 
 NoclipCheckbox.Parent = NoclipButton
 NoclipCheckbox.BackgroundColor3 = Color3.fromRGB(80, 80, 80) -- Darker color for checkbox
-NoclipCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
-NoclipCheckbox.Size = UDim2.new(0.15, 0, 0.8, 0) -- Make checkbox slightly wider
+NoclipCheckbox.Position = UDim2.new(0.8, 0, 0.1, 0)
+NoclipCheckbox.Size = UDim2.new(0.15, 0, 0.8, 0) -- Make checkbox square
 NoclipCheckbox.Text = ""
 NoclipCheckbox.BorderColor3 = Color3.fromRGB(50, 50, 50) -- Add border color to checkbox
 NoclipCheckbox.BorderSizePixel = 1 -- Add border size to checkbox
@@ -117,8 +117,8 @@ addUICorner(NoclipCheckbox, 10)
 
 JumpModeButton.Parent = ScrollingFrame
 JumpModeButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-JumpModeButton.Position = UDim2.new(0.5, 0, 0.5, 0) -- Move button to the right
-JumpModeButton.Size = UDim2.new(0.3, 0, 0.1, 0) -- Adjust width and height of the button
+JumpModeButton.Position = UDim2.new(0.55, 0, 0.4, 0) -- Move button to the right
+JumpModeButton.Size = UDim2.new(0.35, 0, 0.1, 0) -- Adjust width and height of the button
 JumpModeButton.Text = "Toggle JumpMode"
 JumpModeButton.BorderColor3 = Color3.fromRGB(70, 70, 70) -- Add border color
 JumpModeButton.BorderSizePixel = 1 -- Add border size
@@ -126,8 +126,8 @@ addUICorner(JumpModeButton, 10)
 
 JumpModeCheckbox.Parent = JumpModeButton
 JumpModeCheckbox.BackgroundColor3 = Color3.fromRGB(80, 80, 80) -- Darker color for checkbox
-JumpModeCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
-JumpModeCheckbox.Size = UDim2.new(0.15, 0, 0.8, 0) -- Make checkbox slightly wider
+JumpModeCheckbox.Position = UDim2.new(0.8, 0, 0.1, 0)
+JumpModeCheckbox.Size = UDim2.new(0.15, 0, 0.8, 0) -- Make checkbox square
 JumpModeCheckbox.Text = ""
 JumpModeCheckbox.BorderColor3 = Color3.fromRGB(50, 50, 50) -- Add border color to checkbox
 JumpModeCheckbox.BorderSizePixel = 1 -- Add border size to checkbox
@@ -140,7 +140,7 @@ InfoLabel.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
 InfoLabel.BorderSizePixel = 0 -- Remove the border
 InfoLabel.Position = UDim2.new(0, 0, 0, -50) -- Adjust position to be aligned with the frame
 InfoLabel.Size = UDim2.new(1, 0, 0, 50) -- Adjust size to be slightly larger in height
-InfoLabel.Text = "ethereal. 0.4\n" .. plr.Name -- Display "ethereal. 0.1" and player name
+InfoLabel.Text = "ethereal. 0.3\n" .. plr.Name -- Display "ethereal. 0.1" and player name
 InfoLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 InfoLabel.TextSize = 14 -- Set the text size to a smaller value
 InfoLabel.TextWrapped = true -- Wrap text to fit within the label
