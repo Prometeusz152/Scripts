@@ -71,27 +71,27 @@ ScrollingFrame.Parent = Frame
 ScrollingFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 ScrollingFrame.Position = UDim2.new(0, 0, 0, 0)
 ScrollingFrame.Size = UDim2.new(1, 0, 1, 0)
-ScrollingFrame.CanvasSize = UDim2.new(0, 0, 1, 0) -- Adjust canvas size to allow scrolling
+ScrollingFrame.CanvasSize = UDim2.new(0, 0, 1.5, 0) -- Adjust canvas size to allow scrolling
 ScrollingFrame.ScrollBarThickness = 10
 
 SpeedHackButton.Parent = ScrollingFrame
 SpeedHackButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
 SpeedHackButton.Position = UDim2.new(0.1, 0, 0.1, 0)
-SpeedHackButton.Size = UDim2.new(0.8, 0, 0.05, 0) -- Decrease height of the button
+SpeedHackButton.Size = UDim2.new(0.8, 0, 0.125, 0) -- Increase height of the button by 2.5 times
 SpeedHackButton.Text = "Toggle SpeedHack"
 addUICorner(SpeedHackButton, 10)
 
 NoclipButton.Parent = ScrollingFrame
 NoclipButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-NoclipButton.Position = UDim2.new(0.1, 0, 0.2, 0)
-NoclipButton.Size = UDim2.new(0.8, 0, 0.05, 0) -- Decrease height of the button
+NoclipButton.Position = UDim2.new(0.1, 0, 0.3, 0)
+NoclipButton.Size = UDim2.new(0.8, 0, 0.125, 0) -- Increase height of the button by 2.5 times
 NoclipButton.Text = "Toggle Noclip"
 addUICorner(NoclipButton, 10)
 
 JumpModeButton.Parent = ScrollingFrame
 JumpModeButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-JumpModeButton.Position = UDim2.new(0.1, 0, 0.3, 0)
-JumpModeButton.Size = UDim2.new(0.8, 0, 0.05, 0) -- Decrease height of the button
+JumpModeButton.Position = UDim2.new(0.1, 0, 0.5, 0)
+JumpModeButton.Size = UDim2.new(0.8, 0, 0.125, 0) -- Increase height of the button by 2.5 times
 JumpModeButton.Text = "Toggle JumpMode"
 addUICorner(JumpModeButton, 10)
 
