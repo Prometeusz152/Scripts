@@ -7,7 +7,7 @@ getgenv().settings = {speedhack = false, noclip = false}
 
 -- Load the GUI library
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Turtle-Brand/Turtle-Lib/main/source.lua"))()
-local m = lib:Window("skid.gg HVH", Color3.fromRGB(50, 50, 50), Color3.fromRGB(100, 100, 100))
+local m = lib:Window("ethereal. 0.1", Color3.fromRGB(50, 50, 50), Color3.fromRGB(100, 100, 100))
 
 -- Add UICorner to round corners
 local function addUICorner(instance, radius)
@@ -61,8 +61,8 @@ local noclipToggle = m:Toggle("Noclip", false, function (bool)
 end)
 
 -- Apply rounded corners to GUI elements
-addUICorner(speedHackToggle, 10)
-addUICorner(noclipToggle, 10)
-addUICorner(m, 10)
+addUICorner(speedHackToggle.Frame, 10)
+addUICorner(noclipToggle.Frame, 10)
+addUICorner(m.Frame, 10)
 
 print("GUI Loaded: Use buttons to toggle SpeedHack and Noclip")
