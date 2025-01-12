@@ -17,29 +17,38 @@ local LoginButton = Instance.new("TextButton")
 
 ScreenGui.Parent = game.CoreGui
 
+-- Add UICorner to round corners
+local function addUICorner(instance, radius)
+    local uicorner = Instance.new("UICorner")
+    uicorner.CornerRadius = UDim.new(0, radius)
+    uicorner.Parent = instance
+end
+
 -- Login Frame
 LoginFrame.Parent = ScreenGui
 LoginFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 LoginFrame.Position = UDim2.new(0.5, -100, 0.5, -50)
 LoginFrame.Size = UDim2.new(0, 200, 0, 100)
 LoginFrame.Active = true
-LoginFrame.Draggable = true
 addUICorner(LoginFrame, 10)
 
 PasswordBox.Parent = LoginFrame
-PasswordBox.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+PasswordBox.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
 PasswordBox.Position = UDim2.new(0.1, 0, 0.2, 0)
 PasswordBox.Size = UDim2.new(0.8, 0, 0.3, 0)
 PasswordBox.PlaceholderText = "Enter Password"
 PasswordBox.Text = ""
 PasswordBox.TextScaled = true
+PasswordBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 addUICorner(PasswordBox, 10)
 
 LoginButton.Parent = LoginFrame
-LoginButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+LoginButton.BackgroundColor3 = Color3.fromRGB(128, 0, 128)
 LoginButton.Position = UDim2.new(0.1, 0, 0.6, 0)
 LoginButton.Size = UDim2.new(0.8, 0, 0.3, 0)
 LoginButton.Text = "Zaloguj się"
+LoginButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+LoginButton.TextScaled = true
 addUICorner(LoginButton, 10)
 
 -- Main Frame
@@ -50,13 +59,6 @@ Frame.Size = UDim2.new(0, 200, 0, 150)
 Frame.Active = true
 Frame.Draggable = true
 Frame.Visible = false -- Hide main frame initially
-
--- Add UICorner to round corners
-local function addUICorner(instance, radius)
-    local uicorner = Instance.new("UICorner")
-    uicorner.CornerRadius = UDim.new(0, radius)
-    uicorner.Parent = instance
-end
 
 SpeedHackButton.Parent = Frame
 SpeedHackButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
