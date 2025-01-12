@@ -52,12 +52,12 @@ LoginButton.Parent = LoginFrame
 LoginButton.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
 LoginButton.Position = UDim2.new(0.1, 0, 0.6, 0)
 LoginButton.Size = UDim2.new(0.8, 0, 0.3, 0)
-LoginButton.Text = "Zaloguj się2"
+LoginButton.Text = "Zaloguj się"
 LoginButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 LoginButton.TextSize = 14 -- Set the text size to a smaller value
 LoginButton.TextWrapped = true -- Ensure text wraps if necessary
 LoginButton.TextXAlignment = Enum.TextXAlignment.Center -- Align text to the center horizontally
-LoginButton.TextYAlignment = Enum.TextXAlignment.Center -- Align text to the center vertically
+LoginButton.TextYAlignment = Enum.TextYAlignment.Center -- Align text to the center vertically
 addUICorner(LoginButton, 10)
 
 -- Main Frame
@@ -90,8 +90,8 @@ addUICorner(SpeedHackButton, 10)
 
 SpeedHackCheckbox.Parent = SpeedHackButton
 SpeedHackCheckbox.BackgroundColor3 = Color3.fromRGB(80, 80, 80) -- Darker color for checkbox
-SpeedHackCheckbox.Position = UDim2.new(0.75, 0, 0.1, 0)
-SpeedHackCheckbox.Size = UDim2.new(0.2, 0, 0.8, 0) -- Make checkbox square
+SpeedHackCheckbox.Position = UDim2.new(0.8, 0, 0.1, 0)
+SpeedHackCheckbox.Size = UDim2.new(0.15, 0, 0.8, 0) -- Make checkbox square
 SpeedHackCheckbox.Text = ""
 SpeedHackCheckbox.BorderColor3 = Color3.fromRGB(50, 50, 50) -- Add border color to checkbox
 SpeedHackCheckbox.BorderSizePixel = 1 -- Add border size to checkbox
@@ -108,8 +108,8 @@ addUICorner(NoclipButton, 10)
 
 NoclipCheckbox.Parent = NoclipButton
 NoclipCheckbox.BackgroundColor3 = Color3.fromRGB(80, 80, 80) -- Darker color for checkbox
-NoclipCheckbox.Position = UDim2.new(0.75, 0, 0.1, 0)
-NoclipCheckbox.Size = UDim2.new(0.2, 0, 0.8, 0) -- Make checkbox square
+NoclipCheckbox.Position = UDim2.new(0.8, 0, 0.1, 0)
+NoclipCheckbox.Size = UDim2.new(0.15, 0, 0.8, 0) -- Make checkbox square
 NoclipCheckbox.Text = ""
 NoclipCheckbox.BorderColor3 = Color3.fromRGB(50, 50, 50) -- Add border color to checkbox
 NoclipCheckbox.BorderSizePixel = 1 -- Add border size to checkbox
@@ -126,8 +126,8 @@ addUICorner(JumpModeButton, 10)
 
 JumpModeCheckbox.Parent = JumpModeButton
 JumpModeCheckbox.BackgroundColor3 = Color3.fromRGB(80, 80, 80) -- Darker color for checkbox
-JumpModeCheckbox.Position = UDim2.new(0.75, 0, 0.1, 0)
-JumpModeCheckbox.Size = UDim2.new(0.2, 0, 0.8, 0) -- Make checkbox square
+JumpModeCheckbox.Position = UDim2.new(0.8, 0, 0.1, 0)
+JumpModeCheckbox.Size = UDim2.new(0.15, 0, 0.8, 0) -- Make checkbox square
 JumpModeCheckbox.Text = ""
 JumpModeCheckbox.BorderColor3 = Color3.fromRGB(50, 50, 50) -- Add border color to checkbox
 JumpModeCheckbox.BorderSizePixel = 1 -- Add border size to checkbox
