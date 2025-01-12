@@ -103,7 +103,7 @@ local AvatarImage = Instance.new("ImageLabel")
 AvatarImage.Parent = Frame
 AvatarImage.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 AvatarImage.BorderSizePixel = 0
-AvatarImage.Position = UDim2.new(0, 5, 0, -45) -- Position to the left of the text
+AvatarImage.Position = UDim2.new(0, 5, 0, -30) -- Position to the left of the text
 AvatarImage.Size = UDim2.new(0, 30, 0, 30) -- Adjust size as needed
 AvatarImage.Image = "rbxthumb://type=AvatarHeadShot&id=" .. plr.UserId .. "&w=420&h=420" -- Load player's avatar
 addUICorner(AvatarImage, 10) -- Add rounded corners to the avatar image
