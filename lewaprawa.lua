@@ -5,36 +5,14 @@ local userInputService = game:GetService("UserInputService")
 
 getgenv().settings = {speedhack = false, noclip = false}
 
--- Create GUI
-local ScreenGui = Instance.new("ScreenGui")
-local Frame = Instance.new("Frame")
-local SpeedHackButton = Instance.new("TextButton")
-local NoclipButton = Instance.new("TextButton")
-
-ScreenGui.Parent = game.CoreGui
-
-Frame.Parent = ScreenGui
-Frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-Frame.Position = UDim2.new(0.5, -100, 0.5, -50)
-Frame.Size = UDim2.new(0, 200, 0, 100)
-Frame.Visible = false -- Make the frame invisible
-
-SpeedHackButton.Parent = Frame
-SpeedHackButton.BackgroundTransparency = 1 -- Make the button invisible
-SpeedHackButton.Position = UDim2.new(0.1, 0, 0.1, 0)
-SpeedHackButton.Size = UDim2.new(0.8, 0, 0.3, 0)
-SpeedHackButton.Text = ""
-
-NoclipButton.Parent = Frame
-NoclipButton.BackgroundTransparency = 1 -- Make the button invisible
-NoclipButton.Position = UDim2.new(0.1, 0, 0.6, 0)
-NoclipButton.Size = UDim2.new(0.8, 0, 0.3, 0)
-NoclipButton.Text = ""
+-- Load the GUI library
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Turtle-Brand/Turtle-Lib/main/source.lua"))()
+local m = lib:Window("Roblox GUI")
 
 -- SpeedHack
-local function toggleSpeedHack()
-    getgenv().settings.speedhack = not getgenv().settings.speedhack
-    if getgenv().settings.speedhack then
+local function toggleSpeedHack(enabled)
+    getgenv().settings.speedhack = enabled
+    if enabled then
         runService.Heartbeat:Connect(function(delta)
             if getgenv().settings.speedhack and plr.Character and plr.Character:FindFirstChild("Humanoid") then
                 if plr.Character.Humanoid.MoveDirection.Magnitude > 0 then
@@ -47,9 +25,9 @@ end
 
 -- Noclip
 local noclipConnection
-local function toggleNoclip()
-    getgenv().settings.noclip = not getgenv().settings.noclip
-    if getgenv().settings.noclip then
+local function toggleNoclip(enabled)
+    getgenv().settings.noclip = enabled
+    if enabled then
         noclipConnection = runService.Stepped:Connect(function()
             if plr.Character then
                 for _, child in pairs(plr.Character:GetDescendants()) do
@@ -66,7 +44,13 @@ local function toggleNoclip()
     end
 end
 
-SpeedHackButton.MouseButton1Click:Connect(toggleSpeedHack)
-NoclipButton.MouseButton1Click:Connect(toggleNoclip)
+-- Create GUI buttons
+m:Toggle("SpeedHack", false, function (bool)
+    toggleSpeedHack(bool)
+end)
 
-print("Invisible GUI Loaded: Use buttons to toggle SpeedHack and Noclip")
+m:Toggle("Noclip", false, function (bool)
+    toggleNoclip(bool)
+end)
+
+print("GUI Loaded: Use buttons to toggle SpeedHack and Noclip")
