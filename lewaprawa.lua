@@ -83,8 +83,8 @@ addUICorner(Frame, 10)
 InfoLabel.Parent = Frame
 InfoLabel.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
 InfoLabel.BorderSizePixel = 0 -- Remove the border
-InfoLabel.Position = UDim2.new(-0.1, 0, 0, -50) -- Adjust position to be aligned with the frame
-InfoLabel.Size = UDim2.new(1.2, 0, 0, 50) -- Adjust size to be slightly larger in height
+InfoLabel.Position = UDim2.new(0, -10, 0, -50) -- Adjust position to be aligned with the frame
+InfoLabel.Size = UDim2.new(1, 0, 0, 50) -- Adjust size to be slightly larger in height
 InfoLabel.Text = "ethereal. 0.1\n" .. plr.Name -- Display "ethereal. 0.1" and player name
 InfoLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 InfoLabel.TextSize = 14 -- Set the text size to a smaller value
@@ -117,7 +117,7 @@ local function toggleSpeedHack()
         speedHackConnection = runService.Heartbeat:Connect(function(delta)
             if getgenv().settings.speedhack and plr.Character and plr.Character:FindFirstChild("Humanoid") then
                 if plr.Character.Humanoid.MoveDirection.Magnitude > 0 then
-                    plr.Character:TranslateBy(plr.Character.Humanoid.MoveDirection * 4 * delta * 10)
+                    plr.Character:TranslateBy(plr.Character.Humanoid.MoveDirection * 4 * delta * 12)
                 end
             end
         end)
