@@ -97,7 +97,7 @@ local speedHackConnection
 local function toggleSpeedHack()
     getgenv().settings.speedhack = not getgenv().settings.speedhack
     if getgenv().settings.speedhack then
-        SpeedHackButton.BackgroundColor3 = Color3.fromRGB(128, 0, 128) -- Purple color when active
+        SpeedHackButton.BackgroundColor3 = Color3.fromRGB(111, 106, 155) -- Purple color when active
         speedHackConnection = runService.Heartbeat:Connect(function(delta)
             if getgenv().settings.speedhack and plr.Character and plr.Character:FindFirstChild("Humanoid") then
                 if plr.Character.Humanoid.MoveDirection.Magnitude > 0 then
@@ -119,7 +119,7 @@ local noclipConnection
 local function toggleNoclip()
     getgenv().settings.noclip = not getgenv().settings.noclip
     if getgenv().settings.noclip then
-        NoclipButton.BackgroundColor3 = Color3.fromRGB(128, 0, 128) -- Purple color when active
+        NoclipButton.BackgroundColor3 = Color3.fromRGB(111, 106, 155) -- Purple color when active
         noclipConnection = runService.Stepped:Connect(function()
             if plr.Character then
                 for _, child in pairs(plr.Character:GetDescendants()) do
