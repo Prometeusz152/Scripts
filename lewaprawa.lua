@@ -37,6 +37,7 @@ LoginFrame.Parent = ScreenGui
 LoginFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 LoginFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
 LoginFrame.Size = UDim2.new(0, 0, 0, 0)
+LoginFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 LoginFrame.Active = true
 LoginFrame.Visible = false
 addUICorner(LoginFrame, 10)
@@ -67,8 +68,9 @@ addUICorner(LoginButton, 10)
 -- Loading Frame
 LoadingFrame.Parent = ScreenGui
 LoadingFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-LoadingFrame.Position = UDim2.new(0.5, -50, 0.5, -50)
+LoadingFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
 LoadingFrame.Size = UDim2.new(0, 100, 0, 100)
+LoadingFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 LoadingFrame.Visible = false
 addUICorner(LoadingFrame, 10)
 
@@ -285,7 +287,7 @@ end)
 -- Show login frame with animation
 local function showLoginFrame()
     LoginFrame.Visible = true
-    local tween = tweenService:Create(LoginFrame, TweenInfo.new(1, Enum.EasingStyle.Bounce, Enum.EasingDirection.Out), {Size = UDim2.new(0, 200, 0, 100)})
+    local tween = tweenService:Create(LoginFrame, TweenInfo.new(1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 200, 0, 100)})
     tween:Play()
 end
 
