@@ -38,22 +38,23 @@ PasswordBox.Position = UDim2.new(0.1, 0, 0.2, 0)
 PasswordBox.Size = UDim2.new(0.8, 0, 0.3, 0)
 PasswordBox.PlaceholderText = "Enter Password"
 PasswordBox.Text = ""
-PasswordBox.TextScaled = true
+PasswordBox.TextSize = 13 
 PasswordBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+PasswordBox.TextXAlignment = Enum.TextXAlignment.Left -- Align text to the left
 addUICorner(PasswordBox, 10)
 
 LoginButton.Parent = LoginFrame
-LoginButton.BackgroundColor3 = Color3.fromRGB(128, 0, 128)
+LoginButton.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
 LoginButton.Position = UDim2.new(0.1, 0, 0.6, 0)
 LoginButton.Size = UDim2.new(0.8, 0, 0.3, 0)
 LoginButton.Text = "Zaloguj się"
-LoginButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-LoginButton.TextSize = 14 -- Set the text size to a smaller value
+LoginButton.TextColor3 = Color3.fromRGB(33, 33, 33)
+LoginButton.TextSize = 12 -- Set the text size to a smaller value
 LoginButton.TextWrapped = true -- Ensure text wraps if necessary
 LoginButton.TextXAlignment = Enum.TextXAlignment.Center -- Align text to the center horizontally
 LoginButton.TextYAlignment = Enum.TextYAlignment.Center -- Align text to the center vertically
 addUICorner(LoginButton, 10)
--- Main Frame
+
 Frame.Parent = ScreenGui
 Frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 Frame.Position = UDim2.new(0.5, -100, 0.5, -50)
@@ -79,7 +80,8 @@ addUICorner(NoclipButton, 10)
 addUICorner(Frame, 10)
 
 InfoLabel.Parent = Frame
-InfoLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+InfoLabel.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
+InfoLabel.BorderSizePixel = 0 -- Remove the border
 InfoLabel.Position = UDim2.new(0, 0, 0, -35) -- Adjust position to be above the frame
 InfoLabel.Size = UDim2.new(1, 0, 0, 40) -- Adjust size to be slightly smaller than the frame
 InfoLabel.Text = "ethereal. 0.1\n" .. plr.Name -- Display "ethereal. 0.1" and player name
@@ -87,8 +89,19 @@ InfoLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 InfoLabel.TextSize = 14 -- Set the text size to a smaller value
 InfoLabel.TextWrapped = true -- Wrap text to fit within the label
 InfoLabel.TextXAlignment = Enum.TextXAlignment.Left -- Align text to the left
-InfoLabel.TextYAlignment = Enum.TextYAlignment.Top -- Align text to the top
+InfoLabel.TextYAlignment = Enum.TextYAlignment.Center -- Align text to the center vertically
+InfoLabel.Position = UDim2.new(0, 40, 0, -30) -- Lower the text a bit more and move it to the right
 InfoLabel.Font = Enum.Font.GothamBold -- Change font to GothamBold
+
+-- Add Avatar Image
+local AvatarImage = Instance.new("ImageLabel")
+AvatarImage.Parent = Frame
+AvatarImage.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+AvatarImage.BorderSizePixel = 0
+AvatarImage.Position = UDim2.new(0, 5, 0, -30) -- Position to the left of the text
+AvatarImage.Size = UDim2.new(0, 30, 0, 30) -- Adjust size as needed
+AvatarImage.Image = "rbxthumb://type=AvatarHeadShot&id=" .. plr.UserId .. "&w=420&h=420" -- Load player's avatar
+addUICorner(AvatarImage, 10) -- Add rounded corners to the avatar image
 
 -- SpeedHack
 local speedHackConnection
