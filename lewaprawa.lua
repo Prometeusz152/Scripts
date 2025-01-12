@@ -83,7 +83,8 @@ addUICorner(LoadingBackground, 5)
 
 LoadingBar.Parent = LoadingBackground
 LoadingBar.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
-LoadingBar.Size = UDim2.new(0, 0, 1, 0)
+LoadingBar.Size = UDim2.new(0.2, 0, 1, 0)
+LoadingBar.Position = UDim2.new(-0.2, 0, 0, 0) -- Start off-screen to the left
 addUICorner(LoadingBar, 5)
 
 -- Main Frame
@@ -274,10 +275,12 @@ LoginButton.MouseButton1Click:Connect(function()
 
         -- Loading animation
         local function animateLoadingBar()
-            LoadingBar.Size = UDim2.new(0, 0, 1, 0)
-            LoadingBar.Position = UDim2.new(0, -LoadingBackground.Size.X.Offset, 0, 0)
-            local tween = tweenService:Create(LoadingBar, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, false), {Position = UDim2.new(1, 0, 0, 0)})
-            tween:Play()
+            local function loopLoadingBar()
+                LoadingBar.Position = UDim2.new(-0.2, 0, 0, 0)
+                local tween = tweenService:Create(LoadingBar, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, false), {Position = UDim2.new(1, 0, 0, 0)})
+                tween:Play()
+            end
+            loopLoadingBar()
         end
 
         animateLoadingBar()
