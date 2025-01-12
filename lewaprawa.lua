@@ -65,8 +65,8 @@ addUICorner(LoginButton, 10)
 -- Main Frame
 Frame.Parent = ScreenGui
 Frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-Frame.Position = UDim2.new(0.5, -200, 0.5, -100) -- Adjust position to center the larger frame
-Frame.Size = UDim2.new(0, 400, 0, 300) -- Increase size of the frame
+Frame.Position = UDim2.new(0.5, -250, 0.5, -100) -- Adjust position to center the larger frame
+Frame.Size = UDim2.new(0, 500, 0, 300) -- Increase width of the frame
 Frame.Active = true
 Frame.Draggable = true
 Frame.Visible = false -- Hide main frame initially
