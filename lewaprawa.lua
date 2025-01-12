@@ -2,6 +2,7 @@ local players = game.Players
 local plr = players.LocalPlayer
 local runService = game:GetService("RunService")
 local userInputService = game:GetService("UserInputService")
+local tweenService = game:GetService("TweenService")
 
 getgenv().settings = {speedhack = false, noclip = false, jumpmode = false}
 
@@ -19,6 +20,8 @@ local InfoLabel = Instance.new("TextLabel")
 local LoginFrame = Instance.new("Frame")
 local PasswordBox = Instance.new("TextBox")
 local LoginButton = Instance.new("TextButton")
+local LoadingFrame = Instance.new("Frame")
+local LoadingLabel = Instance.new("TextLabel")
 
 ScreenGui.Parent = game.CoreGui
 
@@ -35,6 +38,7 @@ LoginFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 LoginFrame.Position = UDim2.new(0.5, -100, 0.5, -50)
 LoginFrame.Size = UDim2.new(0, 200, 0, 100)
 LoginFrame.Active = true
+LoginFrame.Visible = false
 addUICorner(LoginFrame, 10)
 
 PasswordBox.Parent = LoginFrame
@@ -57,8 +61,23 @@ LoginButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 LoginButton.TextSize = 14 -- Set the text size to a smaller value
 LoginButton.TextWrapped = true -- Ensure text wraps if necessary
 LoginButton.TextXAlignment = Enum.TextXAlignment.Center -- Align text to the center horizontally
-LoginButton.TextYAlignment = Enum.TextYAlignment.Center -- Align text to the center vertically
+LoginButton.TextYAlignment = Enum.TextXAlignment.Center -- Align text to the center vertically
 addUICorner(LoginButton, 10)
+
+-- Loading Frame
+LoadingFrame.Parent = ScreenGui
+LoadingFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+LoadingFrame.Position = UDim2.new(0.5, -50, 0.5, -50)
+LoadingFrame.Size = UDim2.new(0, 100, 0, 100)
+LoadingFrame.Visible = false
+addUICorner(LoadingFrame, 10)
+
+LoadingLabel.Parent = LoadingFrame
+LoadingLabel.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+LoadingLabel.Size = UDim2.new(0.8, 0, 0.8, 0)
+LoadingLabel.Position = UDim2.new(0.1, 0, 0.1, 0)
+LoadingLabel.Text = ""
+addUICorner(LoadingLabel, 10)
 
 -- Main Frame
 Frame.Parent = ScreenGui
@@ -244,6 +263,16 @@ JumpModeCheckbox.MouseButton1Click:Connect(toggleJumpMode)
 LoginButton.MouseButton1Click:Connect(function()
     if PasswordBox.Text == "sigma" and plr.Name == "LearnHow_ToHustle" then
         LoginFrame.Visible = false
+        LoadingFrame.Visible = true
+
+        -- Loading animation
+        local loadingTween = tweenService:Create(LoadingLabel, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, true), {Rotation = 360})
+        loadingTween:Play()
+
+        wait(5) -- Simulate loading time
+
+        loadingTween:Cancel()
+        LoadingFrame.Visible = false
         Frame.Visible = true
         InfoLabel.Visible = true -- Show InfoLabel after login
         AvatarImage.Visible = true -- Show AvatarImage after login
@@ -252,5 +281,15 @@ LoginButton.MouseButton1Click:Connect(function()
         PasswordBox.PlaceholderText = "Incorrect Password or Username"
     end
 end)
+
+-- Show login frame with animation
+local function showLoginFrame()
+    LoginFrame.Visible = true
+    LoginFrame.Position = UDim2.new(0.5, -100, 0.5, -200)
+    local tween = tweenService:Create(LoginFrame, TweenInfo.new(1, Enum.EasingStyle.Bounce, Enum.EasingDirection.Out), {Position = UDim2.new(0.5, -100, 0.5, -50)})
+    tween:Play()
+end
+
+showLoginFrame()
 
 print("GUI Loaded: Use buttons to toggle SpeedHack, Noclip, and JumpMode")
