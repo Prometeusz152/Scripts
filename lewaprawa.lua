@@ -45,22 +45,24 @@ addUICorner(NoclipButton, 10)
 addUICorner(Frame, 10)
 
 -- Info Label
-InfoLabel.Parent = ScreenGui
-InfoLabel.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-InfoLabel.Position = UDim2.new(0.5, -100, 0, 0) -- Position at the top
-InfoLabel.Size = UDim2.new(0, 200, 0, 90) -- Increase height
-InfoLabel.AnchorPoint = Vector2.new(0.5, 0) -- Center horizontally
+InfoLabel.Parent = Frame
+InfoLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+InfoLabel.Position = UDim2.new(0, 5, 0, -35) -- Adjust position to be above the frame
+InfoLabel.Size = UDim2.new(1, -10, 0, 30) -- Adjust size to be slightly smaller than the frame
 InfoLabel.Text = "ethereal. 0.1\n" .. plr.Name -- Display "ethereal. 0.1" and player name
 InfoLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 InfoLabel.TextScaled = true
 InfoLabel.TextWrapped = true -- Wrap text to fit within the label
+InfoLabel.TextXAlignment = Enum.TextXAlignment.Left -- Align text to the left
+InfoLabel.TextYAlignment = Enum.TextYAlignment.Top -- Align text to the top
 
 -- SpeedHack
+local speedHackConnection
 local function toggleSpeedHack()
     getgenv().settings.speedhack = not getgenv().settings.speedhack
     if getgenv().settings.speedhack then
         SpeedHackButton.BackgroundColor3 = Color3.fromRGB(128, 0, 128) -- Purple color when active
-        runService.Heartbeat:Connect(function(delta)
+        speedHackConnection = runService.Heartbeat:Connect(function(delta)
             if getgenv().settings.speedhack and plr.Character and plr.Character:FindFirstChild("Humanoid") then
                 if plr.Character.Humanoid.MoveDirection.Magnitude > 0 then
                     plr.Character:TranslateBy(plr.Character.Humanoid.MoveDirection * 4 * delta * 10)
@@ -69,6 +71,10 @@ local function toggleSpeedHack()
         end)
     else
         SpeedHackButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100) -- Default color when inactive
+        if speedHackConnection then
+            speedHackConnection:Disconnect()
+            speedHackConnection = nil
+        end
     end
 end
 
@@ -91,6 +97,7 @@ local function toggleNoclip()
         NoclipButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100) -- Default color when inactive
         if noclipConnection then
             noclipConnection:Disconnect()
+            noclipConnection = nil
         end
     end
 end
