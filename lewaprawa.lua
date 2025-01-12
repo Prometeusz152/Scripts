@@ -11,15 +11,45 @@ local Frame = Instance.new("Frame")
 local SpeedHackButton = Instance.new("TextButton")
 local NoclipButton = Instance.new("TextButton")
 local InfoLabel = Instance.new("TextLabel")
+local LoginFrame = Instance.new("Frame")
+local PasswordBox = Instance.new("TextBox")
+local LoginButton = Instance.new("TextButton")
 
 ScreenGui.Parent = game.CoreGui
 
+-- Login Frame
+LoginFrame.Parent = ScreenGui
+LoginFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+LoginFrame.Position = UDim2.new(0.5, -100, 0.5, -50)
+LoginFrame.Size = UDim2.new(0, 200, 0, 100)
+LoginFrame.Active = true
+LoginFrame.Draggable = true
+addUICorner(LoginFrame, 10)
+
+PasswordBox.Parent = LoginFrame
+PasswordBox.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+PasswordBox.Position = UDim2.new(0.1, 0, 0.2, 0)
+PasswordBox.Size = UDim2.new(0.8, 0, 0.3, 0)
+PasswordBox.PlaceholderText = "Enter Password"
+PasswordBox.Text = ""
+PasswordBox.TextScaled = true
+addUICorner(PasswordBox, 10)
+
+LoginButton.Parent = LoginFrame
+LoginButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+LoginButton.Position = UDim2.new(0.1, 0, 0.6, 0)
+LoginButton.Size = UDim2.new(0.8, 0, 0.3, 0)
+LoginButton.Text = "Zaloguj się"
+addUICorner(LoginButton, 10)
+
+-- Main Frame
 Frame.Parent = ScreenGui
 Frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 Frame.Position = UDim2.new(0.5, -100, 0.5, -50)
 Frame.Size = UDim2.new(0, 200, 0, 150)
 Frame.Active = true
 Frame.Draggable = true
+Frame.Visible = false -- Hide main frame initially
 
 -- Add UICorner to round corners
 local function addUICorner(instance, radius)
@@ -105,5 +135,16 @@ end
 
 SpeedHackButton.MouseButton1Click:Connect(toggleSpeedHack)
 NoclipButton.MouseButton1Click:Connect(toggleNoclip)
+
+-- Login functionality
+LoginButton.MouseButton1Click:Connect(function()
+    if PasswordBox.Text == "sigma" then
+        LoginFrame.Visible = false
+        Frame.Visible = true
+    else
+        PasswordBox.Text = ""
+        PasswordBox.PlaceholderText = "Incorrect Password"
+    end
+end)
 
 print("GUI Loaded: Use buttons to toggle SpeedHack and Noclip")
