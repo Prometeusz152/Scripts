@@ -7,7 +7,7 @@ getgenv().settings = {speedhack = false, noclip = false}
 
 -- Load the GUI library
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Turtle-Brand/Turtle-Lib/main/source.lua"))()
-local m = lib:Window("Roblox GUI")
+local m = lib:Window("skid.gg HVH", Color3.fromRGB(50, 50, 50), Color3.fromRGB(100, 100, 100))
 
 -- SpeedHack
 local function toggleSpeedHack(enabled)
