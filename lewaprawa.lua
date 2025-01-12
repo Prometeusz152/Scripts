@@ -62,7 +62,7 @@ addUICorner(LoginButton, 10)
 
 -- Main Frame
 Frame.Parent = ScreenGui
-Frame.BackgroundColor3 = Color3.fromRGB(34, 34, 34)
+Frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 Frame.Position = UDim2.new(0.5, -300, 0.5, -100) -- Adjust position to center the larger frame
 Frame.Size = UDim2.new(0, 600, 0, 300) -- Increase width of the frame
 Frame.Active = true
@@ -81,45 +81,45 @@ ScrollingFrame.BorderSizePixel = 0 -- Remove border
 
 SpeedHackButton.Parent = ScrollingFrame
 SpeedHackButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-SpeedHackButton.Position = UDim2.new(0.1, 0, 0.1, 0)
-SpeedHackButton.Size = UDim2.new(0.6, 0, 0.05, 0) -- Adjust height of the button
+SpeedHackButton.Position = UDim2.new(0.4, 0, 0.1, 0)
+SpeedHackButton.Size = UDim2.new(0.4, 0, 0.075, 0) -- Adjust width and height of the button
 SpeedHackButton.Text = "Toggle SpeedHack"
 addUICorner(SpeedHackButton, 10)
 
-SpeedHackCheckbox.Parent = ScrollingFrame
+SpeedHackCheckbox.Parent = SpeedHackButton
 SpeedHackCheckbox.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-SpeedHackCheckbox.Position = UDim2.new(0.75, 0, 0.1, 0)
-SpeedHackCheckbox.Size = UDim2.new(0.1, 0, 0.05, 0) -- Adjust height of the checkbox
+SpeedHackCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
+SpeedHackCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0) -- Make checkbox square
 SpeedHackCheckbox.Text = ""
 SpeedHackCheckbox.BorderColor3 = Color3.fromRGB(70, 70, 70)
 addUICorner(SpeedHackCheckbox, 10)
 
 NoclipButton.Parent = ScrollingFrame
 NoclipButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-NoclipButton.Position = UDim2.new(0.1, 0, 0.2, 0)
-NoclipButton.Size = UDim2.new(0.6, 0, 0.05, 0) -- Adjust height of the button
+NoclipButton.Position = UDim2.new(0.4, 0, 0.2, 0)
+NoclipButton.Size = UDim2.new(0.4, 0, 0.075, 0) -- Adjust width and height of the button
 NoclipButton.Text = "Toggle Noclip"
 addUICorner(NoclipButton, 10)
 
-NoclipCheckbox.Parent = ScrollingFrame
+NoclipCheckbox.Parent = NoclipButton
 NoclipCheckbox.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-NoclipCheckbox.Position = UDim2.new(0.75, 0, 0.2, 0)
-NoclipCheckbox.Size = UDim2.new(0.1, 0, 0.05, 0) -- Adjust height of the checkbox
+NoclipCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
+NoclipCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0) -- Make checkbox square
 NoclipCheckbox.Text = ""
 NoclipCheckbox.BorderColor3 = Color3.fromRGB(70, 70, 70)
 addUICorner(NoclipCheckbox, 10)
 
 JumpModeButton.Parent = ScrollingFrame
 JumpModeButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-JumpModeButton.Position = UDim2.new(0.1, 0, 0.3, 0)
-JumpModeButton.Size = UDim2.new(0.6, 0, 0.05, 0) -- Adjust height of the button
+JumpModeButton.Position = UDim2.new(0.4, 0, 0.3, 0)
+JumpModeButton.Size = UDim2.new(0.4, 0, 0.075, 0) -- Adjust width and height of the button
 JumpModeButton.Text = "Toggle JumpMode"
 addUICorner(JumpModeButton, 10)
 
-JumpModeCheckbox.Parent = ScrollingFrame
+JumpModeCheckbox.Parent = JumpModeButton
 JumpModeCheckbox.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-JumpModeCheckbox.Position = UDim2.new(0.75, 0, 0.3, 0)
-JumpModeCheckbox.Size = UDim2.new(0.1, 0, 0.05, 0) -- Adjust height of the checkbox
+JumpModeCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
+JumpModeCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0) -- Make checkbox square
 JumpModeCheckbox.Text = ""
 JumpModeCheckbox.BorderColor3 = Color3.fromRGB(70, 70, 70)
 addUICorner(JumpModeCheckbox, 10)
@@ -144,14 +144,14 @@ InfoLabel.Visible = false -- Hide InfoLabel initially
 -- Add padding to InfoLabel
 local padding = Instance.new("UIPadding")
 padding.Parent = InfoLabel
-padding.PaddingLeft = UDim.new(0, 40) -- Adjust the value to move the text to the right
+padding.PaddingLeft = UDim.new(0, 10) -- Adjust the value to move the text to the right
 
 -- Add Avatar Image
 local AvatarImage = Instance.new("ImageLabel")
 AvatarImage.Parent = Frame
 AvatarImage.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 AvatarImage.BorderSizePixel = 0
-AvatarImage.Position = UDim2.new(0, 5, 0, -40) -- Position to the left of the text
+AvatarImage.Position = UDim2.new(0, 5, 0, -45) -- Position to the left of the text
 AvatarImage.Size = UDim2.new(0, 30, 0, 30) -- Adjust size as needed
 AvatarImage.Image = "rbxthumb://type=AvatarHeadShot&id=" .. plr.UserId .. "&w=420&h=420" -- Load player's avatar
 addUICorner(AvatarImage, 10) -- Add rounded corners to the avatar image
