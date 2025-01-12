@@ -273,12 +273,17 @@ LoginButton.MouseButton1Click:Connect(function()
         LoadingFrame.Visible = true
 
         -- Loading animation
-        local loadingTween = tweenService:Create(LoadingBar, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, true), {Size = UDim2.new(1, 0, 1, 0)})
-        loadingTween:Play()
+        local function animateLoadingBar()
+            LoadingBar.Size = UDim2.new(0, 0, 1, 0)
+            LoadingBar.Position = UDim2.new(0, -LoadingBackground.Size.X.Offset, 0, 0)
+            local tween = tweenService:Create(LoadingBar, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, false), {Position = UDim2.new(1, 0, 0, 0)})
+            tween:Play()
+        end
+
+        animateLoadingBar()
 
         wait(5) -- Simulate loading time
 
-        loadingTween:Cancel()
         LoadingFrame.Visible = false
         Frame.Visible = true
         InfoLabel.Visible = true -- Show InfoLabel after login
