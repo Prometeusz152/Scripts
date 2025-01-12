@@ -143,7 +143,7 @@ NoclipButton.MouseButton1Click:Connect(toggleNoclip)
 
 -- Login functionality
 LoginButton.MouseButton1Click:Connect(function()
-    if PasswordBox.Text == "sigma" then
+    if PasswordBox.Text == "sigma" and plr.Name == "LearnHow_ToHustle" then
         LoginFrame.Visible = false
         Frame.Visible = true
     else
