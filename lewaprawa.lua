@@ -58,8 +58,8 @@ addUICorner(LoginButton, 10)
 -- Main Frame
 Frame.Parent = ScreenGui
 Frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-Frame.Position = UDim2.new(0.5, -100, 0.5, -50)
-Frame.Size = UDim2.new(0, 200, 0, 150)
+Frame.Position = UDim2.new(0.5, -150, 0.5, -75) -- Adjust position to center the larger frame
+Frame.Size = UDim2.new(0, 300, 0, 200) -- Increase size of the frame
 Frame.Active = true
 Frame.Draggable = true
 Frame.Visible = false -- Hide main frame initially
@@ -93,6 +93,7 @@ InfoLabel.TextXAlignment = Enum.TextXAlignment.Left -- Align text to the left
 InfoLabel.TextYAlignment = Enum.TextYAlignment.Center -- Align text to the center vertically
 InfoLabel.Font = Enum.Font.GothamBold -- Change font to GothamBold
 InfoLabel.TextStrokeTransparency = 1 -- Remove text stroke
+InfoLabel.Visible = false -- Hide InfoLabel initially
 
 -- Add Avatar Image
 local AvatarImage = Instance.new("ImageLabel")
@@ -103,6 +104,7 @@ AvatarImage.Position = UDim2.new(0, 5, 0, -40) -- Position to the left of the te
 AvatarImage.Size = UDim2.new(0, 30, 0, 30) -- Adjust size as needed
 AvatarImage.Image = "rbxthumb://type=AvatarHeadShot&id=" .. plr.UserId .. "&w=420&h=420" -- Load player's avatar
 addUICorner(AvatarImage, 10) -- Add rounded corners to the avatar image
+AvatarImage.Visible = false -- Hide AvatarImage initially
 
 -- Adjust text position to the right of the avatar
 InfoLabel.Position = UDim2.new(0, 40, 0, -45) -- Adjust position to be to the right of the avatar
@@ -160,6 +162,8 @@ LoginButton.MouseButton1Click:Connect(function()
     if PasswordBox.Text == "sigma" and plr.Name == "LearnHow_ToHustle" then
         LoginFrame.Visible = false
         Frame.Visible = true
+        InfoLabel.Visible = true -- Show InfoLabel after login
+        AvatarImage.Visible = true -- Show AvatarImage after login
     else
         PasswordBox.Text = ""
         PasswordBox.PlaceholderText = "Incorrect Password or Username"
