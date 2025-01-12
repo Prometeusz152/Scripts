@@ -3,7 +3,7 @@ local plr = players.LocalPlayer
 local runService = game:GetService("RunService")
 local userInputService = game:GetService("UserInputService")
 
-getgenv().settings = {speedhack = false, noclip = false}
+getgenv().settings = {speedhack = false, noclip = false, jumpmode = false}
 
 -- Create GUI
 local ScreenGui = Instance.new("ScreenGui")
@@ -11,12 +11,7 @@ local Frame = Instance.new("Frame")
 local ScrollingFrame = Instance.new("ScrollingFrame")
 local SpeedHackButton = Instance.new("TextButton")
 local NoclipButton = Instance.new("TextButton")
-local Option1Button = Instance.new("TextButton")
-local Option2Button = Instance.new("TextButton")
-local Option3Button = Instance.new("TextButton")
-local Option4Button = Instance.new("TextButton")
-local Option5Button = Instance.new("TextButton")
-local Option6Button = Instance.new("TextButton")
+local JumpModeButton = Instance.new("TextButton")
 local InfoLabel = Instance.new("TextLabel")
 local LoginFrame = Instance.new("Frame")
 local PasswordBox = Instance.new("TextBox")
@@ -65,8 +60,8 @@ addUICorner(LoginButton, 10)
 -- Main Frame
 Frame.Parent = ScreenGui
 Frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-Frame.Position = UDim2.new(0.5, -250, 0.5, -100) -- Adjust position to center the larger frame
-Frame.Size = UDim2.new(0, 500, 0, 300) -- Increase width of the frame
+Frame.Position = UDim2.new(0.5, -300, 0.5, -100) -- Adjust position to center the larger frame
+Frame.Size = UDim2.new(0, 600, 0, 300) -- Increase width of the frame
 Frame.Active = true
 Frame.Draggable = true
 Frame.Visible = false -- Hide main frame initially
@@ -76,64 +71,29 @@ ScrollingFrame.Parent = Frame
 ScrollingFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 ScrollingFrame.Position = UDim2.new(0, 0, 0, 0)
 ScrollingFrame.Size = UDim2.new(1, 0, 1, 0)
-ScrollingFrame.CanvasSize = UDim2.new(0, 0, 3, 0) -- Adjust canvas size to allow scrolling
+ScrollingFrame.CanvasSize = UDim2.new(0, 0, 1, 0) -- Adjust canvas size to allow scrolling
 ScrollingFrame.ScrollBarThickness = 10
 
 SpeedHackButton.Parent = ScrollingFrame
 SpeedHackButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
 SpeedHackButton.Position = UDim2.new(0.1, 0, 0.1, 0)
-SpeedHackButton.Size = UDim2.new(0.8, 0, 0.1, 0)
+SpeedHackButton.Size = UDim2.new(0.8, 0, 0.05, 0) -- Decrease height of the button
 SpeedHackButton.Text = "Toggle SpeedHack"
 addUICorner(SpeedHackButton, 10)
 
 NoclipButton.Parent = ScrollingFrame
 NoclipButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-NoclipButton.Position = UDim2.new(0.1, 0, 0.25, 0)
-NoclipButton.Size = UDim2.new(0.8, 0, 0.1, 0)
+NoclipButton.Position = UDim2.new(0.1, 0, 0.2, 0)
+NoclipButton.Size = UDim2.new(0.8, 0, 0.05, 0) -- Decrease height of the button
 NoclipButton.Text = "Toggle Noclip"
 addUICorner(NoclipButton, 10)
 
-Option1Button.Parent = ScrollingFrame
-Option1Button.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-Option1Button.Position = UDim2.new(0.1, 0, 0.4, 0)
-Option1Button.Size = UDim2.new(0.8, 0, 0.1, 0)
-Option1Button.Text = "Option 1"
-addUICorner(Option1Button, 10)
-
-Option2Button.Parent = ScrollingFrame
-Option2Button.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-Option2Button.Position = UDim2.new(0.1, 0, 0.55, 0)
-Option2Button.Size = UDim2.new(0.8, 0, 0.1, 0)
-Option2Button.Text = "Option 2"
-addUICorner(Option2Button, 10)
-
-Option3Button.Parent = ScrollingFrame
-Option3Button.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-Option3Button.Position = UDim2.new(0.1, 0, 0.7, 0)
-Option3Button.Size = UDim2.new(0.8, 0, 0.1, 0)
-Option3Button.Text = "Option 3"
-addUICorner(Option3Button, 10)
-
-Option4Button.Parent = ScrollingFrame
-Option4Button.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-Option4Button.Position = UDim2.new(0.1, 0, 0.85, 0)
-Option4Button.Size = UDim2.new(0.8, 0, 0.1, 0)
-Option4Button.Text = "Option 4"
-addUICorner(Option4Button, 10)
-
-Option5Button.Parent = ScrollingFrame
-Option5Button.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-Option5Button.Position = UDim2.new(0.1, 0, 1, 0)
-Option5Button.Size = UDim2.new(0.8, 0, 0.1, 0)
-Option5Button.Text = "Option 5"
-addUICorner(Option5Button, 10)
-
-Option6Button.Parent = ScrollingFrame
-Option6Button.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-Option6Button.Position = UDim2.new(0.1, 0, 1.15, 0)
-Option6Button.Size = UDim2.new(0.8, 0, 0.1, 0)
-Option6Button.Text = "Option 6"
-addUICorner(Option6Button, 10)
+JumpModeButton.Parent = ScrollingFrame
+JumpModeButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+JumpModeButton.Position = UDim2.new(0.1, 0, 0.3, 0)
+JumpModeButton.Size = UDim2.new(0.8, 0, 0.05, 0) -- Decrease height of the button
+JumpModeButton.Text = "Toggle JumpMode"
+addUICorner(JumpModeButton, 10)
 
 addUICorner(Frame, 10)
 
@@ -213,8 +173,34 @@ local function toggleNoclip()
     end
 end
 
+-- JumpMode
+local jumpModeConnection
+local function toggleJumpMode()
+    getgenv().settings.jumpmode = not getgenv().settings.jumpmode
+    if getgenv().settings.jumpmode then
+        JumpModeButton.BackgroundColor3 = Color3.fromRGB(111, 106, 155) -- Purple color when active
+        jumpModeConnection = userInputService.InputBegan:Connect(function(input)
+            if input.KeyCode == Enum.KeyCode.Space then
+                while getgenv().settings.jumpmode and userInputService:IsKeyDown(Enum.KeyCode.Space) do
+                    if plr.Character and plr.Character:FindFirstChildOfClass("Humanoid") then
+                        plr.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+                    end
+                    wait(0.1)
+                end
+            end
+        end)
+    else
+        JumpModeButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100) -- Default color when inactive
+        if jumpModeConnection then
+            jumpModeConnection:Disconnect()
+            jumpModeConnection = nil
+        end
+    end
+end
+
 SpeedHackButton.MouseButton1Click:Connect(toggleSpeedHack)
 NoclipButton.MouseButton1Click:Connect(toggleNoclip)
+JumpModeButton.MouseButton1Click:Connect(toggleJumpMode)
 
 -- Login functionality
 LoginButton.MouseButton1Click:Connect(function()
@@ -229,4 +215,4 @@ LoginButton.MouseButton1Click:Connect(function()
     end
 end)
 
-print("GUI Loaded: Use buttons to toggle SpeedHack and Noclip")
+print("GUI Loaded: Use buttons to toggle SpeedHack, Noclip, and JumpMode")
