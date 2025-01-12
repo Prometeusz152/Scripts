@@ -12,6 +12,9 @@ local ScrollingFrame = Instance.new("ScrollingFrame")
 local SpeedHackButton = Instance.new("TextButton")
 local NoclipButton = Instance.new("TextButton")
 local JumpModeButton = Instance.new("TextButton")
+local SpeedHackCheckbox = Instance.new("TextButton")
+local NoclipCheckbox = Instance.new("TextButton")
+local JumpModeCheckbox = Instance.new("TextButton")
 local InfoLabel = Instance.new("TextLabel")
 local LoginFrame = Instance.new("Frame")
 local PasswordBox = Instance.new("TextBox")
@@ -59,12 +62,13 @@ addUICorner(LoginButton, 10)
 
 -- Main Frame
 Frame.Parent = ScreenGui
-Frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+Frame.BackgroundColor3 = Color3.fromRGB(34, 34, 34)
 Frame.Position = UDim2.new(0.5, -300, 0.5, -100) -- Adjust position to center the larger frame
 Frame.Size = UDim2.new(0, 600, 0, 300) -- Increase width of the frame
 Frame.Active = true
 Frame.Draggable = true
 Frame.Visible = false -- Hide main frame initially
+Frame.BorderSizePixel = 0 -- Remove border
 
 -- Scrolling Frame
 ScrollingFrame.Parent = Frame
@@ -73,27 +77,52 @@ ScrollingFrame.Position = UDim2.new(0, 0, 0, 0)
 ScrollingFrame.Size = UDim2.new(1, 0, 1, 0)
 ScrollingFrame.CanvasSize = UDim2.new(0, 0, 1.5, 0) -- Adjust canvas size to allow scrolling
 ScrollingFrame.ScrollBarThickness = 10
+ScrollingFrame.BorderSizePixel = 0 -- Remove border
 
 SpeedHackButton.Parent = ScrollingFrame
 SpeedHackButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
 SpeedHackButton.Position = UDim2.new(0.1, 0, 0.1, 0)
-SpeedHackButton.Size = UDim2.new(0.8, 0, 0.125, 0) -- Increase height of the button by 2.5 times
+SpeedHackButton.Size = UDim2.new(0.6, 0, 0.05, 0) -- Adjust height of the button
 SpeedHackButton.Text = "Toggle SpeedHack"
 addUICorner(SpeedHackButton, 10)
 
+SpeedHackCheckbox.Parent = ScrollingFrame
+SpeedHackCheckbox.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+SpeedHackCheckbox.Position = UDim2.new(0.75, 0, 0.1, 0)
+SpeedHackCheckbox.Size = UDim2.new(0.1, 0, 0.05, 0) -- Adjust height of the checkbox
+SpeedHackCheckbox.Text = ""
+SpeedHackCheckbox.BorderColor3 = Color3.fromRGB(70, 70, 70)
+addUICorner(SpeedHackCheckbox, 10)
+
 NoclipButton.Parent = ScrollingFrame
 NoclipButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-NoclipButton.Position = UDim2.new(0.1, 0, 0.3, 0)
-NoclipButton.Size = UDim2.new(0.8, 0, 0.125, 0) -- Increase height of the button by 2.5 times
+NoclipButton.Position = UDim2.new(0.1, 0, 0.2, 0)
+NoclipButton.Size = UDim2.new(0.6, 0, 0.05, 0) -- Adjust height of the button
 NoclipButton.Text = "Toggle Noclip"
 addUICorner(NoclipButton, 10)
 
+NoclipCheckbox.Parent = ScrollingFrame
+NoclipCheckbox.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+NoclipCheckbox.Position = UDim2.new(0.75, 0, 0.2, 0)
+NoclipCheckbox.Size = UDim2.new(0.1, 0, 0.05, 0) -- Adjust height of the checkbox
+NoclipCheckbox.Text = ""
+NoclipCheckbox.BorderColor3 = Color3.fromRGB(70, 70, 70)
+addUICorner(NoclipCheckbox, 10)
+
 JumpModeButton.Parent = ScrollingFrame
 JumpModeButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-JumpModeButton.Position = UDim2.new(0.1, 0, 0.5, 0)
-JumpModeButton.Size = UDim2.new(0.8, 0, 0.125, 0) -- Increase height of the button by 2.5 times
+JumpModeButton.Position = UDim2.new(0.1, 0, 0.3, 0)
+JumpModeButton.Size = UDim2.new(0.6, 0, 0.05, 0) -- Adjust height of the button
 JumpModeButton.Text = "Toggle JumpMode"
 addUICorner(JumpModeButton, 10)
+
+JumpModeCheckbox.Parent = ScrollingFrame
+JumpModeCheckbox.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+JumpModeCheckbox.Position = UDim2.new(0.75, 0, 0.3, 0)
+JumpModeCheckbox.Size = UDim2.new(0.1, 0, 0.05, 0) -- Adjust height of the checkbox
+JumpModeCheckbox.Text = ""
+JumpModeCheckbox.BorderColor3 = Color3.fromRGB(70, 70, 70)
+addUICorner(JumpModeCheckbox, 10)
 
 addUICorner(Frame, 10)
 
@@ -115,14 +144,14 @@ InfoLabel.Visible = false -- Hide InfoLabel initially
 -- Add padding to InfoLabel
 local padding = Instance.new("UIPadding")
 padding.Parent = InfoLabel
-padding.PaddingLeft = UDim.new(0, 10) -- Adjust the value to move the text to the right
+padding.PaddingLeft = UDim.new(0, 40) -- Adjust the value to move the text to the right
 
 -- Add Avatar Image
 local AvatarImage = Instance.new("ImageLabel")
 AvatarImage.Parent = Frame
 AvatarImage.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 AvatarImage.BorderSizePixel = 0
-AvatarImage.Position = UDim2.new(0, 5, 0, -45) -- Position to the left of the text
+AvatarImage.Position = UDim2.new(0, 5, 0, -40) -- Position to the left of the text
 AvatarImage.Size = UDim2.new(0, 30, 0, 30) -- Adjust size as needed
 AvatarImage.Image = "rbxthumb://type=AvatarHeadShot&id=" .. plr.UserId .. "&w=420&h=420" -- Load player's avatar
 addUICorner(AvatarImage, 10) -- Add rounded corners to the avatar image
@@ -133,6 +162,7 @@ local function toggleSpeedHack()
     getgenv().settings.speedhack = not getgenv().settings.speedhack
     if getgenv().settings.speedhack then
         SpeedHackButton.BackgroundColor3 = Color3.fromRGB(111, 106, 155) -- Purple color when active
+        SpeedHackCheckbox.BackgroundColor3 = Color3.fromRGB(111, 106, 155) -- Purple color when active
         speedHackConnection = runService.Heartbeat:Connect(function(delta)
             if getgenv().settings.speedhack and plr.Character and plr.Character:FindFirstChild("Humanoid") then
                 if plr.Character.Humanoid.MoveDirection.Magnitude > 0 then
@@ -142,6 +172,7 @@ local function toggleSpeedHack()
         end)
     else
         SpeedHackButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100) -- Default color when inactive
+        SpeedHackCheckbox.BackgroundColor3 = Color3.fromRGB(100, 100, 100) -- Default color when inactive
         if speedHackConnection then
             speedHackConnection:Disconnect()
             speedHackConnection = nil
@@ -155,6 +186,7 @@ local function toggleNoclip()
     getgenv().settings.noclip = not getgenv().settings.noclip
     if getgenv().settings.noclip then
         NoclipButton.BackgroundColor3 = Color3.fromRGB(111, 106, 155) -- Purple color when active
+        NoclipCheckbox.BackgroundColor3 = Color3.fromRGB(111, 106, 155) -- Purple color when active
         noclipConnection = runService.Stepped:Connect(function()
             if plr.Character then
                 for _, child in pairs(plr.Character:GetDescendants()) do
@@ -166,6 +198,7 @@ local function toggleNoclip()
         end)
     else
         NoclipButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100) -- Default color when inactive
+        NoclipCheckbox.BackgroundColor3 = Color3.fromRGB(100, 100, 100) -- Default color when inactive
         if noclipConnection then
             noclipConnection:Disconnect()
             noclipConnection = nil
@@ -179,6 +212,7 @@ local function toggleJumpMode()
     getgenv().settings.jumpmode = not getgenv().settings.jumpmode
     if getgenv().settings.jumpmode then
         JumpModeButton.BackgroundColor3 = Color3.fromRGB(111, 106, 155) -- Purple color when active
+        JumpModeCheckbox.BackgroundColor3 = Color3.fromRGB(111, 106, 155) -- Purple color when active
         jumpModeConnection = userInputService.InputBegan:Connect(function(input)
             if input.KeyCode == Enum.KeyCode.Space then
                 while getgenv().settings.jumpmode and userInputService:IsKeyDown(Enum.KeyCode.Space) do
@@ -191,6 +225,7 @@ local function toggleJumpMode()
         end)
     else
         JumpModeButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100) -- Default color when inactive
+        JumpModeCheckbox.BackgroundColor3 = Color3.fromRGB(100, 100, 100) -- Default color when inactive
         if jumpModeConnection then
             jumpModeConnection:Disconnect()
             jumpModeConnection = nil
@@ -199,8 +234,11 @@ local function toggleJumpMode()
 end
 
 SpeedHackButton.MouseButton1Click:Connect(toggleSpeedHack)
+SpeedHackCheckbox.MouseButton1Click:Connect(toggleSpeedHack)
 NoclipButton.MouseButton1Click:Connect(toggleNoclip)
+NoclipCheckbox.MouseButton1Click:Connect(toggleNoclip)
 JumpModeButton.MouseButton1Click:Connect(toggleJumpMode)
+JumpModeCheckbox.MouseButton1Click:Connect(toggleJumpMode)
 
 -- Login functionality
 LoginButton.MouseButton1Click:Connect(function()
