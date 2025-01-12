@@ -42,6 +42,7 @@ PasswordBox.TextSize = 13
 PasswordBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 PasswordBox.TextXAlignment = Enum.TextXAlignment.Left -- Align text to the left
 addUICorner(PasswordBox, 10)
+PasswordBox.TextXOffset = 10 -- Add padding to the left
 
 LoginButton.Parent = LoginFrame
 LoginButton.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
@@ -84,7 +85,7 @@ InfoLabel.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
 InfoLabel.BorderSizePixel = 0 -- Remove the border
 InfoLabel.Position = UDim2.new(0.5, -100, 0.5, -85) -- Adjust position to be above the frame
 InfoLabel.Size = UDim2.new(0, 200, 0, 40) -- Adjust size to be slightly smaller than the frame
-InfoLabel.Text = "ethereal. 0.2\n" .. plr.Name -- Display "ethereal. 0.1" and player name
+InfoLabel.Text = "ethereal. 0.1\n" .. plr.Name -- Display "ethereal. 0.1" and player name
 InfoLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 InfoLabel.TextSize = 14 -- Set the text size to a smaller value
 InfoLabel.TextWrapped = true -- Wrap text to fit within the label
@@ -92,17 +93,18 @@ InfoLabel.TextXAlignment = Enum.TextXAlignment.Left -- Align text to the left
 InfoLabel.TextYAlignment = Enum.TextYAlignment.Center -- Align text to the center vertically
 InfoLabel.Font = Enum.Font.GothamBold -- Change font to GothamBold
 InfoLabel.TextStrokeTransparency = 1 -- Remove text stroke
+InfoLabel.TextXOffset = 40 -- Add padding to the left
 
 -- Add Avatar Image
 local AvatarImage = Instance.new("ImageLabel")
 AvatarImage.Parent = ScreenGui
-AvatarImage.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+AvatarImage.BackgroundColor3 = Color3.fromRGB(34, 34, 34)
 AvatarImage.BorderSizePixel = 0
-AvatarImage.Position = UDim2.new(0.5, -115, 0.5, -80) -- Position to the left of the text
+AvatarImage.Position = UDim2.new(0.5, -80, 0.5, -80) -- Position to the left of the text
 AvatarImage.Size = UDim2.new(0, 30, 0, 30) -- Adjust size as needed
 AvatarImage.Image = "rbxthumb://type=AvatarHeadShot&id=" .. plr.UserId .. "&w=420&h=420" -- Load player's avatar
 addUICorner(AvatarImage, 10) -- Add rounded corners to the avatar image
--- SpeedHack
+
 local speedHackConnection
 local function toggleSpeedHack()
     getgenv().settings.speedhack = not getgenv().settings.speedhack
