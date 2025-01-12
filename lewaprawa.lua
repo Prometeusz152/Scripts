@@ -8,8 +8,12 @@ getgenv().settings = {speedhack = false, noclip = false}
 -- Create GUI
 local ScreenGui = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
+local ScrollingFrame = Instance.new("ScrollingFrame")
 local SpeedHackButton = Instance.new("TextButton")
 local NoclipButton = Instance.new("TextButton")
+local Option1Button = Instance.new("TextButton")
+local Option2Button = Instance.new("TextButton")
+local Option3Button = Instance.new("TextButton")
 local InfoLabel = Instance.new("TextLabel")
 local LoginFrame = Instance.new("Frame")
 local PasswordBox = Instance.new("TextBox")
@@ -57,32 +61,62 @@ addUICorner(LoginButton, 10)
 
 -- Main Frame
 Frame.Parent = ScreenGui
-Frame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+Frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 Frame.Position = UDim2.new(0.5, -150, 0.5, -75) -- Adjust position to center the larger frame
 Frame.Size = UDim2.new(0, 300, 0, 200) -- Increase size of the frame
 Frame.Active = true
 Frame.Draggable = true
 Frame.Visible = false -- Hide main frame initially
 
-SpeedHackButton.Parent = Frame
+-- Scrolling Frame
+ScrollingFrame.Parent = Frame
+ScrollingFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+ScrollingFrame.Position = UDim2.new(0, 0, 0, 0)
+ScrollingFrame.Size = UDim2.new(1, 0, 1, 0)
+ScrollingFrame.CanvasSize = UDim2.new(0, 0, 2, 0) -- Adjust canvas size to allow scrolling
+ScrollingFrame.ScrollBarThickness = 10
+
+SpeedHackButton.Parent = ScrollingFrame
 SpeedHackButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-SpeedHackButton.Position = UDim2.new(0.1, 0, 0.2, 0)
-SpeedHackButton.Size = UDim2.new(0.8, 0, 0.2, 0)
+SpeedHackButton.Position = UDim2.new(0.1, 0, 0.1, 0)
+SpeedHackButton.Size = UDim2.new(0.8, 0, 0.1, 0)
 SpeedHackButton.Text = "Toggle SpeedHack"
 addUICorner(SpeedHackButton, 10)
 
-NoclipButton.Parent = Frame
+NoclipButton.Parent = ScrollingFrame
 NoclipButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-NoclipButton.Position = UDim2.new(0.1, 0, 0.5, 0)
-NoclipButton.Size = UDim2.new(0.8, 0, 0.2, 0)
+NoclipButton.Position = UDim2.new(0.1, 0, 0.25, 0)
+NoclipButton.Size = UDim2.new(0.8, 0, 0.1, 0)
 NoclipButton.Text = "Toggle Noclip"
 addUICorner(NoclipButton, 10)
 
+Option1Button.Parent = ScrollingFrame
+Option1Button.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+Option1Button.Position = UDim2.new(0.1, 0, 0.4, 0)
+Option1Button.Size = UDim2.new(0.8, 0, 0.1, 0)
+Option1Button.Text = "Option 1"
+addUICorner(Option1Button, 10)
+
+Option2Button.Parent = ScrollingFrame
+Option2Button.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+Option2Button.Position = UDim2.new(0.1, 0, 0.55, 0)
+Option2Button.Size = UDim2.new(0.8, 0, 0.1, 0)
+Option2Button.Text = "Option 2"
+addUICorner(Option2Button, 10)
+
+Option3Button.Parent = ScrollingFrame
+Option3Button.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+Option3Button.Position = UDim2.new(0.1, 0, 0.7, 0)
+Option3Button.Size = UDim2.new(0.8, 0, 0.1, 0)
+Option3Button.Text = "Option 3"
+addUICorner(Option3Button, 10)
+
 addUICorner(Frame, 10)
+
 InfoLabel.Parent = Frame
 InfoLabel.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
 InfoLabel.BorderSizePixel = 0 -- Remove the border
-InfoLabel.Position = UDim2.new(0, 0, 0, -40) -- Adjust position to be aligned with the frame
+InfoLabel.Position = UDim2.new(0, 0, 0, -50) -- Adjust position to be aligned with the frame
 InfoLabel.Size = UDim2.new(1, 0, 0, 50) -- Adjust size to be slightly larger in height
 InfoLabel.Text = "ethereal. 0.3\n" .. plr.Name -- Display "ethereal. 0.1" and player name
 InfoLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -94,16 +128,17 @@ InfoLabel.Font = Enum.Font.GothamBold -- Change font to GothamBold
 InfoLabel.TextStrokeTransparency = 1 -- Remove text stroke
 InfoLabel.Visible = false -- Hide InfoLabel initially
 
+-- Add padding to InfoLabel
 local padding = Instance.new("UIPadding")
 padding.Parent = InfoLabel
-padding.PaddingLeft = UDim.new(0, 40) -- Adjust the value to move the text to the right
+padding.PaddingLeft = UDim.new(0, 10) -- Adjust the value to move the text to the right
 
 -- Add Avatar Image
 local AvatarImage = Instance.new("ImageLabel")
 AvatarImage.Parent = Frame
 AvatarImage.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 AvatarImage.BorderSizePixel = 0
-AvatarImage.Position = UDim2.new(0, 5, 0, -30) -- Position to the left of the text
+AvatarImage.Position = UDim2.new(0, 5, 0, -45) -- Position to the left of the text
 AvatarImage.Size = UDim2.new(0, 30, 0, 30) -- Adjust size as needed
 AvatarImage.Image = "rbxthumb://type=AvatarHeadShot&id=" .. plr.UserId .. "&w=420&h=420" -- Load player's avatar
 addUICorner(AvatarImage, 10) -- Add rounded corners to the avatar image
