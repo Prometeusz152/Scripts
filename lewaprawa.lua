@@ -17,6 +17,8 @@ Frame.Parent = ScreenGui
 Frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 Frame.Position = UDim2.new(0.5, -100, 0.5, -50)
 Frame.Size = UDim2.new(0, 200, 0, 100)
+Frame.Active = true
+Frame.Draggable = true
 
 -- Add UICorner to round corners
 local function addUICorner(instance, radius)
@@ -45,6 +47,7 @@ addUICorner(Frame, 10)
 local function toggleSpeedHack()
     getgenv().settings.speedhack = not getgenv().settings.speedhack
     if getgenv().settings.speedhack then
+        SpeedHackButton.BackgroundColor3 = Color3.fromRGB(128, 0, 128) -- Purple color when active
         runService.Heartbeat:Connect(function(delta)
             if getgenv().settings.speedhack and plr.Character and plr.Character:FindFirstChild("Humanoid") then
                 if plr.Character.Humanoid.MoveDirection.Magnitude > 0 then
@@ -52,6 +55,8 @@ local function toggleSpeedHack()
                 end
             end
         end)
+    else
+        SpeedHackButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100) -- Default color when inactive
     end
 end
 
@@ -60,6 +65,7 @@ local noclipConnection
 local function toggleNoclip()
     getgenv().settings.noclip = not getgenv().settings.noclip
     if getgenv().settings.noclip then
+        NoclipButton.BackgroundColor3 = Color3.fromRGB(128, 0, 128) -- Purple color when active
         noclipConnection = runService.Stepped:Connect(function()
             if plr.Character then
                 for _, child in pairs(plr.Character:GetDescendants()) do
@@ -70,6 +76,7 @@ local function toggleNoclip()
             end
         end)
     else
+        NoclipButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100) -- Default color when inactive
         if noclipConnection then
             noclipConnection:Disconnect()
         end
