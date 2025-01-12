@@ -90,8 +90,8 @@ InfoLabel.TextSize = 14 -- Set the text size to a smaller value
 InfoLabel.TextWrapped = true -- Wrap text to fit within the label
 InfoLabel.TextXAlignment = Enum.TextXAlignment.Left -- Align text to the left
 InfoLabel.TextYAlignment = Enum.TextYAlignment.Center -- Align text to the center vertically
-InfoLabel.Position = UDim2.new(0, 40, 0, -30) -- Lower the text a bit more and move it to the right
 InfoLabel.Font = Enum.Font.GothamBold -- Change font to GothamBold
+InfoLabel.TextStrokeTransparency = 1 -- Remove text stroke
 
 -- Add Avatar Image
 local AvatarImage = Instance.new("ImageLabel")
@@ -103,6 +103,10 @@ AvatarImage.Size = UDim2.new(0, 30, 0, 30) -- Adjust size as needed
 AvatarImage.Image = "rbxthumb://type=AvatarHeadShot&id=" .. plr.UserId .. "&w=420&h=420" -- Load player's avatar
 addUICorner(AvatarImage, 10) -- Add rounded corners to the avatar image
 
+-- Adjust text position to the right of the avatar
+InfoLabel.TextXAlignment = Enum.TextXAlignment.Left -- Align text to the left
+InfoLabel.TextYAlignment = Enum.TextYAlignment.Center -- Align text to the center vertically
+InfoLabel.Position = UDim2.new(0, 40, 0, -35) -- Adjust position to be to the right of the avatar
 -- SpeedHack
 local speedHackConnection
 local function toggleSpeedHack()
