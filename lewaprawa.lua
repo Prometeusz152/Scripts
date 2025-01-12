@@ -57,7 +57,7 @@ addUICorner(LoginButton, 10)
 
 -- Main Frame
 Frame.Parent = ScreenGui
-Frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+Frame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
 Frame.Position = UDim2.new(0.5, -150, 0.5, -75) -- Adjust position to center the larger frame
 Frame.Size = UDim2.new(0, 300, 0, 200) -- Increase size of the frame
 Frame.Active = true
@@ -82,7 +82,7 @@ addUICorner(Frame, 10)
 InfoLabel.Parent = Frame
 InfoLabel.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
 InfoLabel.BorderSizePixel = 0 -- Remove the border
-InfoLabel.Position = UDim2.new(0, 0, 0, -50) -- Adjust position to be aligned with the frame
+InfoLabel.Position = UDim2.new(0, 0, 0, -40) -- Adjust position to be aligned with the frame
 InfoLabel.Size = UDim2.new(1, 0, 0, 50) -- Adjust size to be slightly larger in height
 InfoLabel.Text = "ethereal. 0.3\n" .. plr.Name -- Display "ethereal. 0.1" and player name
 InfoLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -96,7 +96,7 @@ InfoLabel.Visible = false -- Hide InfoLabel initially
 
 local padding = Instance.new("UIPadding")
 padding.Parent = InfoLabel
-padding.PaddingLeft = UDim.new(0, 10) -- Adjust the value to move the text to the right
+padding.PaddingLeft = UDim.new(0, 40) -- Adjust the value to move the text to the right
 
 -- Add Avatar Image
 local AvatarImage = Instance.new("ImageLabel")
