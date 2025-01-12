@@ -14,6 +14,9 @@ local NoclipButton = Instance.new("TextButton")
 local Option1Button = Instance.new("TextButton")
 local Option2Button = Instance.new("TextButton")
 local Option3Button = Instance.new("TextButton")
+local Option4Button = Instance.new("TextButton")
+local Option5Button = Instance.new("TextButton")
+local Option6Button = Instance.new("TextButton")
 local InfoLabel = Instance.new("TextLabel")
 local LoginFrame = Instance.new("Frame")
 local PasswordBox = Instance.new("TextBox")
@@ -62,8 +65,8 @@ addUICorner(LoginButton, 10)
 -- Main Frame
 Frame.Parent = ScreenGui
 Frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-Frame.Position = UDim2.new(0.5, -150, 0.5, -75) -- Adjust position to center the larger frame
-Frame.Size = UDim2.new(0, 300, 0, 200) -- Increase size of the frame
+Frame.Position = UDim2.new(0.5, -200, 0.5, -100) -- Adjust position to center the larger frame
+Frame.Size = UDim2.new(0, 400, 0, 300) -- Increase size of the frame
 Frame.Active = true
 Frame.Draggable = true
 Frame.Visible = false -- Hide main frame initially
@@ -73,7 +76,7 @@ ScrollingFrame.Parent = Frame
 ScrollingFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 ScrollingFrame.Position = UDim2.new(0, 0, 0, 0)
 ScrollingFrame.Size = UDim2.new(1, 0, 1, 0)
-ScrollingFrame.CanvasSize = UDim2.new(0, 0, 2, 0) -- Adjust canvas size to allow scrolling
+ScrollingFrame.CanvasSize = UDim2.new(0, 0, 3, 0) -- Adjust canvas size to allow scrolling
 ScrollingFrame.ScrollBarThickness = 10
 
 SpeedHackButton.Parent = ScrollingFrame
@@ -110,6 +113,27 @@ Option3Button.Position = UDim2.new(0.1, 0, 0.7, 0)
 Option3Button.Size = UDim2.new(0.8, 0, 0.1, 0)
 Option3Button.Text = "Option 3"
 addUICorner(Option3Button, 10)
+
+Option4Button.Parent = ScrollingFrame
+Option4Button.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+Option4Button.Position = UDim2.new(0.1, 0, 0.85, 0)
+Option4Button.Size = UDim2.new(0.8, 0, 0.1, 0)
+Option4Button.Text = "Option 4"
+addUICorner(Option4Button, 10)
+
+Option5Button.Parent = ScrollingFrame
+Option5Button.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+Option5Button.Position = UDim2.new(0.1, 0, 1, 0)
+Option5Button.Size = UDim2.new(0.8, 0, 0.1, 0)
+Option5Button.Text = "Option 5"
+addUICorner(Option5Button, 10)
+
+Option6Button.Parent = ScrollingFrame
+Option6Button.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+Option6Button.Position = UDim2.new(0.1, 0, 1.15, 0)
+Option6Button.Size = UDim2.new(0.8, 0, 0.1, 0)
+Option6Button.Text = "Option 6"
+addUICorner(Option6Button, 10)
 
 addUICorner(Frame, 10)
 
