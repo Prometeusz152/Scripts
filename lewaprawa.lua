@@ -36,13 +36,13 @@ PasswordBox.Parent = LoginFrame
 PasswordBox.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
 PasswordBox.Position = UDim2.new(0.1, 0, 0.2, 0)
 PasswordBox.Size = UDim2.new(0.8, 0, 0.3, 0)
-PasswordBox.PlaceholderText = "Enter Password12"
+PasswordBox.PlaceholderText = "Enter Password"
 PasswordBox.Text = ""
 PasswordBox.TextSize = 13 
 PasswordBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 PasswordBox.TextXAlignment = Enum.TextXAlignment.Left -- Align text to the left
 addUICorner(PasswordBox, 10)
-PasswordBox.TextXOffset = 10 -- Add padding to the left
+PasswordBox.TextXOffset = 40 -- Add padding to the left
 
 LoginButton.Parent = LoginFrame
 LoginButton.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
