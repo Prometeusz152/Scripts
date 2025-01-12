@@ -5,6 +5,7 @@ local userInputService = game:GetService("UserInputService")
 
 getgenv().settings = {speedhack = false, noclip = false}
 
+-- Create GUI
 local ScreenGui = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
 local SpeedHackButton = Instance.new("TextButton")
@@ -14,12 +15,13 @@ local InfoLabel = Instance.new("TextLabel")
 ScreenGui.Parent = game.CoreGui
 
 Frame.Parent = ScreenGui
-Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 Frame.Position = UDim2.new(0.5, -100, 0.5, -50)
 Frame.Size = UDim2.new(0, 200, 0, 150)
 Frame.Active = true
 Frame.Draggable = true
 
+-- Add UICorner to round corners
 local function addUICorner(instance, radius)
     local uicorner = Instance.new("UICorner")
     uicorner.CornerRadius = UDim.new(0, radius)
@@ -27,14 +29,14 @@ local function addUICorner(instance, radius)
 end
 
 SpeedHackButton.Parent = Frame
-SpeedHackButton.BackgroundColor3 = Color3.fromRGB(75, 75, 75)
+SpeedHackButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
 SpeedHackButton.Position = UDim2.new(0.1, 0, 0.2, 0)
 SpeedHackButton.Size = UDim2.new(0.8, 0, 0.2, 0)
 SpeedHackButton.Text = "Toggle SpeedHack"
 addUICorner(SpeedHackButton, 10)
 
 NoclipButton.Parent = Frame
-NoclipButton.BackgroundColor3 = Color3.fromRGB(75, 75, 75)
+NoclipButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
 NoclipButton.Position = UDim2.new(0.1, 0, 0.5, 0)
 NoclipButton.Size = UDim2.new(0.8, 0, 0.2, 0)
 NoclipButton.Text = "Toggle Noclip"
@@ -43,19 +45,21 @@ addUICorner(NoclipButton, 10)
 addUICorner(Frame, 10)
 
 -- Info Label
-InfoLabel.Parent = Frame
+InfoLabel.Parent = ScreenGui
 InfoLabel.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-InfoLabel.Position = UDim2.new(0.1, 0, 0.8, 0)
-InfoLabel.Size = UDim2.new(0.8, 0, 0.1, 0)
-InfoLabel.Text = "ethereal. 0.1"
+InfoLabel.Position = UDim2.new(0.5, -100, 0, 0) -- Position at the top
+InfoLabel.Size = UDim2.new(0, 200, 0, 90) -- Increase height
+InfoLabel.AnchorPoint = Vector2.new(0.5, 0) -- Center horizontally
+InfoLabel.Text = "ethereal. 0.1\n" .. plr.Name -- Display "ethereal. 0.1" and player name
 InfoLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 InfoLabel.TextScaled = true
+InfoLabel.TextWrapped = true -- Wrap text to fit within the label
 
 -- SpeedHack
 local function toggleSpeedHack()
     getgenv().settings.speedhack = not getgenv().settings.speedhack
     if getgenv().settings.speedhack then
-        SpeedHackButton.BackgroundColor3 = Color3.fromRGB(128, 0, 128) 
+        SpeedHackButton.BackgroundColor3 = Color3.fromRGB(128, 0, 128) -- Purple color when active
         runService.Heartbeat:Connect(function(delta)
             if getgenv().settings.speedhack and plr.Character and plr.Character:FindFirstChild("Humanoid") then
                 if plr.Character.Humanoid.MoveDirection.Magnitude > 0 then
@@ -63,8 +67,8 @@ local function toggleSpeedHack()
                 end
             end
         end)
-    else 
-        SpeedHackButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+    else
+        SpeedHackButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100) -- Default color when inactive
     end
 end
 
@@ -73,7 +77,7 @@ local noclipConnection
 local function toggleNoclip()
     getgenv().settings.noclip = not getgenv().settings.noclip
     if getgenv().settings.noclip then
-        NoclipButton.BackgroundColor3 = Color3.fromRGB(111, 106, 155) 
+        NoclipButton.BackgroundColor3 = Color3.fromRGB(128, 0, 128) -- Purple color when active
         noclipConnection = runService.Stepped:Connect(function()
             if plr.Character then
                 for _, child in pairs(plr.Character:GetDescendants()) do
@@ -84,7 +88,7 @@ local function toggleNoclip()
             end
         end)
     else
-        NoclipButton.BackgroundColor3 = Color3.fromRGB(111, 106, 155) 
+        NoclipButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100) -- Default color when inactive
         if noclipConnection then
             noclipConnection:Disconnect()
         end
