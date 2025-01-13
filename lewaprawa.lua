@@ -404,7 +404,7 @@ JumpModeCheckbox.MouseButton1Click:Connect(toggleJumpMode)
 
 -- Login functionality
 LoginButton.MouseButton1Click:Connect(function()
-    if PasswordBox.Text == "sigma" and plr.Name == "LearnHow_ToHustle" then
+    if PasswordBox.Text == "sigma" and plr.Name == "Pandusia687" then
         LoginFrame.Visible = false
         LoadingFrame.Visible = true
 
