@@ -269,7 +269,8 @@ local function toggleNoclip()
                 humanoid.PlatformStand = true
             end
             local moveDirection = plr.Character.Humanoid.MoveDirection
-            bodyVelocity.Velocity = moveDirection * 50
+            local cameraDirection = workspace.CurrentCamera.CFrame.LookVector
+            bodyVelocity.Velocity = (moveDirection + cameraDirection) * 50
             bodyGyro.CFrame = workspace.CurrentCamera.CFrame
         end)
 
@@ -312,7 +313,6 @@ local function toggleNoclip()
         end
     end
 end
-
 -- JumpMode
 local jumpModeConnection
 local function toggleJumpMode()
