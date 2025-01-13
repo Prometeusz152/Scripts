@@ -377,25 +377,30 @@ local function togglePhase()
     PhaseCheckbox.BackgroundColor3 = getgenv().settings.phase and Color3.fromRGB(111, 106, 155) or Color3.fromRGB(80, 80, 80)
     
     if getgenv().settings.phase then
-        -- Increase damage when punching
-        local originalDamage = 10 -- Replace with the original damage value
-        local increasedDamage = 50 -- Replace with the increased damage value
-
-        local function onPunch(hit)
-            if hit.Parent:FindFirstChildOfClass("Humanoid") then
-                local humanoid = hit.Parent:FindFirstChildOfClass("Humanoid")
-                humanoid:TakeDamage(increasedDamage)
+        local function onStepped()
+            if plr.Character and plr.Character:FindFirstChild("HumanoidRootPart") then
+                for _, part in pairs(plr.Character:GetDescendants()) do
+                    if part:IsA("BasePart") then
+                        part.CanCollide = false
+                    end
+                end
             end
         end
-
-        plr.Character.HumanoidRootPart.Touched:Connect(onPunch)
+        phaseConnection = runService.Stepped:Connect(onStepped)
     else
-        -- Reset damage to normal
-        -- Note: This part is optional and depends on how you want to handle disabling the phase mode
+        if phaseConnection then
+            phaseConnection:Disconnect()
+            phaseConnection = nil
+        end
+        if plr.Character then
+            for _, part in pairs(plr.Character:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    part.CanCollide = true
+                end
+            end
+        end
     end
 end
-
-PhaseCheckbox.MouseButton1Click:Connect(togglePhase)
 
 PhaseCheckbox.MouseButton1Click:Connect(togglePhase)
 SpeedHackCheckbox.MouseButton1Click:Connect(toggleSpeedHack)
