@@ -108,7 +108,7 @@ ScrollingFrame.ScrollBarThickness = 10
 ScrollingFrame.BorderSizePixel = 0 -- Remove border
 
 -- Add background under buttons
-ButtonsBackground.Parent = ScrollingFrame
+ButtonsBackground.Parent = Frame
 ButtonsBackground.BackgroundColor3 = Color3.fromRGB(30, 30, 30) -- Darker color for background
 ButtonsBackground.Position = UDim2.new(0.05, 0, 0.05, 0)
 ButtonsBackground.Size = UDim2.new(0.9, 0, 0.5, 0) -- Adjust size to fit all buttons
@@ -126,8 +126,8 @@ addUICorner(SpeedHackButton, 10)
 
 SpeedHackCheckbox.Parent = SpeedHackButton
 SpeedHackCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44) -- Darker color for checkbox
-SpeedHackCheckbox.Position = UDim2.new(0.75, 0, 0.1, 0)
-SpeedHackCheckbox.Size = UDim2.new(0.2, 0, 0.8, 0) -- Make checkbox square
+SpeedHackCheckbox.Position = UDim2.new(0.8, 0, 0.1, 0)
+SpeedHackCheckbox.Size = UDim2.new(0.15, 0, 0.8, 0) -- Make checkbox square
 SpeedHackCheckbox.Text = ""
 SpeedHackCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155) -- Add border color to checkbox
 SpeedHackCheckbox.BorderSizePixel = 2 -- Add border size to checkbox
@@ -144,8 +144,8 @@ addUICorner(NoclipButton, 10)
 
 NoclipCheckbox.Parent = NoclipButton
 NoclipCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44) -- Darker color for checkbox
-NoclipCheckbox.Position = UDim2.new(0.75, 0, 0.1, 0)
-NoclipCheckbox.Size = UDim2.new(0.2, 0, 0.8, 0) -- Make checkbox square
+NoclipCheckbox.Position = UDim2.new(0.8, 0, 0.1, 0)
+NoclipCheckbox.Size = UDim2.new(0.15, 0, 0.8, 0) -- Make checkbox square
 NoclipCheckbox.Text = ""
 NoclipCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155) -- Add border color to checkbox
 NoclipCheckbox.BorderSizePixel = 2 -- Add border size to checkbox
@@ -162,8 +162,8 @@ addUICorner(JumpModeButton, 10)
 
 JumpModeCheckbox.Parent = JumpModeButton
 JumpModeCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44) -- Darker color for checkbox
-JumpModeCheckbox.Position = UDim2.new(0.75, 0, 0.1, 0)
-JumpModeCheckbox.Size = UDim2.new(0.2, 0, 0.8, 0) -- Make checkbox square
+JumpModeCheckbox.Position = UDim2.new(0.8, 0, 0.1, 0)
+JumpModeCheckbox.Size = UDim2.new(0.15, 0, 0.8, 0) -- Make checkbox square
 JumpModeCheckbox.Text = ""
 JumpModeCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155) -- Add border color to checkbox
 JumpModeCheckbox.BorderSizePixel = 2 -- Add border size to checkbox
