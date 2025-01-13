@@ -228,11 +228,12 @@ addUICorner(ToggleButton, 5)
 local function toggleMenu()
     isMenuVisible = not isMenuVisible
     local targetPosition = isMenuVisible and UDim2.new(0.05, 0, 0.05, 0) or UDim2.new(0.05, 0, -0.5, 0)
-    local targetScrollSize = isMenuVisible and UDim2.new(1, 0, 1, 0) or UDim2.new(1, 0, 0, 0)
     local targetOuterSize = isMenuVisible and UDim2.new(1, 0, 1, 0) or UDim2.new(1, 0, 0, 0)
     local tweenBackground = tweenService:Create(ButtonsBackground, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = targetPosition})
-    local tweenScroll = tweenService:Create(ScrollingFrame, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = targetScrollSize})
+    local tweenOuterBackground = tweenService:Create(OuterBackground, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = targetOuterSize})
+    local tweenScroll = tweenService:Create(ScrollingFrame, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = targetOuterSize})
     tweenBackground:Play()
+    tweenOuterBackground:Play()
     tweenScroll:Play()
     ToggleButton.Text = isMenuVisible and "▲" or "▼"
 end
