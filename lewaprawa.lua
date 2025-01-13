@@ -123,6 +123,7 @@ ScrollingFrame.Size = UDim2.new(1, 0, 1, 0)
 ScrollingFrame.CanvasSize = UDim2.new(0, 0, 1.5, 0)
 ScrollingFrame.ScrollBarThickness = 10
 ScrollingFrame.BorderSizePixel = 0
+ScrollingFrame.ClipsDescendants = true -- Ensure buttons are clipped within the scrolling frame
 
 -- Add background under buttons
 ButtonsBackground.Parent = ScrollingFrame
@@ -203,39 +204,6 @@ PhaseCheckbox.Text = ""
 PhaseCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 PhaseCheckbox.BorderSizePixel = 2
 addUICorner(PhaseCheckbox, 10)
-
-addUICorner(Frame, 10)
-
-InfoLabel.Parent = Frame
-InfoLabel.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
-InfoLabel.BorderSizePixel = 0
-InfoLabel.Position = UDim2.new(0, 0, 0, -50)
-InfoLabel.Size = UDim2.new(1, 0, 0, 50)
-InfoLabel.Text = "ethereal. 0.3\n" .. plr.Name
-InfoLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-InfoLabel.TextSize = 14
-InfoLabel.TextWrapped = true
-InfoLabel.TextXAlignment = Enum.TextXAlignment.Left
-InfoLabel.TextYAlignment = Enum.TextYAlignment.Center
-InfoLabel.Font = Enum.Font.GothamBold
-InfoLabel.TextStrokeTransparency = 1
-InfoLabel.Visible = false
-
--- Add padding to InfoLabel
-local padding = Instance.new("UIPadding")
-padding.Parent = InfoLabel
-padding.PaddingLeft = UDim.new(0, 40)
-
--- Add Avatar Image
-local AvatarImage = Instance.new("ImageLabel")
-AvatarImage.Parent = Frame
-AvatarImage.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-AvatarImage.BorderSizePixel = 0
-AvatarImage.Position = UDim2.new(0, 5, 0, -40)
-AvatarImage.Size = UDim2.new(0, 30, 0, 30)
-AvatarImage.Image = "rbxthumb://type=AvatarHeadShot&id=" .. plr.UserId .. "&w=420&h=420"
-addUICorner(AvatarImage, 10)
-AvatarImage.Visible = false
 
 -- Toggle Button for sliding menu
 ToggleButton.Parent = InfoLabel
@@ -372,7 +340,12 @@ local function toggleJumpMode()
         end
     end
 end
+local function togglePhase()
+    getgenv().settings.phase = not getgenv().settings.phase
+    PhaseCheckbox.BackgroundColor3 = getgenv().settings.phase and Color3.fromRGB(111, 106, 155) or Color3.fromRGB(80, 80, 80)
+end
 
+PhaseCheckbox.MouseButton1Click:Connect(togglePhase)
 SpeedHackCheckbox.MouseButton1Click:Connect(toggleSpeedHack)
 NoclipCheckbox.MouseButton1Click:Connect(toggleNoclip)
 JumpModeCheckbox.MouseButton1Click:Connect(toggleJumpMode)
