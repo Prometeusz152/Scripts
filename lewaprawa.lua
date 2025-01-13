@@ -290,7 +290,6 @@ local function toggleNoclip()
         end
     end
 end
-
 -- JumpMode
 local jumpModeConnection
 local function toggleJumpMode()
