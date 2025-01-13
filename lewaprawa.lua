@@ -51,7 +51,7 @@ PasswordBox.Parent = LoginFrame
 PasswordBox.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
 PasswordBox.Position = UDim2.new(0.1, 0, 0.2, 0)
 PasswordBox.Size = UDim2.new(0.8, 0, 0.3, 0)
-PasswordBox.PlaceholderText = "Wprowadź hasło"
+PasswordBox.PlaceholderText = "Enter Password"
 PasswordBox.Text = ""
 PasswordBox.TextSize = 13 
 PasswordBox.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -97,18 +97,25 @@ addUICorner(LoadingBar, 5)
 
 -- Main Frame
 Frame.Parent = ScreenGui
-Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Frame.BackgroundColor3 = Color3.fromRGB(38, 38, 38)
 Frame.Position = UDim2.new(0.5, -300, 0.5, -100)
 Frame.Size = UDim2.new(0, 600, 0, 300)
-Frame.BackgroundTransparency = 0.0
 Frame.Active = true
 Frame.Draggable = true
 Frame.Visible = false
 Frame.BorderSizePixel = 0
 
+-- Outer Background
+OuterBackground.Parent = Frame
+OuterBackground.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+OuterBackground.Position = UDim2.new(0, 0, 0, 0)
+OuterBackground.Size = UDim2.new(1, 0, 1, 0)
+OuterBackground.BorderSizePixel = 0
+addUICorner(OuterBackground, 10)
+
 -- Scrolling Frame
 ScrollingFrame.Parent = OuterBackground
-ScrollingFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+ScrollingFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 ScrollingFrame.Position = UDim2.new(0, 0, 0, 0)
 ScrollingFrame.Size = UDim2.new(1, 0, 1, 0)
 ScrollingFrame.CanvasSize = UDim2.new(0, 0, 1.5, 0)
