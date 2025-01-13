@@ -119,14 +119,14 @@ ScrollingFrame.ClipsDescendants = true -- Ensure buttons are clipped within the 
 ScrollingFrame.BackgroundTransparency = 0.1 -- 50% przezroczystości
 
 -- Add background under buttons
-ButtonsBackground.Parent = ScrollingFrame
+ButtonsBackground.Parent = Frame
 ButtonsBackground.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 ButtonsBackground.Position = UDim2.new(0.05, 0, 0.05, 0)
 ButtonsBackground.Size = UDim2.new(0.9, 0, 1.5, 0) -- Adjusted to fit all buttons
 ButtonsBackground.BorderSizePixel = 0
 addUICorner(ButtonsBackground, 10)
 
-SpeedHackButton.Parent = ButtonsBackground
+SpeedHackButton.Parent = ScrollingFrame
 SpeedHackButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 SpeedHackButton.Position = UDim2.new(0.05, 0, 0.05, 0)
 SpeedHackButton.Size = UDim2.new(0.9, 0, 0.05, 0) -- Adjusted size
@@ -144,7 +144,7 @@ SpeedHackCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 SpeedHackCheckbox.BorderSizePixel = 2
 addUICorner(SpeedHackCheckbox, 10)
 
-NoclipButton.Parent = ButtonsBackground
+NoclipButton.Parent = ScrollingFrame
 NoclipButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 NoclipButton.Position = UDim2.new(0.05, 0, 0.15, 0) -- Adjusted position
 NoclipButton.Size = UDim2.new(0.9, 0, 0.05, 0) -- Adjusted size
@@ -162,7 +162,7 @@ NoclipCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 NoclipCheckbox.BorderSizePixel = 2
 addUICorner(NoclipCheckbox, 10)
 
-JumpModeButton.Parent = ButtonsBackground
+JumpModeButton.Parent = ScrollingFrame
 JumpModeButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 JumpModeButton.Position = UDim2.new(0.05, 0, 0.25, 0) -- Adjusted position
 JumpModeButton.Size = UDim2.new(0.9, 0, 0.05, 0) -- Adjusted size
