@@ -106,15 +106,6 @@ Frame.Draggable = true
 Frame.Visible = false
 Frame.BorderSizePixel = 0
 
--- Outer Background
-OuterBackground.Parent = Frame
-OuterBackground.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-OuterBackground.Position = UDim2.new(0, 0, 0, 0)
-OuterBackground.Size = UDim2.new(1, 0, 1, 0)
-OuterBackground.BackgroundTransparency = 0.0
-OuterBackground.BorderSizePixel = 0
-addUICorner(OuterBackground, 10)
-
 -- Scrolling Frame
 ScrollingFrame.Parent = OuterBackground
 ScrollingFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
