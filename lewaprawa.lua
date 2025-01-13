@@ -145,15 +145,11 @@ addUICorner(SpeedHackButton, 10)
 SpeedHackCheckbox.Parent = SpeedHackButton
 SpeedHackCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
 SpeedHackCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
-SpeedHackCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0.8) -- Make it square
+SpeedHackCheckbox.Size = UDim2.new(0.1, 0, 0.7, 0.8) -- Make it square
 SpeedHackCheckbox.Text = ""
 SpeedHackCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 SpeedHackCheckbox.BorderSizePixel = 2
 addUICorner(SpeedHackCheckbox, 10)
-local stroke = Instance.new("UIStroke") -- Tworzymy element UIStroke
-stroke.Parent = SpeedHackCheckbox -- Przypisujemy go do PhaseCheckbox
-stroke.Color = Color3.fromRGB(200, 50, 50) -- Ustawiamy kolor obramowania
-stroke.Thickness = 2 -- Ustawiamy grubość obramowania
 
 NoclipButton.Parent = ButtonsBackground
 NoclipButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
@@ -167,15 +163,11 @@ addUICorner(NoclipButton, 10)
 NoclipCheckbox.Parent = NoclipButton
 NoclipCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
 NoclipCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
-NoclipCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0.8) -- Make it square
+NoclipCheckbox.Size = UDim2.new(0.1, 0, 0.7, 0.8) -- Make it square
 NoclipCheckbox.Text = ""
 NoclipCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 NoclipCheckbox.BorderSizePixel = 2
 addUICorner(NoclipCheckbox, 10)
-local stroke = Instance.new("UIStroke") -- Tworzymy element UIStroke
-stroke.Parent = NoclipCheckbox -- Przypisujemy go do PhaseCheckbox
-stroke.Color = Color3.fromRGB(200, 50, 50) -- Ustawiamy kolor obramowania
-stroke.Thickness = 2 -- Ustawiamy grubość obramowania
 
 JumpModeButton.Parent = ButtonsBackground
 JumpModeButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
@@ -186,20 +178,15 @@ JumpModeButton.BorderColor3 = Color3.fromRGB(111, 106, 155)
 JumpModeButton.BorderSizePixel = 2
 addUICorner(JumpModeButton, 10)
 
-local JumpModeCheckbox = Instance.new("Frame") -- Upewnij się, że tworzysz odpowiedni element
 JumpModeCheckbox.Parent = JumpModeButton
 JumpModeCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
 JumpModeCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
-JumpModeCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0.8) -- Make it square
+JumpModeCheckbox.Size = UDim2.new(0.1, 0, 0.7, 0.8) -- Make it square
 JumpModeCheckbox.Text = ""
 JumpModeCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 JumpModeCheckbox.BorderSizePixel = 2
 addUICorner(JumpModeCheckbox, 10)
 
-local stroke = Instance.new("UIStroke") -- Tworzymy element UIStroke
-stroke.Parent = JumpModeCheckbox -- Przypisujemy go do JumpModeCheckbox
-stroke.Color = Color3.fromRGB(200, 50, 50) -- Ustawiamy kolor obramowania
-stroke.Thickness = 2 -- Ustawiamy grubość obramowania
 PhaseButton.Parent = ButtonsBackground
 PhaseButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 PhaseButton.Position = UDim2.new(0.05, 0, 0.35, 0) -- Adjusted position
@@ -212,15 +199,11 @@ addUICorner(PhaseButton, 10)
 PhaseCheckbox.Parent = PhaseButton
 PhaseCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
 PhaseCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
-PhaseCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0.8) -- Make it square
+PhaseCheckbox.Size = UDim2.new(0.1, 0, 0.7, 0.8) -- Make it square
 PhaseCheckbox.Text = ""
 PhaseCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 PhaseCheckbox.BorderSizePixel = 2
 addUICorner(PhaseCheckbox, 10)
-local stroke = Instance.new("UIStroke") -- Tworzymy element UIStroke
-stroke.Parent = PhaseCheckbox -- Przypisujemy go do PhaseCheckbox
-stroke.Color = Color3.fromRGB(200, 50, 50) -- Ustawiamy kolor obramowania
-stroke.Thickness = 2 -- Ustawiamy grubość obramowania
 
 addUICorner(Frame, 10)
 
