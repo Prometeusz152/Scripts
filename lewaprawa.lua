@@ -186,6 +186,7 @@ JumpModeButton.BorderColor3 = Color3.fromRGB(111, 106, 155)
 JumpModeButton.BorderSizePixel = 2
 addUICorner(JumpModeButton, 10)
 
+local JumpModeCheckbox = Instance.new("Frame") -- Upewnij się, że tworzysz odpowiedni element
 JumpModeCheckbox.Parent = JumpModeButton
 JumpModeCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
 JumpModeCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
@@ -194,11 +195,11 @@ JumpModeCheckbox.Text = ""
 JumpModeCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 JumpModeCheckbox.BorderSizePixel = 2
 addUICorner(JumpModeCheckbox, 10)
+
 local stroke = Instance.new("UIStroke") -- Tworzymy element UIStroke
-stroke.Parent = JumpModeCheckbox -- Przypisujemy go do PhaseCheckbox
+stroke.Parent = JumpModeCheckbox -- Przypisujemy go do JumpModeCheckbox
 stroke.Color = Color3.fromRGB(200, 50, 50) -- Ustawiamy kolor obramowania
 stroke.Thickness = 2 -- Ustawiamy grubość obramowania
-
 PhaseButton.Parent = ButtonsBackground
 PhaseButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 PhaseButton.Position = UDim2.new(0.05, 0, 0.35, 0) -- Adjusted position
