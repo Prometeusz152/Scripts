@@ -24,6 +24,7 @@ local LoadingFrame = Instance.new("Frame")
 local LoadingBackground = Instance.new("Frame")
 local LoadingBar = Instance.new("Frame")
 local ButtonsBackground = Instance.new("Frame")
+local OuterBackground = Instance.new("Frame") -- New outer background
 local ToggleButton = Instance.new("TextButton") -- New toggle button for sliding
 local isMenuVisible = true -- Track menu visibility
 
@@ -104,8 +105,16 @@ Frame.Draggable = true
 Frame.Visible = false
 Frame.BorderSizePixel = 0
 
+-- Outer Background
+OuterBackground.Parent = Frame
+OuterBackground.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+OuterBackground.Position = UDim2.new(0, 0, 0, 0)
+OuterBackground.Size = UDim2.new(1, 0, 1, 0)
+OuterBackground.BorderSizePixel = 0
+addUICorner(OuterBackground, 10)
+
 -- Scrolling Frame
-ScrollingFrame.Parent = Frame
+ScrollingFrame.Parent = OuterBackground
 ScrollingFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 ScrollingFrame.Position = UDim2.new(0, 0, 0, 0)
 ScrollingFrame.Size = UDim2.new(1, 0, 1, 0)
@@ -220,6 +229,7 @@ local function toggleMenu()
     isMenuVisible = not isMenuVisible
     local targetPosition = isMenuVisible and UDim2.new(0.05, 0, 0.05, 0) or UDim2.new(0.05, 0, -0.5, 0)
     local targetScrollSize = isMenuVisible and UDim2.new(1, 0, 1, 0) or UDim2.new(1, 0, 0, 0)
+    local targetOuterSize = isMenuVisible and UDim2.new(1, 0, 1, 0) or UDim2.new(1, 0, 0, 0)
     local tweenBackground = tweenService:Create(ButtonsBackground, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = targetPosition})
     local tweenScroll = tweenService:Create(ScrollingFrame, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = targetScrollSize})
     tweenBackground:Play()
