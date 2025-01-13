@@ -219,13 +219,14 @@ addUICorner(ToggleButton, 5)
 local function toggleMenu()
     isMenuVisible = not isMenuVisible
     local targetPosition = isMenuVisible and UDim2.new(0.05, 0, 0.05, 0) or UDim2.new(0.05, 0, -0.5, 0)
-    local tween = tweenService:Create(ButtonsBackground, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = targetPosition})
-    tween:Play()
+    local tweenBackground = tweenService:Create(ButtonsBackground, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = targetPosition})
+    local tweenScroll = tweenService:Create(ScrollingFrame, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {CanvasPosition = isMenuVisible and Vector2.new(0, 0) or Vector2.new(0, ScrollingFrame.CanvasSize.Y.Offset)})
+    tweenBackground:Play()
+    tweenScroll:Play()
     ToggleButton.Text = isMenuVisible and "▲" or "▼"
 end
 
 ToggleButton.MouseButton1Click:Connect(toggleMenu)
-
 local speedHackConnection
 local function toggleSpeedHack()
     getgenv().settings.speedhack = not getgenv().settings.speedhack
