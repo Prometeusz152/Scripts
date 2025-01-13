@@ -97,7 +97,7 @@ addUICorner(LoadingBar, 5)
 
 -- Main Frame
 Frame.Parent = ScreenGui
-Frame.BackgroundColor3 = Color3.fromRGB(38, 38, 38)
+Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 Frame.Position = UDim2.new(0.5, -300, 0.5, -100)
 Frame.Size = UDim2.new(0, 600, 0, 300)
 Frame.BackgroundTransparency = 0.0
@@ -117,7 +117,7 @@ addUICorner(OuterBackground, 10)
 
 -- Scrolling Frame
 ScrollingFrame.Parent = OuterBackground
-ScrollingFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+ScrollingFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 ScrollingFrame.Position = UDim2.new(0, 0, 0, 0)
 ScrollingFrame.Size = UDim2.new(1, 0, 1, 0)
 ScrollingFrame.CanvasSize = UDim2.new(0, 0, 1.5, 0)
