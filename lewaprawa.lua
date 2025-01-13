@@ -4,7 +4,7 @@ local runService = game:GetService("RunService")
 local userInputService = game:GetService("UserInputService")
 local tweenService = game:GetService("TweenService")
 
-getgenv().settings = {speedhack = false, noclip = false, jumpmode = false}
+getgenv().settings = {speedhack = false, noclip = false, jumpmode = false, phase = false}
 
 -- Create GUI
 local ScreenGui = Instance.new("ScreenGui")
@@ -13,9 +13,11 @@ local ScrollingFrame = Instance.new("ScrollingFrame")
 local SpeedHackButton = Instance.new("TextButton")
 local NoclipButton = Instance.new("TextButton")
 local JumpModeButton = Instance.new("TextButton")
+local PhaseButton = Instance.new("TextButton") -- New phase button
 local SpeedHackCheckbox = Instance.new("TextButton")
 local NoclipCheckbox = Instance.new("TextButton")
 local JumpModeCheckbox = Instance.new("TextButton")
+local PhaseCheckbox = Instance.new("TextButton") -- New phase checkbox
 local InfoLabel = Instance.new("TextLabel")
 local LoginFrame = Instance.new("Frame")
 local PasswordBox = Instance.new("TextBox")
@@ -183,6 +185,24 @@ JumpModeCheckbox.Text = ""
 JumpModeCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 JumpModeCheckbox.BorderSizePixel = 2
 addUICorner(JumpModeCheckbox, 10)
+
+PhaseButton.Parent = ButtonsBackground
+PhaseButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+PhaseButton.Position = UDim2.new(0.05, 0, 0.95, 0)
+PhaseButton.Size = UDim2.new(0.9, 0, 0.25, 0)
+PhaseButton.Text = "Toggle Phase"
+PhaseButton.BorderColor3 = Color3.fromRGB(111, 106, 155)
+PhaseButton.BorderSizePixel = 2
+addUICorner(PhaseButton, 10)
+
+PhaseCheckbox.Parent = PhaseButton
+PhaseCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
+PhaseCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
+PhaseCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0.8) -- Make it square
+PhaseCheckbox.Text = ""
+PhaseCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
+PhaseCheckbox.BorderSizePixel = 2
+addUICorner(PhaseCheckbox, 10)
 
 addUICorner(Frame, 10)
 
