@@ -120,7 +120,7 @@ ScrollingFrame.Parent = OuterBackground
 ScrollingFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 ScrollingFrame.Position = UDim2.new(0, 0, 0, 0)
 ScrollingFrame.Size = UDim2.new(1, 0, 1, 0)
-ScrollingFrame.CanvasSize = UDim2.new(0, 0, 1.5, 0)
+ScrollingFrame.CanvasSize = UDim2.new(0, 0, 2, 0) -- Adjusted to fit all buttons
 ScrollingFrame.ScrollBarThickness = 10
 ScrollingFrame.BorderSizePixel = 0
 ScrollingFrame.ClipsDescendants = true -- Ensure buttons are clipped within the scrolling frame
@@ -129,14 +129,14 @@ ScrollingFrame.ClipsDescendants = true -- Ensure buttons are clipped within the 
 ButtonsBackground.Parent = ScrollingFrame
 ButtonsBackground.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 ButtonsBackground.Position = UDim2.new(0.05, 0, 0.05, 0)
-ButtonsBackground.Size = UDim2.new(0.9, 0, 0.5, 0)
+ButtonsBackground.Size = UDim2.new(0.9, 0, 1.5, 0) -- Adjusted to fit all buttons
 ButtonsBackground.BorderSizePixel = 0
 addUICorner(ButtonsBackground, 10)
 
 SpeedHackButton.Parent = ButtonsBackground
 SpeedHackButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 SpeedHackButton.Position = UDim2.new(0.05, 0, 0.05, 0)
-SpeedHackButton.Size = UDim2.new(0.9, 0, 0.25, 0)
+SpeedHackButton.Size = UDim2.new(0.9, 0, 0.1, 0) -- Adjusted size
 SpeedHackButton.Text = "Toggle SpeedHack"
 SpeedHackButton.BorderColor3 = Color3.fromRGB(111, 106, 155)
 SpeedHackButton.BorderSizePixel = 2
@@ -153,8 +153,8 @@ addUICorner(SpeedHackCheckbox, 10)
 
 NoclipButton.Parent = ButtonsBackground
 NoclipButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-NoclipButton.Position = UDim2.new(0.05, 0, 0.35, 0)
-NoclipButton.Size = UDim2.new(0.9, 0, 0.25, 0)
+NoclipButton.Position = UDim2.new(0.05, 0, 0.2, 0) -- Adjusted position
+NoclipButton.Size = UDim2.new(0.9, 0, 0.1, 0) -- Adjusted size
 NoclipButton.Text = "Toggle Noclip"
 NoclipButton.BorderColor3 = Color3.fromRGB(111, 106, 155)
 NoclipButton.BorderSizePixel = 2
@@ -171,8 +171,8 @@ addUICorner(NoclipCheckbox, 10)
 
 JumpModeButton.Parent = ButtonsBackground
 JumpModeButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-JumpModeButton.Position = UDim2.new(0.05, 0, 0.65, 0)
-JumpModeButton.Size = UDim2.new(0.9, 0, 0.25, 0)
+JumpModeButton.Position = UDim2.new(0.05, 0, 0.35, 0) -- Adjusted position
+JumpModeButton.Size = UDim2.new(0.9, 0, 0.1, 0) -- Adjusted size
 JumpModeButton.Text = "Toggle JumpMode"
 JumpModeButton.BorderColor3 = Color3.fromRGB(111, 106, 155)
 JumpModeButton.BorderSizePixel = 2
@@ -189,8 +189,8 @@ addUICorner(JumpModeCheckbox, 10)
 
 PhaseButton.Parent = ButtonsBackground
 PhaseButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-PhaseButton.Position = UDim2.new(0.05, 0, 0.95, 0)
-PhaseButton.Size = UDim2.new(0.9, 0, 0.25, 0)
+PhaseButton.Position = UDim2.new(0.05, 0, 0.5, 0) -- Adjusted position
+PhaseButton.Size = UDim2.new(0.9, 0, 0.1, 0) -- Adjusted size
 PhaseButton.Text = "Toggle Phase"
 PhaseButton.BorderColor3 = Color3.fromRGB(111, 106, 155)
 PhaseButton.BorderSizePixel = 2
@@ -205,7 +205,39 @@ PhaseCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 PhaseCheckbox.BorderSizePixel = 2
 addUICorner(PhaseCheckbox, 10)
 
--- Toggle Button for sliding menu
+addUICorner(Frame, 10)
+
+InfoLabel.Parent = Frame
+InfoLabel.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
+InfoLabel.BorderSizePixel = 0
+InfoLabel.Position = UDim2.new(0, 0, 0, -50)
+InfoLabel.Size = UDim2.new(1, 0, 0, 50)
+InfoLabel.Text = "ethereal. 0.3\n" .. plr.Name
+InfoLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+InfoLabel.TextSize = 14
+InfoLabel.TextWrapped = true
+InfoLabel.TextXAlignment = Enum.TextXAlignment.Left
+InfoLabel.TextYAlignment = Enum.TextYAlignment.Center
+InfoLabel.Font = Enum.Font.GothamBold
+InfoLabel.TextStrokeTransparency = 1
+InfoLabel.Visible = false
+
+-- Add padding to InfoLabel
+local padding = Instance.new("UIPadding")
+padding.Parent = InfoLabel
+padding.PaddingLeft = UDim.new(0, 40)
+
+-- Add Avatar Image
+local AvatarImage = Instance.new("ImageLabel")
+AvatarImage.Parent = Frame
+AvatarImage.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+AvatarImage.BorderSizePixel = 0
+AvatarImage.Position = UDim2.new(0, 5, 0, -40)
+AvatarImage.Size = UDim2.new(0, 30, 0, 30)
+AvatarImage.Image = "rbxthumb://type=AvatarHeadShot&id=" .. plr.UserId .. "&w=420&h=420"
+addUICorner(AvatarImage, 10)
+AvatarImage.Visible = false
+
 ToggleButton.Parent = InfoLabel
 ToggleButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 ToggleButton.Position = UDim2.new(1, -40, 0, 10) -- Position at the top right corner
