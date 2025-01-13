@@ -249,6 +249,8 @@ end
 
 -- Noclip (Fly Mode)
 local noclipConnection
+local flyUpConnection
+local flyDownConnection
 local function toggleNoclip()
     getgenv().settings.noclip = not getgenv().settings.noclip
     if getgenv().settings.noclip then
@@ -270,11 +272,31 @@ local function toggleNoclip()
             bodyVelocity.Velocity = moveDirection * 50
             bodyGyro.CFrame = workspace.CurrentCamera.CFrame
         end)
+
+        flyUpConnection = userInputService.InputBegan:Connect(function(input)
+            if input.KeyCode == Enum.KeyCode.E then
+                bodyVelocity.Velocity = bodyVelocity.Velocity + Vector3.new(0, 50, 0)
+            end
+        end)
+
+        flyDownConnection = userInputService.InputBegan:Connect(function(input)
+            if input.KeyCode == Enum.KeyCode.Q then
+                bodyVelocity.Velocity = bodyVelocity.Velocity + Vector3.new(0, -50, 0)
+            end
+        end)
     else
         NoclipCheckbox.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
         if noclipConnection then
             noclipConnection:Disconnect()
             noclipConnection = nil
+        end
+        if flyUpConnection then
+            flyUpConnection:Disconnect()
+            flyUpConnection = nil
+        end
+        if flyDownConnection then
+            flyDownConnection:Disconnect()
+            flyDownConnection = nil
         end
         if plr.Character then
             local humanoid = plr.Character:FindFirstChildOfClass("Humanoid")
@@ -290,6 +312,7 @@ local function toggleNoclip()
         end
     end
 end
+
 -- JumpMode
 local jumpModeConnection
 local function toggleJumpMode()
