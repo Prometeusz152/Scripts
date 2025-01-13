@@ -107,16 +107,8 @@ Frame.Draggable = true
 Frame.Visible = false
 Frame.BorderSizePixel = 0
 
--- Outer Background
-OuterBackground.Parent = Frame
-OuterBackground.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-OuterBackground.Position = UDim2.new(0, 0, 0, 0)
-OuterBackground.Size = UDim2.new(1, 0, 1, 0)
-OuterBackground.BorderSizePixel = 0
-addUICorner(OuterBackground, 10)
-
 -- Scrolling Frame
-ScrollingFrame.Parent = OuterBackground
+ScrollingFrame.Parent = Frame
 ScrollingFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 ScrollingFrame.Position = UDim2.new(0, 0, 0, 0)
 ScrollingFrame.Size = UDim2.new(1, 0, 1, 0)
@@ -136,7 +128,7 @@ addUICorner(ButtonsBackground, 10)
 SpeedHackButton.Parent = ButtonsBackground
 SpeedHackButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 SpeedHackButton.Position = UDim2.new(0.05, 0, 0.05, 0)
-SpeedHackButton.Size = UDim2.new(0.9, 0, 0.1, 0) -- Adjusted size
+SpeedHackButton.Size = UDim2.new(0.9, 0, 0.05, 0) -- Adjusted size
 SpeedHackButton.Text = "Toggle SpeedHack"
 SpeedHackButton.BorderColor3 = Color3.fromRGB(111, 106, 155)
 SpeedHackButton.BorderSizePixel = 2
@@ -145,7 +137,7 @@ addUICorner(SpeedHackButton, 10)
 SpeedHackCheckbox.Parent = SpeedHackButton
 SpeedHackCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
 SpeedHackCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
-SpeedHackCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0.8) -- Make it square
+SpeedHackCheckbox.Size = UDim2.new(0.1, 0, 0.4, 0.8) -- Make it square
 SpeedHackCheckbox.Text = ""
 SpeedHackCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 SpeedHackCheckbox.BorderSizePixel = 2
@@ -153,8 +145,8 @@ addUICorner(SpeedHackCheckbox, 10)
 
 NoclipButton.Parent = ButtonsBackground
 NoclipButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-NoclipButton.Position = UDim2.new(0.05, 0, 0.2, 0) -- Adjusted position
-NoclipButton.Size = UDim2.new(0.9, 0, 0.1, 0) -- Adjusted size
+NoclipButton.Position = UDim2.new(0.05, 0, 0.15, 0) -- Adjusted position
+NoclipButton.Size = UDim2.new(0.9, 0, 0.05, 0) -- Adjusted size
 NoclipButton.Text = "Toggle Noclip"
 NoclipButton.BorderColor3 = Color3.fromRGB(111, 106, 155)
 NoclipButton.BorderSizePixel = 2
@@ -163,7 +155,7 @@ addUICorner(NoclipButton, 10)
 NoclipCheckbox.Parent = NoclipButton
 NoclipCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
 NoclipCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
-NoclipCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0.8) -- Make it square
+NoclipCheckbox.Size = UDim2.new(0.1, 0, 0.4, 0.8) -- Make it square
 NoclipCheckbox.Text = ""
 NoclipCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 NoclipCheckbox.BorderSizePixel = 2
@@ -171,8 +163,8 @@ addUICorner(NoclipCheckbox, 10)
 
 JumpModeButton.Parent = ButtonsBackground
 JumpModeButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-JumpModeButton.Position = UDim2.new(0.05, 0, 0.35, 0) -- Adjusted position
-JumpModeButton.Size = UDim2.new(0.9, 0, 0.1, 0) -- Adjusted size
+JumpModeButton.Position = UDim2.new(0.05, 0, 0.25, 0) -- Adjusted position
+JumpModeButton.Size = UDim2.new(0.9, 0, 0.05, 0) -- Adjusted size
 JumpModeButton.Text = "Toggle JumpMode"
 JumpModeButton.BorderColor3 = Color3.fromRGB(111, 106, 155)
 JumpModeButton.BorderSizePixel = 2
@@ -181,7 +173,7 @@ addUICorner(JumpModeButton, 10)
 JumpModeCheckbox.Parent = JumpModeButton
 JumpModeCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
 JumpModeCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
-JumpModeCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0.8) -- Make it square
+JumpModeCheckbox.Size = UDim2.new(0.1, 0, 0.4, 0.8) -- Make it square
 JumpModeCheckbox.Text = ""
 JumpModeCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 JumpModeCheckbox.BorderSizePixel = 2
@@ -189,8 +181,8 @@ addUICorner(JumpModeCheckbox, 10)
 
 PhaseButton.Parent = ButtonsBackground
 PhaseButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-PhaseButton.Position = UDim2.new(0.05, 0, 0.5, 0) -- Adjusted position
-PhaseButton.Size = UDim2.new(0.9, 0, 0.1, 0) -- Adjusted size
+PhaseButton.Position = UDim2.new(0.05, 0, 0.35, 0) -- Adjusted position
+PhaseButton.Size = UDim2.new(0.9, 0, 0.05, 0) -- Adjusted size
 PhaseButton.Text = "Toggle Phase"
 PhaseButton.BorderColor3 = Color3.fromRGB(111, 106, 155)
 PhaseButton.BorderSizePixel = 2
@@ -199,7 +191,7 @@ addUICorner(PhaseButton, 10)
 PhaseCheckbox.Parent = PhaseButton
 PhaseCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
 PhaseCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
-PhaseCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0.8) -- Make it square
+PhaseCheckbox.Size = UDim2.new(0.1, 0, 0.4, 0.8) -- Make it square
 PhaseCheckbox.Text = ""
 PhaseCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 PhaseCheckbox.BorderSizePixel = 2
