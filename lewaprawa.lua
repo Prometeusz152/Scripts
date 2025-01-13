@@ -133,7 +133,7 @@ addUICorner(SpeedHackButton, 10)
 SpeedHackCheckbox.Parent = SpeedHackButton
 SpeedHackCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
 SpeedHackCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
-SpeedHackCheckbox.Size = UDim2.new(0.1, 0, 0.1, 0.1) -- Make it square
+SpeedHackCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0.8) -- Make it square
 SpeedHackCheckbox.Text = ""
 SpeedHackCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 SpeedHackCheckbox.BorderSizePixel = 2
@@ -151,7 +151,7 @@ addUICorner(NoclipButton, 10)
 NoclipCheckbox.Parent = NoclipButton
 NoclipCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
 NoclipCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
-NoclipCheckbox.Size = UDim2.new(0.1, 0, 0.1, 0.1) -- Make it square
+NoclipCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0.8) -- Make it square
 NoclipCheckbox.Text = ""
 NoclipCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 NoclipCheckbox.BorderSizePixel = 2
@@ -169,7 +169,7 @@ addUICorner(JumpModeButton, 10)
 JumpModeCheckbox.Parent = JumpModeButton
 JumpModeCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
 JumpModeCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
-JumpModeCheckbox.Size = UDim2.new(0.1, 0, 0.1, 0.1) -- Make it square
+JumpModeCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0.8) -- Make it square
 JumpModeCheckbox.Text = ""
 JumpModeCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 JumpModeCheckbox.BorderSizePixel = 2
@@ -182,7 +182,7 @@ InfoLabel.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
 InfoLabel.BorderSizePixel = 0
 InfoLabel.Position = UDim2.new(0, 0, 0, -50)
 InfoLabel.Size = UDim2.new(1, 0, 0, 50)
-InfoLabel.Text = "ethereal. 0.4\n" .. plr.Name
+InfoLabel.Text = "ethereal. 0.3\n" .. plr.Name
 InfoLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 InfoLabel.TextSize = 14
 InfoLabel.TextWrapped = true
@@ -247,26 +247,46 @@ local function toggleSpeedHack()
     end
 end
 
--- Noclip
+-- Noclip (Fly Mode)
 local noclipConnection
 local function toggleNoclip()
     getgenv().settings.noclip = not getgenv().settings.noclip
     if getgenv().settings.noclip then
         NoclipCheckbox.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
-        noclipConnection = runService.Stepped:Connect(function()
-            if plr.Character then
-                for _, child in pairs(plr.Character:GetDescendants()) do
-                    if child:IsA("BasePart") and child.CanCollide == true then
-                        child.CanCollide = false
-                    end
-                end
+        local bodyGyro = Instance.new("BodyGyro")
+        local bodyVelocity = Instance.new("BodyVelocity")
+        bodyGyro.P = 9e4
+        bodyGyro.Parent = plr.Character.HumanoidRootPart
+        bodyVelocity.Parent = plr.Character.HumanoidRootPart
+        bodyVelocity.Velocity = Vector3.new(0, 0, 0)
+        bodyVelocity.MaxForce = Vector3.new(9e9, 9e9, 9e9)
+        
+        noclipConnection = runService.RenderStepped:Connect(function()
+            local humanoid = plr.Character:FindFirstChildOfClass("Humanoid")
+            if humanoid then
+                humanoid.PlatformStand = true
             end
+            local moveDirection = plr.Character.Humanoid.MoveDirection
+            bodyVelocity.Velocity = moveDirection * 50
+            bodyGyro.CFrame = workspace.CurrentCamera.CFrame
         end)
     else
         NoclipCheckbox.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
         if noclipConnection then
             noclipConnection:Disconnect()
             noclipConnection = nil
+        end
+        if plr.Character then
+            local humanoid = plr.Character:FindFirstChildOfClass("Humanoid")
+            if humanoid then
+                humanoid.PlatformStand = false
+            end
+            if plr.Character.HumanoidRootPart:FindFirstChild("BodyGyro") then
+                plr.Character.HumanoidRootPart.BodyGyro:Destroy()
+            end
+            if plr.Character.HumanoidRootPart:FindFirstChild("BodyVelocity") then
+                plr.Character.HumanoidRootPart.BodyVelocity:Destroy()
+            end
         end
     end
 end
