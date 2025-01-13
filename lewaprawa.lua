@@ -50,7 +50,7 @@ PasswordBox.Parent = LoginFrame
 PasswordBox.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
 PasswordBox.Position = UDim2.new(0.1, 0, 0.2, 0)
 PasswordBox.Size = UDim2.new(0.8, 0, 0.3, 0)
-PasswordBox.PlaceholderText = "Wprowadź hasło"
+PasswordBox.PlaceholderText = "Enter Password"
 PasswordBox.Text = ""
 PasswordBox.TextSize = 13 
 PasswordBox.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -274,13 +274,13 @@ local function toggleNoclip()
         end)
 
         flyUpConnection = userInputService.InputBegan:Connect(function(input)
-            if input.KeyCode == Enum.KeyCode.E then
+            if input.KeyCode == Enum.KeyCode.Space then
                 bodyVelocity.Velocity = bodyVelocity.Velocity + Vector3.new(0, 50, 0)
             end
         end)
 
         flyDownConnection = userInputService.InputBegan:Connect(function(input)
-            if input.KeyCode == Enum.KeyCode.Q then
+            if input.KeyCode == Enum.KeyCode.LeftShift then
                 bodyVelocity.Velocity = bodyVelocity.Velocity + Vector3.new(0, -50, 0)
             end
         end)
