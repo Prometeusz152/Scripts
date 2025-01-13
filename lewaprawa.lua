@@ -50,7 +50,7 @@ PasswordBox.Parent = LoginFrame
 PasswordBox.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
 PasswordBox.Position = UDim2.new(0.1, 0, 0.2, 0)
 PasswordBox.Size = UDim2.new(0.8, 0, 0.3, 0)
-PasswordBox.PlaceholderText = "Enter Password2"
+PasswordBox.PlaceholderText = "Enter Password"
 PasswordBox.Text = ""
 PasswordBox.TextSize = 13 
 PasswordBox.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -219,8 +219,9 @@ addUICorner(ToggleButton, 5)
 local function toggleMenu()
     isMenuVisible = not isMenuVisible
     local targetPosition = isMenuVisible and UDim2.new(0.05, 0, 0.05, 0) or UDim2.new(0.05, 0, -0.5, 0)
+    local targetScrollSize = isMenuVisible and UDim2.new(1, 0, 1, 0) or UDim2.new(1, 0, 0, 0)
     local tweenBackground = tweenService:Create(ButtonsBackground, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = targetPosition})
-    local tweenScroll = tweenService:Create(ScrollingFrame, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {CanvasPosition = isMenuVisible and Vector2.new(0, 0) or Vector2.new(0, ScrollingFrame.CanvasSize.Y.Offset)})
+    local tweenScroll = tweenService:Create(ScrollingFrame, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = targetScrollSize})
     tweenBackground:Play()
     tweenScroll:Play()
     ToggleButton.Text = isMenuVisible and "▲" or "▼"
