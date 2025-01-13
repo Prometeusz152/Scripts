@@ -50,7 +50,7 @@ PasswordBox.Parent = LoginFrame
 PasswordBox.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
 PasswordBox.Position = UDim2.new(0.1, 0, 0.2, 0)
 PasswordBox.Size = UDim2.new(0.8, 0, 0.3, 0)
-PasswordBox.PlaceholderText = "Enter Password"
+PasswordBox.PlaceholderText = "Wprowadz hasło"
 PasswordBox.Text = ""
 PasswordBox.TextSize = 13 
 PasswordBox.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -218,10 +218,11 @@ addUICorner(ToggleButton, 5)
 
 local function toggleMenu()
     isMenuVisible = not isMenuVisible
-    local targetPosition = isMenuVisible and UDim2.new(0.05, 0, 0.05, 0) or UDim2.new(0.05, 0, -0.5, 0)
+    local targetPosition = isMenuVisible and UDim2.new(0.05, 0, 0.05, 0) or UDim2.new(0.05, 0, 0.05, -ButtonsBackground.Size.Y.Offset)
     local tween = tweenService:Create(ButtonsBackground, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = targetPosition})
     tween:Play()
     ToggleButton.Text = isMenuVisible and "▲" or "▼"
+    ButtonsBackground.Visible = isMenuVisible
 end
 
 ToggleButton.MouseButton1Click:Connect(toggleMenu)
