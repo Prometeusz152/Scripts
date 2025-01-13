@@ -53,7 +53,7 @@ PasswordBox.Size = UDim2.new(0.8, 0, 0.3, 0)
 PasswordBox.PlaceholderText = "Enter Password"
 PasswordBox.Text = ""
 PasswordBox.TextSize = 13 
-PasswordBox.TextColor3 = Color3.fromRGB(255, 255, 255) -- Change text color to white
+PasswordBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 PasswordBox.TextXAlignment = Enum.TextXAlignment.Left
 addUICorner(PasswordBox, 10)
 
@@ -133,7 +133,7 @@ addUICorner(SpeedHackButton, 10)
 SpeedHackCheckbox.Parent = SpeedHackButton
 SpeedHackCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
 SpeedHackCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
-SpeedHackCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0.8) -- Make it square
+SpeedHackCheckbox.Size = UDim2.new(0.1, 0, 0.1, 0.1) -- Make it square
 SpeedHackCheckbox.Text = ""
 SpeedHackCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 SpeedHackCheckbox.BorderSizePixel = 2
@@ -151,7 +151,7 @@ addUICorner(NoclipButton, 10)
 NoclipCheckbox.Parent = NoclipButton
 NoclipCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
 NoclipCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
-NoclipCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0.8) -- Make it square
+NoclipCheckbox.Size = UDim2.new(0.1, 0, 0.1, 0.1) -- Make it square
 NoclipCheckbox.Text = ""
 NoclipCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 NoclipCheckbox.BorderSizePixel = 2
@@ -169,7 +169,7 @@ addUICorner(JumpModeButton, 10)
 JumpModeCheckbox.Parent = JumpModeButton
 JumpModeCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
 JumpModeCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
-JumpModeCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0.8) -- Make it square
+JumpModeCheckbox.Size = UDim2.new(0.1, 0, 0.1, 0.1) -- Make it square
 JumpModeCheckbox.Text = ""
 JumpModeCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 JumpModeCheckbox.BorderSizePixel = 2
@@ -211,16 +211,17 @@ AvatarImage.Visible = false
 -- Toggle Button for sliding menu
 ToggleButton.Parent = InfoLabel
 ToggleButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-ToggleButton.Position = UDim2.new(1, -40, 0.5, -15) -- Position at the top right corner
+ToggleButton.Position = UDim2.new(1, -40, 0, 10) -- Position at the top right corner
 ToggleButton.Size = UDim2.new(0, 30, 0, 30)
-ToggleButton.Text = "▶" -- Arrow icon
+ToggleButton.Text = "▲" -- Arrow icon
 addUICorner(ToggleButton, 5)
 
 local function toggleMenu()
     isMenuVisible = not isMenuVisible
-    local targetPosition = isMenuVisible and UDim2.new(0.05, 0, 0.05, 0) or UDim2.new(0.05, 0, 0.05, -ButtonsBackground.Size.Y.Offset)
+    local targetPosition = isMenuVisible and UDim2.new(0.05, 0, 0.05, 0) or UDim2.new(0.05, 0, -0.5, 0)
     local tween = tweenService:Create(ButtonsBackground, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = targetPosition})
     tween:Play()
+    ToggleButton.Text = isMenuVisible and "▲" or "▼"
 end
 
 ToggleButton.MouseButton1Click:Connect(toggleMenu)
