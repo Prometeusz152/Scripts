@@ -111,6 +111,7 @@ OuterBackground.Parent = Frame
 OuterBackground.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 OuterBackground.Position = UDim2.new(0, 0, 0, 0)
 OuterBackground.Size = UDim2.new(1, 0, 1, 0)
+OuterBackground.BackgroundTransparency = 0.0
 OuterBackground.BorderSizePixel = 0
 addUICorner(OuterBackground, 10)
 
