@@ -100,6 +100,7 @@ Frame.Parent = ScreenGui
 Frame.BackgroundColor3 = Color3.fromRGB(38, 38, 38)
 Frame.Position = UDim2.new(0.5, -300, 0.5, -100)
 Frame.Size = UDim2.new(0, 600, 0, 300)
+Frame.BackgroundTransparency = 0
 Frame.Active = true
 Frame.Draggable = true
 Frame.Visible = false
