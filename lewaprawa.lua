@@ -107,8 +107,16 @@ Frame.Draggable = true
 Frame.Visible = false
 Frame.BorderSizePixel = 0
 
+-- Outer Background
+OuterBackground.Parent = Frame
+OuterBackground.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+OuterBackground.Position = UDim2.new(0, 0, 0, 0)
+OuterBackground.Size = UDim2.new(1, 0, 1, 0)
+OuterBackground.BorderSizePixel = 0
+addUICorner(OuterBackground, 10)
+
 -- Scrolling Frame
-ScrollingFrame.Parent = Frame
+ScrollingFrame.Parent = OuterBackground
 ScrollingFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 ScrollingFrame.Position = UDim2.new(0, 0, 0, 0)
 ScrollingFrame.Size = UDim2.new(1, 0, 1, 0)
@@ -116,7 +124,6 @@ ScrollingFrame.CanvasSize = UDim2.new(0, 0, 2, 0) -- Adjusted to fit all buttons
 ScrollingFrame.ScrollBarThickness = 10
 ScrollingFrame.BorderSizePixel = 0
 ScrollingFrame.ClipsDescendants = true -- Ensure buttons are clipped within the scrolling frame
-ScrollingFrame.BackgroundTransparency = 0.0 -- 50% przezroczystości
 
 -- Add background under buttons
 ButtonsBackground.Parent = ScrollingFrame
@@ -138,7 +145,7 @@ addUICorner(SpeedHackButton, 10)
 SpeedHackCheckbox.Parent = SpeedHackButton
 SpeedHackCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
 SpeedHackCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
-SpeedHackCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0.8) -- Make it square
+SpeedHackCheckbox.Size = UDim2.new(0.1, 0, 0.4, 0.8) -- Make it square
 SpeedHackCheckbox.Text = ""
 SpeedHackCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 SpeedHackCheckbox.BorderSizePixel = 2
@@ -156,7 +163,7 @@ addUICorner(NoclipButton, 10)
 NoclipCheckbox.Parent = NoclipButton
 NoclipCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
 NoclipCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
-NoclipCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0.8) -- Make it square
+NoclipCheckbox.Size = UDim2.new(0.1, 0, 0.4, 0.8) -- Make it square
 NoclipCheckbox.Text = ""
 NoclipCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 NoclipCheckbox.BorderSizePixel = 2
@@ -174,7 +181,7 @@ addUICorner(JumpModeButton, 10)
 JumpModeCheckbox.Parent = JumpModeButton
 JumpModeCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
 JumpModeCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
-JumpModeCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0.8) -- Make it square
+JumpModeCheckbox.Size = UDim2.new(0.1, 0, 0.4, 0.8) -- Make it square
 JumpModeCheckbox.Text = ""
 JumpModeCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 JumpModeCheckbox.BorderSizePixel = 2
@@ -192,7 +199,7 @@ addUICorner(PhaseButton, 10)
 PhaseCheckbox.Parent = PhaseButton
 PhaseCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
 PhaseCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
-PhaseCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0.8) -- Make it square
+PhaseCheckbox.Size = UDim2.new(0.1, 0, 0.4, 0.8) -- Make it square
 PhaseCheckbox.Text = ""
 PhaseCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 PhaseCheckbox.BorderSizePixel = 2
@@ -368,6 +375,19 @@ end
 local function togglePhase()
     getgenv().settings.phase = not getgenv().settings.phase
     PhaseCheckbox.BackgroundColor3 = getgenv().settings.phase and Color3.fromRGB(111, 106, 155) or Color3.fromRGB(80, 80, 80)
+    
+    if getgenv().settings.phase then
+        -- Increase damage
+        plr.Character.HumanoidRootPart.Touched:Connect(function(hit)
+            if hit.Parent:FindFirstChildOfClass("Humanoid") then
+                local humanoid = hit.Parent:FindFirstChildOfClass("Humanoid")
+                humanoid:TakeDamage(50) -- Increase damage value as needed
+            end
+        end)
+    else
+        -- Reset damage to normal
+        -- Note: This part is optional and depends on how you want to handle disabling the phase mode
+    end
 end
 
 PhaseCheckbox.MouseButton1Click:Connect(togglePhase)
