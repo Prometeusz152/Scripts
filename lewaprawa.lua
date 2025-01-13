@@ -24,6 +24,8 @@ local LoadingFrame = Instance.new("Frame")
 local LoadingBackground = Instance.new("Frame")
 local LoadingBar = Instance.new("Frame")
 local ButtonsBackground = Instance.new("Frame")
+local ToggleButton = Instance.new("TextButton") -- New toggle button for sliding
+local isMenuVisible = false -- Track menu visibility
 
 ScreenGui.Parent = game.CoreGui
 
@@ -52,12 +54,12 @@ PasswordBox.PlaceholderText = "Enter Password"
 PasswordBox.Text = ""
 PasswordBox.TextSize = 13 
 PasswordBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-PasswordBox.TextXAlignment = Enum.TextXAlignment.Left -- Align text to the left
+PasswordBox.TextXAlignment = Enum.TextXAlignment.Left
 addUICorner(PasswordBox, 10)
 
 local UIPadding = Instance.new("UIPadding")
 UIPadding.Parent = PasswordBox
-UIPadding.PaddingLeft = UDim.new(0, 10) -- Przesunięcie o 10 pikseli w prawo
+UIPadding.PaddingLeft = UDim.new(0, 10)
 
 LoginButton.Parent = LoginFrame
 LoginButton.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
@@ -65,10 +67,10 @@ LoginButton.Position = UDim2.new(0.1, 0, 0.6, 0)
 LoginButton.Size = UDim2.new(0.8, 0, 0.3, 0)
 LoginButton.Text = "Zaloguj się"
 LoginButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-LoginButton.TextSize = 14 -- Set the text size to a smaller value
-LoginButton.TextWrapped = true -- Ensure text wraps if necessary
-LoginButton.TextXAlignment = Enum.TextXAlignment.Center -- Align text to the center horizontally
-LoginButton.TextYAlignment = Enum.TextYAlignment.Center -- Align text to the center vertically
+LoginButton.TextSize = 14
+LoginButton.TextWrapped = true
+LoginButton.TextXAlignment = Enum.TextXAlignment.Center
+LoginButton.TextYAlignment = Enum.TextYAlignment.Center
 addUICorner(LoginButton, 10)
 
 -- Loading Frame
@@ -95,122 +97,139 @@ addUICorner(LoadingBar, 5)
 -- Main Frame
 Frame.Parent = ScreenGui
 Frame.BackgroundColor3 = Color3.fromRGB(38, 38, 38)
-Frame.Position = UDim2.new(0.5, -300, 0.5, -100) -- Adjust position to center the larger frame
-Frame.Size = UDim2.new(0, 600, 0, 300) -- Increase width of the frame
+Frame.Position = UDim2.new(0.5, -300, 0.5, -100)
+Frame.Size = UDim2.new(0, 600, 0, 300)
 Frame.Active = true
 Frame.Draggable = true
-Frame.Visible = false -- Hide main frame initially
-Frame.BorderSizePixel = 0 -- Remove border
+Frame.Visible = false
+Frame.BorderSizePixel = 0
 
 -- Scrolling Frame
 ScrollingFrame.Parent = Frame
 ScrollingFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 ScrollingFrame.Position = UDim2.new(0, 0, 0, 0)
 ScrollingFrame.Size = UDim2.new(1, 0, 1, 0)
-ScrollingFrame.CanvasSize = UDim2.new(0, 0, 1.5, 0) -- Adjust canvas size to allow scrolling
+ScrollingFrame.CanvasSize = UDim2.new(0, 0, 1.5, 0)
 ScrollingFrame.ScrollBarThickness = 10
-ScrollingFrame.BorderSizePixel = 0 -- Remove border
+ScrollingFrame.BorderSizePixel = 0
 
 -- Add background under buttons
 ButtonsBackground.Parent = Frame
-ButtonsBackground.BackgroundColor3 = Color3.fromRGB(30, 30, 30) -- Darker color for background
+ButtonsBackground.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 ButtonsBackground.Position = UDim2.new(0.05, 0, 0.05, 0)
-ButtonsBackground.Size = UDim2.new(0.9, 0, 0.5, 0) -- Adjust size to fit all buttons
-ButtonsBackground.BorderSizePixel = 0 -- Remove border
+ButtonsBackground.Size = UDim2.new(0.9, 0, 0.5, 0)
+ButtonsBackground.BorderSizePixel = 0
 addUICorner(ButtonsBackground, 10)
 
 SpeedHackButton.Parent = ButtonsBackground
 SpeedHackButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-SpeedHackButton.Position = UDim2.new(0.05, 0, 0.05, 0) -- Move button slightly to the left
-SpeedHackButton.Size = UDim2.new(0.9, 0, 0.25, 0) -- Adjust width and height of the button
+SpeedHackButton.Position = UDim2.new(0.05, 0, 0.05, 0)
+SpeedHackButton.Size = UDim2.new(0.9, 0, 0.25, 0)
 SpeedHackButton.Text = "Toggle SpeedHack"
-SpeedHackButton.BorderColor3 = Color3.fromRGB(111, 106, 155) -- Add border color
-SpeedHackButton.BorderSizePixel = 2 -- Add border size
+SpeedHackButton.BorderColor3 = Color3.fromRGB(111, 106, 155)
+SpeedHackButton.BorderSizePixel = 2
 addUICorner(SpeedHackButton, 10)
 
 SpeedHackCheckbox.Parent = SpeedHackButton
-SpeedHackCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44) -- Darker color for checkbox
+SpeedHackCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
 SpeedHackCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
-SpeedHackCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0) -- Make checkbox square
+SpeedHackCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0)
 SpeedHackCheckbox.Text = ""
-SpeedHackCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155) -- Add border color to checkbox
-SpeedHackCheckbox.BorderSizePixel = 2 -- Add border size to checkbox
+SpeedHackCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
+SpeedHackCheckbox.BorderSizePixel = 2
 addUICorner(SpeedHackCheckbox, 10)
 
 NoclipButton.Parent = ButtonsBackground
 NoclipButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-NoclipButton.Position = UDim2.new(0.05, 0, 0.35, 0) -- Move button slightly to the left
-NoclipButton.Size = UDim2.new(0.9, 0, 0.25, 0) -- Adjust width and height of the button
+NoclipButton.Position = UDim2.new(0.05, 0, 0.35, 0)
+NoclipButton.Size = UDim2.new(0.9, 0, 0.25, 0)
 NoclipButton.Text = "Toggle Noclip"
-NoclipButton.BorderColor3 = Color3.fromRGB(111, 106, 155) -- Add border color
-NoclipButton.BorderSizePixel = 2 -- Add border size
+NoclipButton.BorderColor3 = Color3.fromRGB(111, 106, 155)
+NoclipButton.BorderSizePixel = 2
 addUICorner(NoclipButton, 10)
 
 NoclipCheckbox.Parent = NoclipButton
-NoclipCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44) -- Darker color for checkbox
+NoclipCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
 NoclipCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
-NoclipCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0) -- Make checkbox square
+NoclipCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0)
 NoclipCheckbox.Text = ""
-NoclipCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155) -- Add border color to checkbox
-NoclipCheckbox.BorderSizePixel = 2 -- Add border size to checkbox
+NoclipCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
+NoclipCheckbox.BorderSizePixel = 2
 addUICorner(NoclipCheckbox, 10)
 
 JumpModeButton.Parent = ButtonsBackground
 JumpModeButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-JumpModeButton.Position = UDim2.new(0.05, 0, 0.65, 0) -- Move button slightly to the left
-JumpModeButton.Size = UDim2.new(0.9, 0, 0.25, 0) -- Adjust width and height of the button
+JumpModeButton.Position = UDim2.new(0.05, 0, 0.65, 0)
+JumpModeButton.Size = UDim2.new(0.9, 0, 0.25, 0)
 JumpModeButton.Text = "Toggle JumpMode"
-JumpModeButton.BorderColor3 = Color3.fromRGB(111, 106, 155) -- Add border color
-JumpModeButton.BorderSizePixel = 2 -- Add border size
+JumpModeButton.BorderColor3 = Color3.fromRGB(111, 106, 155)
+JumpModeButton.BorderSizePixel = 2
 addUICorner(JumpModeButton, 10)
 
 JumpModeCheckbox.Parent = JumpModeButton
-JumpModeCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44) -- Darker color for checkbox
+JumpModeCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
 JumpModeCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
-JumpModeCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0) -- Make checkbox square
+JumpModeCheckbox.Size = UDim2.new(0.1, 0, 0.8, 0)
 JumpModeCheckbox.Text = ""
-JumpModeCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155) -- Add border color to checkbox
-JumpModeCheckbox.BorderSizePixel = 2 -- Add border size to checkbox
+JumpModeCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
+JumpModeCheckbox.BorderSizePixel = 2
 addUICorner(JumpModeCheckbox, 10)
 
 addUICorner(Frame, 10)
 
 InfoLabel.Parent = Frame
 InfoLabel.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
-InfoLabel.BorderSizePixel = 0 -- Remove the border
-InfoLabel.Position = UDim2.new(0, 0, 0, -50) -- Adjust position to be aligned with the frame
-InfoLabel.Size = UDim2.new(1, 0, 0, 50) -- Adjust size to be slightly larger in height
-InfoLabel.Text = "ethereal. 0.3\n" .. plr.Name -- Display "ethereal. 0.1" and player name
+InfoLabel.BorderSizePixel = 0
+InfoLabel.Position = UDim2.new(0, 0, 0, -50)
+InfoLabel.Size = UDim2.new(1, 0, 0, 50)
+InfoLabel.Text = "ethereal. 0.3\n" .. plr.Name
 InfoLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-InfoLabel.TextSize = 14 -- Set the text size to a smaller value
-InfoLabel.TextWrapped = true -- Wrap text to fit within the label
-InfoLabel.TextXAlignment = Enum.TextXAlignment.Left -- Align text to the left
-InfoLabel.TextYAlignment = Enum.TextYAlignment.Center -- Align text to the center vertically
-InfoLabel.Font = Enum.Font.GothamBold -- Change font to GothamBold
-InfoLabel.TextStrokeTransparency = 1 -- Remove text stroke
-InfoLabel.Visible = false -- Hide InfoLabel initially
+InfoLabel.TextSize = 14
+InfoLabel.TextWrapped = true
+InfoLabel.TextXAlignment = Enum.TextXAlignment.Left
+InfoLabel.TextYAlignment = Enum.TextYAlignment.Center
+InfoLabel.Font = Enum.Font.GothamBold
+InfoLabel.TextStrokeTransparency = 1
+InfoLabel.Visible = false
 
 -- Add padding to InfoLabel
 local padding = Instance.new("UIPadding")
 padding.Parent = InfoLabel
-padding.PaddingLeft = UDim.new(0, 40) -- Adjust the value to move the text to the right
+padding.PaddingLeft = UDim.new(0, 40)
 
 -- Add Avatar Image
 local AvatarImage = Instance.new("ImageLabel")
 AvatarImage.Parent = Frame
 AvatarImage.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 AvatarImage.BorderSizePixel = 0
-AvatarImage.Position = UDim2.new(0, 5, 0, -40) -- Position to the left of the text
-AvatarImage.Size = UDim2.new(0, 30, 0, 30) -- Adjust size as needed
-AvatarImage.Image = "rbxthumb://type=AvatarHeadShot&id=" .. plr.UserId .. "&w=420&h=420" -- Load player's avatar
-addUICorner(AvatarImage, 10) -- Add rounded corners to the avatar image
-AvatarImage.Visible = false -- Hide AvatarImage initially
+AvatarImage.Position = UDim2.new(0, 5, 0, -40)
+AvatarImage.Size = UDim2.new(0, 30, 0, 30)
+AvatarImage.Image = "rbxthumb://type=AvatarHeadShot&id=" .. plr.UserId .. "&w=420&h=420"
+addUICorner(AvatarImage, 10)
+AvatarImage.Visible = false
+
+-- Toggle Button for sliding menu
+ToggleButton.Parent = Frame
+ToggleButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+ToggleButton.Position = UDim2.new(1, -40, 0, 10) -- Position at the top right corner
+ToggleButton.Size = UDim2.new(0, 30, 0, 30)
+ToggleButton.Text = "▶" -- Arrow icon
+addUICorner(ToggleButton, 5)
+
+local function toggleMenu()
+    isMenuVisible = not isMenuVisible
+    local targetPosition = isMenuVisible and UDim2.new(0.5, -300, 0.5, -100) or UDim2.new(0.5, -600, 0.5, -100)
+    local tween = tweenService:Create(Frame, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = targetPosition})
+    tween:Play()
+end
+
+ToggleButton.MouseButton1Click:Connect(toggleMenu)
 
 local speedHackConnection
 local function toggleSpeedHack()
     getgenv().settings.speedhack = not getgenv().settings.speedhack
     if getgenv().settings.speedhack then
-        SpeedHackCheckbox.BackgroundColor3 = Color3.fromRGB(111, 106, 155) -- Purple color when active
+        SpeedHackCheckbox.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
         speedHackConnection = runService.Heartbeat:Connect(function(delta)
             if getgenv().settings.speedhack and plr.Character and plr.Character:FindFirstChild("Humanoid") then
                 if plr.Character.Humanoid.MoveDirection.Magnitude > 0 then
@@ -219,7 +238,7 @@ local function toggleSpeedHack()
             end
         end)
     else
-        SpeedHackCheckbox.BackgroundColor3 = Color3.fromRGB(80, 80, 80) -- Default color when inactive
+        SpeedHackCheckbox.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
         if speedHackConnection then
             speedHackConnection:Disconnect()
             speedHackConnection = nil
@@ -232,7 +251,7 @@ local noclipConnection
 local function toggleNoclip()
     getgenv().settings.noclip = not getgenv().settings.noclip
     if getgenv().settings.noclip then
-        NoclipCheckbox.BackgroundColor3 = Color3.fromRGB(111, 106, 155) -- Purple color when active
+        NoclipCheckbox.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
         noclipConnection = runService.Stepped:Connect(function()
             if plr.Character then
                 for _, child in pairs(plr.Character:GetDescendants()) do
@@ -243,7 +262,7 @@ local function toggleNoclip()
             end
         end)
     else
-        NoclipCheckbox.BackgroundColor3 = Color3.fromRGB(80, 80, 80) -- Default color when inactive
+        NoclipCheckbox.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
         if noclipConnection then
             noclipConnection:Disconnect()
             noclipConnection = nil
@@ -256,7 +275,7 @@ local jumpModeConnection
 local function toggleJumpMode()
     getgenv().settings.jumpmode = not getgenv().settings.jumpmode
     if getgenv().settings.jumpmode then
-        JumpModeCheckbox.BackgroundColor3 = Color3.fromRGB(111, 106, 155) -- Purple color when active
+        JumpModeCheckbox.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
         jumpModeConnection = userInputService.InputBegan:Connect(function(input)
             if input.KeyCode == Enum.KeyCode.Space then
                 while getgenv().settings.jumpmode and userInputService:IsKeyDown(Enum.KeyCode.Space) do
@@ -268,7 +287,7 @@ local function toggleJumpMode()
             end
         end)
     else
-        JumpModeCheckbox.BackgroundColor3 = Color3.fromRGB(80, 80, 80) -- Default color when inactive
+        JumpModeCheckbox.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
         if jumpModeConnection then
             jumpModeConnection:Disconnect()
             jumpModeConnection = nil
@@ -307,12 +326,12 @@ LoginButton.MouseButton1Click:Connect(function()
 
         animateLoadingBar()
 
-        wait(5) -- Simulate loading time
+        wait(5)
 
         LoadingFrame.Visible = false
         Frame.Visible = true
-        InfoLabel.Visible = true -- Show InfoLabel after login
-        AvatarImage.Visible = true -- Show AvatarImage after login
+        InfoLabel.Visible = true
+        AvatarImage.Visible = true
     else
         PasswordBox.Text = ""
         PasswordBox.PlaceholderText = "Incorrect Password or Username"
