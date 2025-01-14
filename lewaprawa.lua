@@ -573,6 +573,13 @@ end
 
 local firstGameConnection
 
+local function isColorClose(color1, color2, tolerance)
+    tolerance = tolerance or 40
+    return math.abs(color1.R - color2.R) <= tolerance and
+           math.abs(color1.G - color2.G) <= tolerance and
+           math.abs(color1.B - color2.B) <= tolerance
+end
+
 local function toggleFirstGame()
     getgenv().settings.firstGame = not getgenv().settings.firstGame
     if getgenv().settings.firstGame then
@@ -580,11 +587,13 @@ local function toggleFirstGame()
         firstGameConnection = runService.RenderStepped:Connect(function()
             local textLabel = workspace:FindFirstChild("GameStatusLabel") -- Zmień na właściwą nazwę napisu
             if textLabel and textLabel:IsA("TextLabel") then
-                if textLabel.TextColor3 == Color3.fromRGB(0, 255, 0) then -- Zielony napis
+                local greenLightColor = Color3.fromRGB(0, 255, 0)
+                local redLightColor = Color3.fromRGB(255, 0, 0)
+                if isColorClose(textLabel.TextColor3, greenLightColor) then -- Zielony napis
                     if plr.Character and plr.Character:FindFirstChild("Humanoid") then
                         plr.Character.Humanoid:Move(Vector3.new(0, 0, -1), true) -- Idź do przodu
                     end
-                elseif textLabel.TextColor3 == Color3.fromRGB(255, 0, 0) then -- Czerwony napis
+                elseif isColorClose(textLabel.TextColor3, redLightColor) then -- Czerwony napis
                     if plr.Character and plr.Character:FindFirstChild("Humanoid") then
                         plr.Character.Humanoid:Move(Vector3.new(0, 0, 0), true) -- Zatrzymaj się
                     end
