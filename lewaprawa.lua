@@ -53,7 +53,7 @@ PasswordBox.Parent = LoginFrame
 PasswordBox.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
 PasswordBox.Position = UDim2.new(0.1, 0, 0.2, 0)
 PasswordBox.Size = UDim2.new(0.8, 0, 0.3, 0)
-PasswordBox.PlaceholderText = "Enter Password2"
+PasswordBox.PlaceholderText = "Enter Password"
 PasswordBox.Text = ""
 PasswordBox.TextSize = 13 
 PasswordBox.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -314,10 +314,6 @@ local function toggleNoclip()
                 moveDirection = moveDirection + workspace.CurrentCamera.CFrame.LookVector
             elseif input.KeyCode == Enum.KeyCode.S then
                 moveDirection = moveDirection - workspace.CurrentCamera.CFrame.LookVector
-            elseif input.KeyCode == Enum.KeyCode.A then
-                moveDirection = moveDirection - workspace.CurrentCamera.CFrame.RightVector
-            elseif input.KeyCode == Enum.KeyCode.D then
-                moveDirection = moveDirection + workspace.CurrentCamera.CFrame.RightVector
             elseif input.KeyCode == Enum.KeyCode.Space then
                 moveDirection = moveDirection + Vector3.new(0, 1, 0)
             elseif input.KeyCode == Enum.KeyCode.LeftShift then
@@ -330,10 +326,6 @@ local function toggleNoclip()
                 moveDirection = moveDirection - workspace.CurrentCamera.CFrame.LookVector
             elseif input.KeyCode == Enum.KeyCode.S then
                 moveDirection = moveDirection + workspace.CurrentCamera.CFrame.LookVector
-            elseif input.KeyCode == Enum.KeyCode.A then
-                moveDirection = moveDirection + workspace.CurrentCamera.CFrame.RightVector
-            elseif input.KeyCode == Enum.KeyCode.D then
-                moveDirection = moveDirection - workspace.CurrentCamera.CFrame.RightVector
             elseif input.KeyCode == Enum.KeyCode.Space then
                 moveDirection = moveDirection - Vector3.new(0, 1, 0)
             elseif input.KeyCode == Enum.KeyCode.LeftShift then
