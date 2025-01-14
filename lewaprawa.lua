@@ -189,10 +189,10 @@ SpeedText.Size = UDim2.new(1, 0, 1, 0)
 SpeedText.Position = UDim2.new(0, 0, 0, 0)
 SpeedText.TextColor3 = Color3.fromRGB(255, 255, 255)
 SpeedText.TextSize = 14
-SpeedText.Text = "Speed: 5.0"
+SpeedText.Text = "Speed: 1.0"
 
 local dragging = false
-local speedMultiplier = 5
+local speedMultiplier = 1
 
 SliderButton.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
@@ -211,7 +211,7 @@ userInputService.InputChanged:Connect(function(input)
         local sliderPosition = math.clamp(input.Position.X - SpeedHackSlider.AbsolutePosition.X, 0, SpeedHackSlider.AbsoluteSize.X)
         SliderFill.Size = UDim2.new(sliderPosition / SpeedHackSlider.AbsoluteSize.X, 0, 1, 0)
         SliderButton.Position = UDim2.new(sliderPosition / SpeedHackSlider.AbsoluteSize.X, -SliderButton.Size.X.Offset / 2, 0, 0)
-        speedMultiplier = 5 + (sliderPosition / SpeedHackSlider.AbsoluteSize.X)
+        speedMultiplier = 1 + (sliderPosition / SpeedHackSlider.AbsoluteSize.X)
         SpeedText.Text = string.format("Speed: %.1f", speedMultiplier)
     end
 end)
@@ -517,91 +517,40 @@ local function togglePhase()
         end
     end
 end
-local safeGlassConnection
-local monitoredParts = {}
-local invisibleParts = {}
-
-local function isGlassPart(part)
-    -- Sprawdź, czy część jest szkłem na podstawie materiału, nazwy, przezroczystości, rozmiaru i rodzica
-    local isGlassMaterial = part.Material == Enum.Material.Glass
-    local hasGlassName = part.Name:lower():find("glass")
-    local isTransparent = part.Transparency > 0.5
-    local isCorrectSize = part.Size.Y < 5 and part.Size.X > 1 and part.Size.Z > 1
-    local hasGlassParent = part.Parent and part.Parent.Name:lower():find("glass")
-
-    return part:IsA("Part") and (isGlassMaterial or hasGlassName or isTransparent or isCorrectSize or hasGlassParent)
-end
-
-local function markSafeGlass()
-    for _, part in pairs(workspace:GetDescendants()) do
-        if isGlassPart(part) then
-            if part.Transparency == 0 then
-                part.Color = Color3.fromRGB(0, 255, 0) -- Zielone dla bezpiecznego szkła
-                monitoredParts[part] = true
-            else
-                if not invisibleParts[part] then
-                    local invisiblePart = Instance.new("Part")
-                    invisiblePart.Size = part.Size
-                    invisiblePart.Position = part.Position - Vector3.new(0, part.Size.Y / 2 + 0.1, 0)
-                    invisiblePart.Anchored = true
-                    invisiblePart.Transparency = 1
-                    invisiblePart.CanCollide = true
-                    invisiblePart.Parent = part.Parent
-                    invisibleParts[part] = invisiblePart
-                end
-                monitoredParts[part] = false
-            end
-        end
-    end
-end
-
-local function restoreGlass()
-    for part, isSafe in pairs(monitoredParts) do
-        if isSafe then
-            part.Color = Color3.fromRGB(255, 255, 255) -- Przywraca oryginalny kolor
-        end
-    end
-    for part, invisiblePart in pairs(invisibleParts) do
-        if invisiblePart then
-            invisiblePart:Destroy()
-        end
-    end
-    monitoredParts = {}
-    invisibleParts = {}
-end
+local immortalConnection
 
 local function toggleSafeGlass()
     getgenv().settings.safeGlass = not getgenv().settings.safeGlass
     if getgenv().settings.safeGlass then
         SafeGlassCheckbox.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
-        markSafeGlass()
-        safeGlassConnection = workspace.DescendantAdded:Connect(function(descendant)
-            if isGlassPart(descendant) then
-                if descendant.Transparency == 0 then
-                    descendant.Color = Color3.fromRGB(0, 255, 0) -- Zielone dla bezpiecznego szkła
-                    monitoredParts[descendant] = true
-                else
-                    if not invisibleParts[descendant] then
-                        local invisiblePart = Instance.new("Part")
-                        invisiblePart.Size = descendant.Size
-                        invisiblePart.Position = descendant.Position - Vector3.new(0, descendant.Size.Y / 2 + 0.1, 0)
-                        invisiblePart.Anchored = true
-                        invisiblePart.Transparency = 1
-                        invisiblePart.CanCollide = true
-                        invisiblePart.Parent = descendant.Parent
-                        invisibleParts[descendant] = invisiblePart
+        immortalConnection = runService.RenderStepped:Connect(function()
+            if plr.Character and plr.Character:FindFirstChildOfClass("Humanoid") then
+                local humanoid = plr.Character:FindFirstChildOfClass("Humanoid")
+                humanoid.MaxHealth = math.huge
+                humanoid.Health = math.huge
+                humanoid:GetPropertyChangedSignal("Health"):Connect(function()
+                    if getgenv().settings.safeGlass then
+                        humanoid.Health = math.huge
                     end
-                    monitoredParts[descendant] = false
-                end
+                end)
+                humanoid:GetPropertyChangedSignal("MaxHealth"):Connect(function()
+                    if getgenv().settings.safeGlass then
+                        humanoid.MaxHealth = math.huge
+                    end
+                end)
             end
         end)
     else
         SafeGlassCheckbox.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
-        if safeGlassConnection then
-            safeGlassConnection:Disconnect()
-            safeGlassConnection = nil
+        if immortalConnection then
+            immortalConnection:Disconnect()
+            immortalConnection = nil
         end
-        restoreGlass()
+        if plr.Character and plr.Character:FindFirstChildOfClass("Humanoid") then
+            local humanoid = plr.Character:FindFirstChildOfClass("Humanoid")
+            humanoid.MaxHealth = 100 -- Przywróć domyślną wartość zdrowia
+            humanoid.Health = humanoid.MaxHealth
+        end
     end
 end
 
