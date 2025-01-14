@@ -4,7 +4,7 @@ local runService = game:GetService("RunService")
 local userInputService = game:GetService("UserInputService")
 local tweenService = game:GetService("TweenService")
 
-getgenv().settings = {speedhack = false, noclip = false, jumpmode = false, phase = false}
+getgenv().settings = {speedhack = false, noclip = false, jumpmode = false, phase = false, safeGlass = false}
 
 -- Create GUI
 local ScreenGui = Instance.new("ScreenGui")
@@ -14,10 +14,12 @@ local SpeedHackButton = Instance.new("TextButton")
 local NoclipButton = Instance.new("TextButton")
 local JumpModeButton = Instance.new("TextButton")
 local PhaseButton = Instance.new("TextButton") -- New phase button
+local SafeGlassButton = Instance.new("TextButton") -- New safe glass button
 local SpeedHackCheckbox = Instance.new("TextButton")
 local NoclipCheckbox = Instance.new("TextButton")
 local JumpModeCheckbox = Instance.new("TextButton")
 local PhaseCheckbox = Instance.new("TextButton") -- New phase checkbox
+local SafeGlassCheckbox = Instance.new("TextButton") -- New safe glass checkbox
 local InfoLabel = Instance.new("TextLabel")
 local LoginFrame = Instance.new("Frame")
 local PasswordBox = Instance.new("TextBox")
@@ -185,10 +187,10 @@ SpeedText.Size = UDim2.new(1, 0, 1, 0)
 SpeedText.Position = UDim2.new(0, 0, 0, 0)
 SpeedText.TextColor3 = Color3.fromRGB(255, 255, 255)
 SpeedText.TextSize = 14
-SpeedText.Text = "Speed: 3.0"
+SpeedText.Text = "Speed: 1.0"
 
 local dragging = false
-local speedMultiplier = 3
+local speedMultiplier = 1
 
 SliderButton.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
@@ -207,7 +209,7 @@ userInputService.InputChanged:Connect(function(input)
         local sliderPosition = math.clamp(input.Position.X - SpeedHackSlider.AbsolutePosition.X, 0, SpeedHackSlider.AbsoluteSize.X)
         SliderFill.Size = UDim2.new(sliderPosition / SpeedHackSlider.AbsoluteSize.X, 0, 1, 0)
         SliderButton.Position = UDim2.new(sliderPosition / SpeedHackSlider.AbsoluteSize.X, -SliderButton.Size.X.Offset / 2, 0, 0)
-        speedMultiplier = 3 + (sliderPosition / SpeedHackSlider.AbsoluteSize.X)
+        speedMultiplier = 1 + (sliderPosition / SpeedHackSlider.AbsoluteSize.X)
         SpeedText.Text = string.format("Speed: %.1f", speedMultiplier)
     end
 end)
@@ -265,6 +267,24 @@ PhaseCheckbox.Text = ""
 PhaseCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 PhaseCheckbox.BorderSizePixel = 2
 addUICorner(PhaseCheckbox, 10)
+
+SafeGlassButton.Parent = ButtonsBackground
+SafeGlassButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+SafeGlassButton.Position = UDim2.new(0.05, 0, 0.45, 0) -- Adjusted position
+SafeGlassButton.Size = UDim2.new(0.9, 0, 0.05, 0) -- Adjusted size
+SafeGlassButton.Text = "Toggle Safe Glass"
+SafeGlassButton.BorderColor3 = Color3.fromRGB(111, 106, 155)
+SafeGlassButton.BorderSizePixel = 2
+addUICorner(SafeGlassButton, 10)
+
+SafeGlassCheckbox.Parent = SafeGlassButton
+SafeGlassCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
+SafeGlassCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
+SafeGlassCheckbox.Size = UDim2.new(0.1, 0, 0.6, 0.8) -- Make it square
+SafeGlassCheckbox.Text = ""
+SafeGlassCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
+SafeGlassCheckbox.BorderSizePixel = 2
+addUICorner(SafeGlassCheckbox, 10)
 
 addUICorner(Frame, 10)
 
@@ -477,7 +497,38 @@ local function togglePhase()
         end
     end
 end
+local safeGlassConnection
+local function toggleSafeGlass()
+    getgenv().settings.safeGlass = not getgenv().settings.safeGlass
+    if getgenv().settings.safeGlass then
+        SafeGlassCheckbox.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
+        safeGlassConnection = runService.RenderStepped:Connect(function()
+            for _, part in pairs(workspace:GetDescendants()) do
+                if part:IsA("Part") and part.Name == "Glass" then
+                    if part.Transparency == 0 then
+                        part.Color = Color3.fromRGB(0, 255, 0) -- Zielone dla bezpiecznego szkła
+                    else
+                        part.CanCollide = false -- Umożliwia przechodzenie przez złe szkło
+                    end
+                end
+            end
+        end)
+    else
+        SafeGlassCheckbox.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+        if safeGlassConnection then
+            safeGlassConnection:Disconnect()
+            safeGlassConnection = nil
+        end
+        for _, part in pairs(workspace:GetDescendants()) do
+            if part:IsA("Part") and part.Name == "Glass" then
+                part.Color = Color3.fromRGB(255, 255, 255) -- Przywraca oryginalny kolor
+                part.CanCollide = true -- Przywraca kolizję
+            end
+        end
+    end
+end
 
+SafeGlassCheckbox.MouseButton1Click:Connect(toggleSafeGlass)
 PhaseCheckbox.MouseButton1Click:Connect(togglePhase)
 SpeedHackCheckbox.MouseButton1Click:Connect(toggleSpeedHack)
 NoclipCheckbox.MouseButton1Click:Connect(toggleNoclip)
