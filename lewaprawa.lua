@@ -284,8 +284,10 @@ end
 
 -- Noclip (Fly Mode)
 local noclipConnection
-local flyUpConnection
-local flyDownConnection
+local inputBeganConnection
+local inputEndedConnection
+local moveDirection = Vector3.new(0, 0, 0)
+
 local function toggleNoclip()
     getgenv().settings.noclip = not getgenv().settings.noclip
     if getgenv().settings.noclip then
@@ -303,21 +305,39 @@ local function toggleNoclip()
             if humanoid then
                 humanoid.PlatformStand = true
             end
-            local moveDirection = plr.Character.Humanoid.MoveDirection
-            local cameraDirection = workspace.CurrentCamera.CFrame.LookVector
-            bodyVelocity.Velocity = (moveDirection + cameraDirection) * 50
+            bodyVelocity.Velocity = moveDirection * 50
             bodyGyro.CFrame = workspace.CurrentCamera.CFrame
         end)
 
-        flyUpConnection = userInputService.InputBegan:Connect(function(input)
-            if input.KeyCode == Enum.KeyCode.Space then
-                bodyVelocity.Velocity = bodyVelocity.Velocity + Vector3.new(0, 50, 0)
+        inputBeganConnection = userInputService.InputBegan:Connect(function(input)
+            if input.KeyCode == Enum.KeyCode.W then
+                moveDirection = moveDirection + workspace.CurrentCamera.CFrame.LookVector
+            elseif input.KeyCode == Enum.KeyCode.S then
+                moveDirection = moveDirection - workspace.CurrentCamera.CFrame.LookVector
+            elseif input.KeyCode == Enum.KeyCode.A then
+                moveDirection = moveDirection - workspace.CurrentCamera.CFrame.RightVector
+            elseif input.KeyCode == Enum.KeyCode.D then
+                moveDirection = moveDirection + workspace.CurrentCamera.CFrame.RightVector
+            elseif input.KeyCode == Enum.KeyCode.Space then
+                moveDirection = moveDirection + Vector3.new(0, 1, 0)
+            elseif input.KeyCode == Enum.KeyCode.LeftShift then
+                moveDirection = moveDirection - Vector3.new(0, 1, 0)
             end
         end)
 
-        flyDownConnection = userInputService.InputBegan:Connect(function(input)
-            if input.KeyCode == Enum.KeyCode.LeftShift then
-                bodyVelocity.Velocity = bodyVelocity.Velocity + Vector3.new(0, -50, 0)
+        inputEndedConnection = userInputService.InputEnded:Connect(function(input)
+            if input.KeyCode == Enum.KeyCode.W then
+                moveDirection = moveDirection - workspace.CurrentCamera.CFrame.LookVector
+            elseif input.KeyCode == Enum.KeyCode.S then
+                moveDirection = moveDirection + workspace.CurrentCamera.CFrame.LookVector
+            elseif input.KeyCode == Enum.KeyCode.A then
+                moveDirection = moveDirection + workspace.CurrentCamera.CFrame.RightVector
+            elseif input.KeyCode == Enum.KeyCode.D then
+                moveDirection = moveDirection - workspace.CurrentCamera.CFrame.RightVector
+            elseif input.KeyCode == Enum.KeyCode.Space then
+                moveDirection = moveDirection - Vector3.new(0, 1, 0)
+            elseif input.KeyCode == Enum.KeyCode.LeftShift then
+                moveDirection = moveDirection + Vector3.new(0, 1, 0)
             end
         end)
     else
@@ -326,13 +346,13 @@ local function toggleNoclip()
             noclipConnection:Disconnect()
             noclipConnection = nil
         end
-        if flyUpConnection then
-            flyUpConnection:Disconnect()
-            flyUpConnection = nil
+        if inputBeganConnection then
+            inputBeganConnection:Disconnect()
+            inputBeganConnection = nil
         end
-        if flyDownConnection then
-            flyDownConnection:Disconnect()
-            flyDownConnection = nil
+        if inputEndedConnection then
+            inputEndedConnection:Disconnect()
+            inputEndedConnection = nil
         end
         if plr.Character then
             local humanoid = plr.Character:FindFirstChildOfClass("Humanoid")
