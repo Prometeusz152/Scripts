@@ -20,6 +20,8 @@ local NoclipCheckbox = Instance.new("TextButton")
 local JumpModeCheckbox = Instance.new("TextButton")
 local PhaseCheckbox = Instance.new("TextButton") -- New phase checkbox
 local SafeGlassCheckbox = Instance.new("TextButton") -- New safe glass checkbox
+local FirstGameButton = Instance.new("TextButton")
+local FirstGameCheckbox = Instance.new("TextButton")
 local InfoLabel = Instance.new("TextLabel")
 local LoginFrame = Instance.new("Frame")
 local PasswordBox = Instance.new("TextBox")
@@ -187,10 +189,10 @@ SpeedText.Size = UDim2.new(1, 0, 1, 0)
 SpeedText.Position = UDim2.new(0, 0, 0, 0)
 SpeedText.TextColor3 = Color3.fromRGB(255, 255, 255)
 SpeedText.TextSize = 14
-SpeedText.Text = "Speed: 5.0"
+SpeedText.Text = "Speed: 1.0"
 
 local dragging = false
-local speedMultiplier = 5
+local speedMultiplier = 1
 
 SliderButton.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
@@ -209,7 +211,7 @@ userInputService.InputChanged:Connect(function(input)
         local sliderPosition = math.clamp(input.Position.X - SpeedHackSlider.AbsolutePosition.X, 0, SpeedHackSlider.AbsoluteSize.X)
         SliderFill.Size = UDim2.new(sliderPosition / SpeedHackSlider.AbsoluteSize.X, 0, 1, 0)
         SliderButton.Position = UDim2.new(sliderPosition / SpeedHackSlider.AbsoluteSize.X, -SliderButton.Size.X.Offset / 2, 0, 0)
-        speedMultiplier = 5 + (sliderPosition / SpeedHackSlider.AbsoluteSize.X)
+        speedMultiplier = 1 + (sliderPosition / SpeedHackSlider.AbsoluteSize.X)
         SpeedText.Text = string.format("Speed: %.1f", speedMultiplier)
     end
 end)
@@ -285,6 +287,24 @@ SafeGlassCheckbox.Text = ""
 SafeGlassCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 SafeGlassCheckbox.BorderSizePixel = 2
 addUICorner(SafeGlassCheckbox, 10)
+
+FirstGameButton.Parent = ButtonsBackground
+FirstGameButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+FirstGameButton.Position = UDim2.new(0.05, 0, 0.55, 0) -- Adjusted position
+FirstGameButton.Size = UDim2.new(0.9, 0, 0.05, 0) -- Adjusted size
+FirstGameButton.Text = "Toggle First Game"
+FirstGameButton.BorderColor3 = Color3.fromRGB(111, 106, 155)
+FirstGameButton.BorderSizePixel = 2
+addUICorner(FirstGameButton, 10)
+
+FirstGameCheckbox.Parent = FirstGameButton
+FirstGameCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
+FirstGameCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
+FirstGameCheckbox.Size = UDim2.new(0.1, 0, 0.6, 0.8) -- Make it square
+FirstGameCheckbox.Text = ""
+FirstGameCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
+FirstGameCheckbox.BorderSizePixel = 2
+addUICorner(FirstGameCheckbox, 10)
 
 addUICorner(Frame, 10)
 
@@ -550,6 +570,38 @@ local function toggleSafeGlass()
         restoreGlass()
     end
 end
+
+local firstGameConnection
+
+local function toggleFirstGame()
+    getgenv().settings.firstGame = not getgenv().settings.firstGame
+    if getgenv().settings.firstGame then
+        FirstGameCheckbox.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
+        firstGameConnection = runService.RenderStepped:Connect(function()
+            local textLabel = workspace:FindFirstChild("GameStatusLabel") -- Zmień na właściwą nazwę napisu
+            if textLabel and textLabel:IsA("TextLabel") then
+                local text = textLabel.Text:lower()
+                if text:find("Green Light") then -- Zielony napis
+                    if plr.Character and plr.Character:FindFirstChild("Humanoid") then
+                        plr.Character.Humanoid:Move(Vector3.new(0, 0, -1), true) -- Idź do przodu
+                    end
+                elseif text:find("Red Light") then -- Czerwony napis
+                    if plr.Character and plr.Character:FindFirstChild("Humanoid") then
+                        plr.Character.Humanoid:Move(Vector3.new(0, 0, 0), true) -- Zatrzymaj się
+                    end
+                end
+            end
+        end)
+    else
+        FirstGameCheckbox.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+        if firstGameConnection then
+            firstGameConnection:Disconnect()
+            firstGameConnection = nil
+        end
+    end
+end
+
+FirstGameCheckbox.MouseButton1Click:Connect(toggleFirstGame)
 
 SafeGlassCheckbox.MouseButton1Click:Connect(toggleSafeGlass)
 PhaseCheckbox.MouseButton1Click:Connect(togglePhase)
