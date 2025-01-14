@@ -517,12 +517,38 @@ local function togglePhase()
         end
     end
 end
+
+local function isWeakGlass(part)
+    return part.Material == Enum.Material.Glass and part.Anchored == false
+end
+
+local function highlightGlass(glassPart, isGood)
+    if isGood then
+        glassPart.Color = Color3.fromRGB(0, 255, 0) -- Zielony
+        glassPart.Material = Enum.Material.Neon
+    else
+        glassPart.Color = Color3.fromRGB(255, 0, 0) -- Czerwony
+        glassPart.Material = Enum.Material.Neon
+    end
+end
+
+local function detectAndHighlightGlass()
+    for _, part in pairs(workspace:GetDescendants()) do
+        if part:IsA("Part") and part.Material == Enum.Material.Glass then
+            local isGood = not isWeakGlass(part)
+            highlightGlass(part, isGood)
+        end
+    end
+end
+
 local immortalConnection
+local glassDetectionConnection
 
 local function toggleSafeGlass()
     getgenv().settings.safeGlass = not getgenv().settings.safeGlass
     if getgenv().settings.safeGlass then
         SafeGlassCheckbox.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
+        
         immortalConnection = runService.RenderStepped:Connect(function()
             if plr.Character and plr.Character:FindFirstChildOfClass("Humanoid") then
                 local humanoid = plr.Character:FindFirstChildOfClass("Humanoid")
@@ -540,11 +566,18 @@ local function toggleSafeGlass()
                 end)
             end
         end)
+
+        glassDetectionConnection = runService.RenderStepped:Connect(detectAndHighlightGlass)
+
     else
         SafeGlassCheckbox.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
         if immortalConnection then
             immortalConnection:Disconnect()
             immortalConnection = nil
+        end
+        if glassDetectionConnection then
+            glassDetectionConnection:Disconnect()
+            glassDetectionConnection = nil
         end
         if plr.Character and plr.Character:FindFirstChildOfClass("Humanoid") then
             local humanoid = plr.Character:FindFirstChildOfClass("Humanoid")
@@ -553,6 +586,7 @@ local function toggleSafeGlass()
         end
     end
 end
+
 
 local firstGameConnection
 
