@@ -504,7 +504,7 @@ local function toggleSafeGlass()
         SafeGlassCheckbox.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
         safeGlassConnection = runService.RenderStepped:Connect(function()
             for _, part in pairs(workspace:GetDescendants()) do
-                if part:IsA("Part") and part.Name == "Glass" then
+                if part:IsA("Part") and part.Material == Enum.Material.Glass then
                     if part.Transparency == 0 then
                         part.Color = Color3.fromRGB(0, 255, 0) -- Zielone dla bezpiecznego szkła
                     else
@@ -520,7 +520,7 @@ local function toggleSafeGlass()
             safeGlassConnection = nil
         end
         for _, part in pairs(workspace:GetDescendants()) do
-            if part:IsA("Part") and part.Name == "Glass" then
+            if part:IsA("Part") and part.Material == Enum.Material.Glass then
                 part.Color = Color3.fromRGB(255, 255, 255) -- Przywraca oryginalny kolor
                 part.CanCollide = true -- Przywraca kolizję
             end
