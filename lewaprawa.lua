@@ -151,12 +151,11 @@ SpeedHackCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
 SpeedHackCheckbox.BorderSizePixel = 2
 addUICorner(SpeedHackCheckbox, 10)
 
--- SpeedHack Slider
 local SpeedHackSlider = Instance.new("Frame")
 SpeedHackSlider.Parent = ButtonsBackground
 SpeedHackSlider.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 SpeedHackSlider.Position = UDim2.new(0.05, 0, 0.11, 0) -- Adjusted position
-SpeedHackSlider.Size = UDim2.new(0.8, 0, 0.03, 0) -- Adjusted size
+SpeedHackSlider.Size = UDim2.new(0.9, 0, 0.03, 0) -- Adjusted size
 SpeedHackSlider.BorderColor3 = Color3.fromRGB(200, 200, 200)
 SpeedHackSlider.BorderSizePixel = 2
 addUICorner(SpeedHackSlider, 10)
@@ -343,6 +342,7 @@ local function toggleSpeedHack()
         end
     end
 end
+
 -- Noclip (Fly Mode)
 local noclipConnection
 local inputBeganConnection
