@@ -287,6 +287,7 @@ local noclipConnection
 local inputBeganConnection
 local inputEndedConnection
 local moveDirection = Vector3.new(0, 0, 0)
+local activeKeys = {}
 
 local function toggleNoclip()
     getgenv().settings.noclip = not getgenv().settings.noclip
@@ -310,28 +311,30 @@ local function toggleNoclip()
         end)
 
         inputBeganConnection = userInputService.InputBegan:Connect(function(input)
-            if input.KeyCode == Enum.KeyCode.W then
-                moveDirection = moveDirection + workspace.CurrentCamera.CFrame.LookVector
-            elseif input.KeyCode == Enum.KeyCode.S then
-                moveDirection = moveDirection - workspace.CurrentCamera.CFrame.LookVector
-            elseif input.KeyCode == Enum.KeyCode.Space then
-                moveDirection = moveDirection + Vector3.new(0, 1, 0)
-            elseif input.KeyCode == Enum.KeyCode.LeftShift then
-                moveDirection = moveDirection - Vector3.new(0, 1, 0)
-            end
+            activeKeys[input.KeyCode] = true
+            updateMoveDirection()
         end)
 
         inputEndedConnection = userInputService.InputEnded:Connect(function(input)
-            if input.KeyCode == Enum.KeyCode.W then
-                moveDirection = moveDirection - workspace.CurrentCamera.CFrame.LookVector
-            elseif input.KeyCode == Enum.KeyCode.S then
+            activeKeys[input.KeyCode] = false
+            updateMoveDirection()
+        end)
+
+        function updateMoveDirection()
+            moveDirection = Vector3.new(0, 0, 0)
+            if activeKeys[Enum.KeyCode.W] then
                 moveDirection = moveDirection + workspace.CurrentCamera.CFrame.LookVector
-            elseif input.KeyCode == Enum.KeyCode.Space then
-                moveDirection = moveDirection - Vector3.new(0, 1, 0)
-            elseif input.KeyCode == Enum.KeyCode.LeftShift then
+            end
+            if activeKeys[Enum.KeyCode.S] then
+                moveDirection = moveDirection - workspace.CurrentCamera.CFrame.LookVector
+            end
+            if activeKeys[Enum.KeyCode.Space] then
                 moveDirection = moveDirection + Vector3.new(0, 1, 0)
             end
-        end)
+            if activeKeys[Enum.KeyCode.LeftShift] then
+                moveDirection = moveDirection - Vector3.new(0, 1, 0)
+            end
+        end
     else
         NoclipCheckbox.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
         if noclipConnection then
