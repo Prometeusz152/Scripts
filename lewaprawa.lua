@@ -187,10 +187,10 @@ SpeedText.Size = UDim2.new(1, 0, 1, 0)
 SpeedText.Position = UDim2.new(0, 0, 0, 0)
 SpeedText.TextColor3 = Color3.fromRGB(255, 255, 255)
 SpeedText.TextSize = 14
-SpeedText.Text = "Speed: 1.0"
+SpeedText.Text = "Speed: 5.0"
 
 local dragging = false
-local speedMultiplier = 1
+local speedMultiplier = 5
 
 SliderButton.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
@@ -209,7 +209,7 @@ userInputService.InputChanged:Connect(function(input)
         local sliderPosition = math.clamp(input.Position.X - SpeedHackSlider.AbsolutePosition.X, 0, SpeedHackSlider.AbsoluteSize.X)
         SliderFill.Size = UDim2.new(sliderPosition / SpeedHackSlider.AbsoluteSize.X, 0, 1, 0)
         SliderButton.Position = UDim2.new(sliderPosition / SpeedHackSlider.AbsoluteSize.X, -SliderButton.Size.X.Offset / 2, 0, 0)
-        speedMultiplier = 1 + (sliderPosition / SpeedHackSlider.AbsoluteSize.X)
+        speedMultiplier = 5 + (sliderPosition / SpeedHackSlider.AbsoluteSize.X)
         SpeedText.Text = string.format("Speed: %.1f", speedMultiplier)
     end
 end)
@@ -498,29 +498,46 @@ local function togglePhase()
     end
 end
 local safeGlassConnection
-local invisibleParts = {}
+local monitoredParts = {}
+
+local function isGlassPart(part)
+    return part:IsA("Part") and (part.Material == Enum.Material.Glass or part.Name:lower():find("glass") or part.Transparency > 0.5)
+end
+
+local function markSafeGlass()
+    for _, part in pairs(workspace:GetDescendants()) do
+        if isGlassPart(part) then
+            if part.Transparency == 0 then
+                part.Color = Color3.fromRGB(0, 255, 0) -- Zielone dla bezpiecznego szkła
+                monitoredParts[part] = true
+            else
+                monitoredParts[part] = false
+            end
+        end
+    end
+end
+
+local function restoreGlass()
+    for part, isSafe in pairs(monitoredParts) do
+        if isSafe then
+            part.Color = Color3.fromRGB(255, 255, 255) -- Przywraca oryginalny kolor
+        end
+    end
+    monitoredParts = {}
+end
 
 local function toggleSafeGlass()
     getgenv().settings.safeGlass = not getgenv().settings.safeGlass
     if getgenv().settings.safeGlass then
         SafeGlassCheckbox.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
-        safeGlassConnection = runService.RenderStepped:Connect(function()
-            for _, part in pairs(workspace:GetDescendants()) do
-                if part:IsA("Part") and (part.Material == Enum.Material.Glass or part.Name:lower():find("glass") or part.Transparency > 0.5) then
-                    if part.Transparency == 0 then
-                        part.Color = Color3.fromRGB(0, 255, 0) -- Zielone dla bezpiecznego szkła
-                    else
-                        if not invisibleParts[part] then
-                            local invisiblePart = Instance.new("Part")
-                            invisiblePart.Size = part.Size
-                            invisiblePart.Position = part.Position
-                            invisiblePart.Anchored = true
-                            invisiblePart.Transparency = 1
-                            invisiblePart.CanCollide = true
-                            invisiblePart.Parent = part.Parent
-                            invisibleParts[part] = invisiblePart
-                        end
-                    end
+        markSafeGlass()
+        safeGlassConnection = workspace.DescendantAdded:Connect(function(descendant)
+            if isGlassPart(descendant) then
+                if descendant.Transparency == 0 then
+                    descendant.Color = Color3.fromRGB(0, 255, 0) -- Zielone dla bezpiecznego szkła
+                    monitoredParts[descendant] = true
+                else
+                    monitoredParts[descendant] = false
                 end
             end
         end)
@@ -530,18 +547,7 @@ local function toggleSafeGlass()
             safeGlassConnection:Disconnect()
             safeGlassConnection = nil
         end
-        for part, invisiblePart in pairs(invisibleParts) do
-            if invisiblePart then
-                invisiblePart:Destroy()
-            end
-        end
-        invisibleParts = {}
-        for _, part in pairs(workspace:GetDescendants()) do
-            if part:IsA("Part") and (part.Material == Enum.Material.Glass or part.Name:lower():find("glass") or part.Transparency > 0.5) then
-                part.Color = Color3.fromRGB(255, 255, 255) -- Przywraca oryginalny kolor
-                part.CanCollide = true -- Przywraca kolizję
-            end
-        end
+        restoreGlass()
     end
 end
 
