@@ -189,10 +189,10 @@ SpeedText.Size = UDim2.new(1, 0, 1, 0)
 SpeedText.Position = UDim2.new(0, 0, 0, 0)
 SpeedText.TextColor3 = Color3.fromRGB(255, 255, 255)
 SpeedText.TextSize = 14
-SpeedText.Text = "Speed: 1.0"
+SpeedText.Text = "Speed: 5.0"
 
 local dragging = false
-local speedMultiplier = 1
+local speedMultiplier = 5
 
 SliderButton.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
@@ -211,7 +211,7 @@ userInputService.InputChanged:Connect(function(input)
         local sliderPosition = math.clamp(input.Position.X - SpeedHackSlider.AbsolutePosition.X, 0, SpeedHackSlider.AbsoluteSize.X)
         SliderFill.Size = UDim2.new(sliderPosition / SpeedHackSlider.AbsoluteSize.X, 0, 1, 0)
         SliderButton.Position = UDim2.new(sliderPosition / SpeedHackSlider.AbsoluteSize.X, -SliderButton.Size.X.Offset / 2, 0, 0)
-        speedMultiplier = 1 + (sliderPosition / SpeedHackSlider.AbsoluteSize.X)
+        speedMultiplier = 5 + (sliderPosition / SpeedHackSlider.AbsoluteSize.X)
         SpeedText.Text = string.format("Speed: %.1f", speedMultiplier)
     end
 end)
@@ -580,12 +580,11 @@ local function toggleFirstGame()
         firstGameConnection = runService.RenderStepped:Connect(function()
             local textLabel = workspace:FindFirstChild("GameStatusLabel") -- Zmień na właściwą nazwę napisu
             if textLabel and textLabel:IsA("TextLabel") then
-                local text = textLabel.Text:lower()
-                if text:find("Green Light") then -- Zielony napis
+                if textLabel.TextColor3 == Color3.fromRGB(0, 255, 0) then -- Zielony napis
                     if plr.Character and plr.Character:FindFirstChild("Humanoid") then
                         plr.Character.Humanoid:Move(Vector3.new(0, 0, -1), true) -- Idź do przodu
                     end
-                elseif text:find("Red Light") then -- Czerwony napis
+                elseif textLabel.TextColor3 == Color3.fromRGB(255, 0, 0) then -- Czerwony napis
                     if plr.Character and plr.Character:FindFirstChild("Humanoid") then
                         plr.Character.Humanoid:Move(Vector3.new(0, 0, 0), true) -- Zatrzymaj się
                     end
