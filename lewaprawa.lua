@@ -533,11 +533,17 @@ local function highlightGlass(glassPart, isGood)
 end
 
 local function detectAndHighlightGlass()
-    for _, part in pairs(workspace:GetDescendants()) do
-        if part:IsA("Part") and part.Material == Enum.Material.Glass then
-            local isGood = not isWeakGlass(part)
-            highlightGlass(part, isGood)
-        end
+    -- Detekcja szybek w najbliższym sąsiedztwie gracza
+    local character = plr.Character
+    if not character then return end
+
+    local rayDirection = character.PrimaryPart.CFrame.LookVector * 10 -- Kierunek w którym gracz patrzy, na odległość 10 jednostek
+    local ray = Ray.new(character.PrimaryPart.Position, rayDirection)
+    local hitPart, hitPosition = workspace:FindPartOnRay(ray, character)
+
+    if hitPart and hitPart:IsA("Part") and hitPart.Material == Enum.Material.Glass then
+        local isGood = not isWeakGlass(hitPart)
+        highlightGlass(hitPart, isGood)
     end
 end
 
@@ -586,7 +592,6 @@ local function toggleSafeGlass()
         end
     end
 end
-
 
 local firstGameConnection
 
