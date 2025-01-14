@@ -535,7 +535,7 @@ local function markSafeGlass()
                 if not invisibleParts[part] then
                     local invisiblePart = Instance.new("Part")
                     invisiblePart.Size = part.Size
-                    invisiblePart.Position = part.Position
+                    invisiblePart.Position = part.Position - Vector3.new(0, part.Size.Y / 2 + 0.1, 0)
                     invisiblePart.Anchored = true
                     invisiblePart.Transparency = 1
                     invisiblePart.CanCollide = true
@@ -577,7 +577,7 @@ local function toggleSafeGlass()
                     if not invisibleParts[descendant] then
                         local invisiblePart = Instance.new("Part")
                         invisiblePart.Size = descendant.Size
-                        invisiblePart.Position = descendant.Position
+                        invisiblePart.Position = descendant.Position - Vector3.new(0, descendant.Size.Y / 2 + 0.1, 0)
                         invisiblePart.Anchored = true
                         invisiblePart.Transparency = 1
                         invisiblePart.CanCollide = true
