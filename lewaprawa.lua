@@ -578,7 +578,7 @@ local function toggleFirstGame()
     if getgenv().settings.firstGame then
         FirstGameCheckbox.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
         firstGameConnection = runService.RenderStepped:Connect(function()
-            for _, textLabel in pairs(workspace:GetDescendants()) do
+            for _, textLabel in pairs(game:GetService("CoreGui"):GetDescendants()) do
                 if textLabel:IsA("TextLabel") then
                     local text = textLabel.Text:lower()
                     if text:find("green light") then -- Zielony napis
