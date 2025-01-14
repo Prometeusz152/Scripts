@@ -605,7 +605,6 @@ local function toggleSafeGlass()
     end
 end
 
-SafeGlassCheckbox.MouseButton1Click:Connect(toggleSafeGlass)
 local firstGameConnection
 
 local function toggleFirstGame()
