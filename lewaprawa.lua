@@ -189,10 +189,10 @@ SpeedText.Size = UDim2.new(1, 0, 1, 0)
 SpeedText.Position = UDim2.new(0, 0, 0, 0)
 SpeedText.TextColor3 = Color3.fromRGB(255, 255, 255)
 SpeedText.TextSize = 14
-SpeedText.Text = "Speed: 5.0"
+SpeedText.Text = "Speed: 1.0"
 
 local dragging = false
-local speedMultiplier = 5
+local speedMultiplier = 1
 
 SliderButton.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
@@ -211,7 +211,7 @@ userInputService.InputChanged:Connect(function(input)
         local sliderPosition = math.clamp(input.Position.X - SpeedHackSlider.AbsolutePosition.X, 0, SpeedHackSlider.AbsoluteSize.X)
         SliderFill.Size = UDim2.new(sliderPosition / SpeedHackSlider.AbsoluteSize.X, 0, 1, 0)
         SliderButton.Position = UDim2.new(sliderPosition / SpeedHackSlider.AbsoluteSize.X, -SliderButton.Size.X.Offset / 2, 0, 0)
-        speedMultiplier = 5 + (sliderPosition / SpeedHackSlider.AbsoluteSize.X)
+        speedMultiplier = 1 + (sliderPosition / SpeedHackSlider.AbsoluteSize.X)
         SpeedText.Text = string.format("Speed: %.1f", speedMultiplier)
     end
 end)
@@ -573,29 +573,22 @@ end
 
 local firstGameConnection
 
-local function isColorClose(color1, color2, tolerance)
-    tolerance = tolerance or 40
-    return math.abs(color1.R - color2.R) <= tolerance and
-           math.abs(color1.G - color2.G) <= tolerance and
-           math.abs(color1.B - color2.B) <= tolerance
-end
-
 local function toggleFirstGame()
     getgenv().settings.firstGame = not getgenv().settings.firstGame
     if getgenv().settings.firstGame then
         FirstGameCheckbox.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
         firstGameConnection = runService.RenderStepped:Connect(function()
-            local textLabel = workspace:FindFirstChild("GameStatusLabel") -- Zmień na właściwą nazwę napisu
-            if textLabel and textLabel:IsA("TextLabel") then
-                local greenLightColor = Color3.fromRGB(0, 255, 0)
-                local redLightColor = Color3.fromRGB(255, 0, 0)
-                if isColorClose(textLabel.TextColor3, greenLightColor) then -- Zielony napis
-                    if plr.Character and plr.Character:FindFirstChild("Humanoid") then
-                        plr.Character.Humanoid:Move(Vector3.new(0, 0, -1), true) -- Idź do przodu
-                    end
-                elseif isColorClose(textLabel.TextColor3, redLightColor) then -- Czerwony napis
-                    if plr.Character and plr.Character:FindFirstChild("Humanoid") then
-                        plr.Character.Humanoid:Move(Vector3.new(0, 0, 0), true) -- Zatrzymaj się
+            for _, textLabel in pairs(workspace:GetDescendants()) do
+                if textLabel:IsA("TextLabel") then
+                    local text = textLabel.Text:lower()
+                    if text:find("green light") then -- Zielony napis
+                        if plr.Character and plr.Character:FindFirstChild("Humanoid") then
+                            plr.Character.Humanoid:Move(Vector3.new(0, 0, -1), true) -- Idź do przodu
+                        end
+                    elseif text:find("red light") then -- Czerwony napis
+                        if plr.Character and plr.Character:FindFirstChild("Humanoid") then
+                            plr.Character.Humanoid:Move(Vector3.new(0, 0, 0), true) -- Zatrzymaj się
+                        end
                     end
                 end
             end
@@ -610,7 +603,6 @@ local function toggleFirstGame()
 end
 
 FirstGameCheckbox.MouseButton1Click:Connect(toggleFirstGame)
-
 SafeGlassCheckbox.MouseButton1Click:Connect(toggleSafeGlass)
 PhaseCheckbox.MouseButton1Click:Connect(togglePhase)
 SpeedHackCheckbox.MouseButton1Click:Connect(toggleSpeedHack)
