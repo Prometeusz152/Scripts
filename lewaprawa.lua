@@ -185,10 +185,10 @@ SpeedText.Size = UDim2.new(1, 0, 1, 0)
 SpeedText.Position = UDim2.new(0, 0, 0, 0)
 SpeedText.TextColor3 = Color3.fromRGB(255, 255, 255)
 SpeedText.TextSize = 14
-SpeedText.Text = "Speed: 1.0"
+SpeedText.Text = "Speed: 3.0"
 
 local dragging = false
-local speedMultiplier = 1
+local speedMultiplier = 3
 
 SliderButton.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
@@ -207,7 +207,7 @@ userInputService.InputChanged:Connect(function(input)
         local sliderPosition = math.clamp(input.Position.X - SpeedHackSlider.AbsolutePosition.X, 0, SpeedHackSlider.AbsoluteSize.X)
         SliderFill.Size = UDim2.new(sliderPosition / SpeedHackSlider.AbsoluteSize.X, 0, 1, 0)
         SliderButton.Position = UDim2.new(sliderPosition / SpeedHackSlider.AbsoluteSize.X, -SliderButton.Size.X.Offset / 2, 0, 0)
-        speedMultiplier = 2 + (sliderPosition / SpeedHackSlider.AbsoluteSize.X)
+        speedMultiplier = 3 + (sliderPosition / SpeedHackSlider.AbsoluteSize.X)
         SpeedText.Text = string.format("Speed: %.1f", speedMultiplier)
     end
 end)
