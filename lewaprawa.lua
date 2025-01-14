@@ -522,7 +522,14 @@ local monitoredParts = {}
 local invisibleParts = {}
 
 local function isGlassPart(part)
-    return part:IsA("Part") and (part.Material == Enum.Material.Glass or part.Name:lower():find("glass") or part.Transparency > 0.5)
+    -- Sprawdź, czy część jest szkłem na podstawie materiału, nazwy, przezroczystości, rozmiaru i rodzica
+    local isGlassMaterial = part.Material == Enum.Material.Glass
+    local hasGlassName = part.Name:lower():find("glass")
+    local isTransparent = part.Transparency > 0.5
+    local isCorrectSize = part.Size.Y < 5 and part.Size.X > 1 and part.Size.Z > 1
+    local hasGlassParent = part.Parent and part.Parent.Name:lower():find("glass")
+
+    return part:IsA("Part") and (isGlassMaterial or hasGlassName or isTransparent or isCorrectSize or hasGlassParent)
 end
 
 local function markSafeGlass()
@@ -598,6 +605,7 @@ local function toggleSafeGlass()
     end
 end
 
+SafeGlassCheckbox.MouseButton1Click:Connect(toggleSafeGlass)
 local firstGameConnection
 
 local function toggleFirstGame()
