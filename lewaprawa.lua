@@ -261,6 +261,48 @@ end
 
 ToggleButton.MouseButton1Click:Connect(toggleMenu)
 
+-- SpeedHack Slider
+local SpeedHackSlider = Instance.new("Frame")
+SpeedHackSlider.Parent = ButtonsBackground
+SpeedHackSlider.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+SpeedHackSlider.Position = UDim2.new(0.05, 0, 0.1, 0) -- Adjusted position
+SpeedHackSlider.Size = UDim2.new(0.9, 0, 0.05, 0) -- Adjusted size
+SpeedHackSlider.BorderColor3 = Color3.fromRGB(200, 200, 200)
+SpeedHackSlider.BorderSizePixel = 2
+addUICorner(SpeedHackSlider, 10)
+
+local SliderButton = Instance.new("Frame")
+SliderButton.Parent = SpeedHackSlider
+SliderButton.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
+SliderButton.Size = UDim2.new(0.1, 0, 1, 0) -- Initial size
+SliderButton.Position = UDim2.new(0, 0, 0, 0)
+SliderButton.BorderColor3 = Color3.fromRGB(200, 200, 200)
+SliderButton.BorderSizePixel = 2
+addUICorner(SliderButton, 10)
+
+local dragging = false
+local speedMultiplier = 1
+
+SliderButton.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+    end
+end)
+
+SliderButton.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = false
+    end
+end)
+
+userInputService.InputChanged:Connect(function(input)
+    if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+        local sliderPosition = math.clamp(input.Position.X - SpeedHackSlider.AbsolutePosition.X, 0, SpeedHackSlider.AbsoluteSize.X)
+        SliderButton.Position = UDim2.new(sliderPosition / SpeedHackSlider.AbsoluteSize.X, 0, 0, 0)
+        speedMultiplier = 1 + (sliderPosition / SpeedHackSlider.AbsoluteSize.X)
+    end
+end)
+
 local speedHackConnection
 local function toggleSpeedHack()
     getgenv().settings.speedhack = not getgenv().settings.speedhack
@@ -269,7 +311,7 @@ local function toggleSpeedHack()
         speedHackConnection = runService.Heartbeat:Connect(function(delta)
             if getgenv().settings.speedhack and plr.Character and plr.Character:FindFirstChild("Humanoid") then
                 if plr.Character.Humanoid.MoveDirection.Magnitude > 0 then
-                    plr.Character:TranslateBy(plr.Character.Humanoid.MoveDirection * 4 * delta * 10)
+                    plr.Character:TranslateBy(plr.Character.Humanoid.MoveDirection * speedMultiplier * delta * 10)
                 end
             end
         end)
@@ -282,6 +324,7 @@ local function toggleSpeedHack()
     end
 end
 
+SpeedHackCheckbox.MouseButton1Click:Connect(toggleSpeedHack)
 -- Noclip (Fly Mode)
 local noclipConnection
 local inputBeganConnection
