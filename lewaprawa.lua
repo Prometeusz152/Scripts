@@ -189,10 +189,10 @@ SpeedText.Size = UDim2.new(1, 0, 1, 0)
 SpeedText.Position = UDim2.new(0, 0, 0, 0)
 SpeedText.TextColor3 = Color3.fromRGB(255, 255, 255)
 SpeedText.TextSize = 14
-SpeedText.Text = "Speed: 5.0"
+SpeedText.Text = "Speed: 1.0"
 
 local dragging = false
-local speedMultiplier = 5
+local speedMultiplier = 1
 
 SliderButton.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
@@ -211,7 +211,7 @@ userInputService.InputChanged:Connect(function(input)
         local sliderPosition = math.clamp(input.Position.X - SpeedHackSlider.AbsolutePosition.X, 0, SpeedHackSlider.AbsoluteSize.X)
         SliderFill.Size = UDim2.new(sliderPosition / SpeedHackSlider.AbsoluteSize.X, 0, 1, 0)
         SliderButton.Position = UDim2.new(sliderPosition / SpeedHackSlider.AbsoluteSize.X, -SliderButton.Size.X.Offset / 2, 0, 0)
-        speedMultiplier = 5 + (sliderPosition / SpeedHackSlider.AbsoluteSize.X)
+        speedMultiplier = 1 + (sliderPosition / SpeedHackSlider.AbsoluteSize.X)
         SpeedText.Text = string.format("Speed: %.1f", speedMultiplier)
     end
 end)
@@ -519,6 +519,7 @@ local function togglePhase()
 end
 local safeGlassConnection
 local monitoredParts = {}
+local invisibleParts = {}
 
 local function isGlassPart(part)
     return part:IsA("Part") and (part.Material == Enum.Material.Glass or part.Name:lower():find("glass") or part.Transparency > 0.5)
@@ -531,6 +532,16 @@ local function markSafeGlass()
                 part.Color = Color3.fromRGB(0, 255, 0) -- Zielone dla bezpiecznego szkła
                 monitoredParts[part] = true
             else
+                if not invisibleParts[part] then
+                    local invisiblePart = Instance.new("Part")
+                    invisiblePart.Size = part.Size
+                    invisiblePart.Position = part.Position
+                    invisiblePart.Anchored = true
+                    invisiblePart.Transparency = 1
+                    invisiblePart.CanCollide = true
+                    invisiblePart.Parent = part.Parent
+                    invisibleParts[part] = invisiblePart
+                end
                 monitoredParts[part] = false
             end
         end
@@ -543,7 +554,13 @@ local function restoreGlass()
             part.Color = Color3.fromRGB(255, 255, 255) -- Przywraca oryginalny kolor
         end
     end
+    for part, invisiblePart in pairs(invisibleParts) do
+        if invisiblePart then
+            invisiblePart:Destroy()
+        end
+    end
     monitoredParts = {}
+    invisibleParts = {}
 end
 
 local function toggleSafeGlass()
@@ -557,6 +574,16 @@ local function toggleSafeGlass()
                     descendant.Color = Color3.fromRGB(0, 255, 0) -- Zielone dla bezpiecznego szkła
                     monitoredParts[descendant] = true
                 else
+                    if not invisibleParts[descendant] then
+                        local invisiblePart = Instance.new("Part")
+                        invisiblePart.Size = descendant.Size
+                        invisiblePart.Position = descendant.Position
+                        invisiblePart.Anchored = true
+                        invisiblePart.Transparency = 1
+                        invisiblePart.CanCollide = true
+                        invisiblePart.Parent = descendant.Parent
+                        invisibleParts[descendant] = invisiblePart
+                    end
                     monitoredParts[descendant] = false
                 end
             end
@@ -578,7 +605,7 @@ local function toggleFirstGame()
     if getgenv().settings.firstGame then
         FirstGameCheckbox.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
         firstGameConnection = runService.RenderStepped:Connect(function()
-            for _, textLabel in pairs(game:GetService("CoreGui"):GetDescendants()) do
+            for _, textLabel in pairs(workspace:GetDescendants()) do
                 if textLabel:IsA("TextLabel") then
                     local text = textLabel.Text:lower()
                     if text:find("green light") then -- Zielony napis
