@@ -498,17 +498,28 @@ local function togglePhase()
     end
 end
 local safeGlassConnection
+local invisibleParts = {}
+
 local function toggleSafeGlass()
     getgenv().settings.safeGlass = not getgenv().settings.safeGlass
     if getgenv().settings.safeGlass then
         SafeGlassCheckbox.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
         safeGlassConnection = runService.RenderStepped:Connect(function()
             for _, part in pairs(workspace:GetDescendants()) do
-                if part:IsA("Part") and part.Material == Enum.Material.Glass then
+                if part:IsA("Part") and (part.Material == Enum.Material.Glass or part.Name:lower():find("glass") or part.Transparency > 0.5) then
                     if part.Transparency == 0 then
                         part.Color = Color3.fromRGB(0, 255, 0) -- Zielone dla bezpiecznego szkła
                     else
-                        part.CanCollide = false -- Umożliwia przechodzenie przez złe szkło
+                        if not invisibleParts[part] then
+                            local invisiblePart = Instance.new("Part")
+                            invisiblePart.Size = part.Size
+                            invisiblePart.Position = part.Position
+                            invisiblePart.Anchored = true
+                            invisiblePart.Transparency = 1
+                            invisiblePart.CanCollide = true
+                            invisiblePart.Parent = part.Parent
+                            invisibleParts[part] = invisiblePart
+                        end
                     end
                 end
             end
@@ -519,8 +530,14 @@ local function toggleSafeGlass()
             safeGlassConnection:Disconnect()
             safeGlassConnection = nil
         end
+        for part, invisiblePart in pairs(invisibleParts) do
+            if invisiblePart then
+                invisiblePart:Destroy()
+            end
+        end
+        invisibleParts = {}
         for _, part in pairs(workspace:GetDescendants()) do
-            if part:IsA("Part") and part.Material == Enum.Material.Glass then
+            if part:IsA("Part") and (part.Material == Enum.Material.Glass or part.Name:lower():find("glass") or part.Transparency > 0.5) then
                 part.Color = Color3.fromRGB(255, 255, 255) -- Przywraca oryginalny kolor
                 part.CanCollide = true -- Przywraca kolizję
             end
