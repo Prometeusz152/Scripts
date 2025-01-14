@@ -265,20 +265,38 @@ ToggleButton.MouseButton1Click:Connect(toggleMenu)
 local SpeedHackSlider = Instance.new("Frame")
 SpeedHackSlider.Parent = ButtonsBackground
 SpeedHackSlider.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-SpeedHackSlider.Position = UDim2.new(0.05, 0, 0.1, 0) -- Adjusted position
+SpeedHackSlider.Position = UDim2.new(0.05, 0, 0.2, 0) -- Adjusted position
 SpeedHackSlider.Size = UDim2.new(0.9, 0, 0.05, 0) -- Adjusted size
 SpeedHackSlider.BorderColor3 = Color3.fromRGB(200, 200, 200)
 SpeedHackSlider.BorderSizePixel = 2
 addUICorner(SpeedHackSlider, 10)
 
+local SliderFill = Instance.new("Frame")
+SliderFill.Parent = SpeedHackSlider
+SliderFill.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
+SliderFill.Size = UDim2.new(0, 0, 1, 0) -- Initial size
+SliderFill.Position = UDim2.new(0, 0, 0, 0)
+SliderFill.BorderColor3 = Color3.fromRGB(200, 200, 200)
+SliderFill.BorderSizePixel = 2
+addUICorner(SliderFill, 10)
+
 local SliderButton = Instance.new("Frame")
-SliderButton.Parent = SpeedHackSlider
+SliderButton.Parent = SliderFill
 SliderButton.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
 SliderButton.Size = UDim2.new(0.1, 0, 1, 0) -- Initial size
-SliderButton.Position = UDim2.new(0, 0, 0, 0)
+SliderButton.Position = UDim2.new(1, -0.1, 0, 0)
 SliderButton.BorderColor3 = Color3.fromRGB(200, 200, 200)
 SliderButton.BorderSizePixel = 2
 addUICorner(SliderButton, 10)
+
+local SpeedText = Instance.new("TextLabel")
+SpeedText.Parent = SpeedHackSlider
+SpeedText.BackgroundTransparency = 1
+SpeedText.Size = UDim2.new(1, 0, 1, 0)
+SpeedText.Position = UDim2.new(0, 0, 0, 0)
+SpeedText.TextColor3 = Color3.fromRGB(255, 255, 255)
+SpeedText.TextSize = 14
+SpeedText.Text = "Speed: 1.0"
 
 local dragging = false
 local speedMultiplier = 1
@@ -298,8 +316,10 @@ end)
 userInputService.InputChanged:Connect(function(input)
     if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
         local sliderPosition = math.clamp(input.Position.X - SpeedHackSlider.AbsolutePosition.X, 0, SpeedHackSlider.AbsoluteSize.X)
-        SliderButton.Position = UDim2.new(sliderPosition / SpeedHackSlider.AbsoluteSize.X, 0, 0, 0)
+        SliderFill.Size = UDim2.new(sliderPosition / SpeedHackSlider.AbsoluteSize.X, 0, 1, 0)
+        SliderButton.Position = UDim2.new(1, -0.1, 0, 0)
         speedMultiplier = 1 + (sliderPosition / SpeedHackSlider.AbsoluteSize.X)
+        SpeedText.Text = string.format("Speed: %.1f", speedMultiplier)
     end
 end)
 
@@ -324,7 +344,6 @@ local function toggleSpeedHack()
     end
 end
 
-SpeedHackCheckbox.MouseButton1Click:Connect(toggleSpeedHack)
 -- Noclip (Fly Mode)
 local noclipConnection
 local inputBeganConnection
