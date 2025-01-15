@@ -245,12 +245,15 @@ addUICorner(JumpModeButton, 10)
 
 JumpModeCheckbox.Parent = JumpModeButton
 JumpModeCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
-JumpModeCheckbox.Position = UDim2.new(0.85, 0, 0.1, 0)
-JumpModeCheckbox.Size = UDim2.new(0.1, 0, 0.6, 0.8) -- Make it square
+JumpModeCheckbox.Position = UDim2.new(0.85, 0, 0.2, 0)
+JumpModeCheckbox.Size = UDim2.new(0.1, 0, 0.6, 0.7) -- Make it square
 JumpModeCheckbox.Text = ""
-JumpModeCheckbox.BorderColor3 = Color3.fromRGB(111, 106, 155)
-JumpModeCheckbox.BorderSizePixel = 2
 addUICorner(JumpModeCheckbox, 10)
+
+local stroke = Instance.new("UIStroke")
+stroke.Parent = JumpModeCheckbox
+stroke.Color = Color3.fromRGB(111, 106, 155)
+stroke.Thickness = 2
 
 PhaseButton.Parent = ButtonsBackground
 PhaseButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
