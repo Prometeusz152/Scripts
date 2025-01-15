@@ -246,14 +246,14 @@ addUICorner(JumpModeButton, 10)
 JumpModeCheckbox.Parent = JumpModeButton
 JumpModeCheckbox.BackgroundColor3 = Color3.fromRGB(44, 44, 44)
 JumpModeCheckbox.Position = UDim2.new(0.85, 0, 0.2, 0)
-JumpModeCheckbox.Size = UDim2.new(0.1, 0, 0.6, 0.6) -- Make it square
+JumpModeCheckbox.Size = UDim2.new(0.1, 0, 0.6, 0.7) -- Make it square
 JumpModeCheckbox.Text = ""
 addUICorner(JumpModeCheckbox, 10)
 
 local stroke = Instance.new("UIStroke")
 stroke.Parent = JumpModeCheckbox
-stroke.Color = Color3.fromRGB(155, 155, 155)
-stroke.Thickness = 5
+stroke.Color = Color3.fromRGB(111, 106, 155)
+stroke.Thickness = 2
 
 PhaseButton.Parent = ButtonsBackground
 PhaseButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
@@ -521,80 +521,43 @@ local function togglePhase()
     end
 end
 
-local function isWeakGlass(part)
-    return part.Material == Enum.Material.Glass and part.Anchored == false
-end
+local nearbyKillConnection
 
-local function highlightGlass(glassPart, isGood)
-    if isGood then
-        glassPart.Color = Color3.fromRGB(0, 255, 0) -- Zielony
-        glassPart.Material = Enum.Material.Neon
-    else
-        glassPart.Color = Color3.fromRGB(255, 0, 0) -- Czerwony
-        glassPart.Material = Enum.Material.Neon
-    end
-end
-
-local function detectAndHighlightGlass()
-    -- Detekcja szybek w najbliższym sąsiedztwie gracza
+local function killNearbyPlayers(radius)
     local character = plr.Character
-    if not character then return end
+    if not character or not character:FindFirstChild("HumanoidRootPart") then return end
 
-    local rayDirection = character.PrimaryPart.CFrame.LookVector * 10 -- Kierunek w którym gracz patrzy, na odległość 10 jednostek
-    local ray = Ray.new(character.PrimaryPart.Position, rayDirection)
-    local hitPart, hitPosition = workspace:FindPartOnRay(ray, character)
-
-    if hitPart and hitPart:IsA("Part") and hitPart.Material == Enum.Material.Glass then
-        local isGood = not isWeakGlass(hitPart)
-        highlightGlass(hitPart, isGood)
+    local rootPart = character.HumanoidRootPart
+    for _, otherPlayer in pairs(game.Players:GetPlayers()) do
+        if otherPlayer ~= plr and otherPlayer.Character and otherPlayer.Character:FindFirstChild("Humanoid") and otherPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            local otherRootPart = otherPlayer.Character.HumanoidRootPart
+            local distance = (rootPart.Position - otherRootPart.Position).Magnitude
+            if distance <= radius then
+                local humanoid = otherPlayer.Character.Humanoid
+                humanoid.Health = 0 -- Zabij gracza
+            end
+        end
     end
 end
-
-local immortalConnection
-local glassDetectionConnection
 
 local function toggleSafeGlass()
-    getgenv().settings.safeGlass = not getgenv().settings.safeGlass
-    if getgenv().settings.safeGlass then
+    getgenv().settings.SafeGlass = not getgenv().settings.SafeGlass
+    if getgenv().settings.SafeGlass then
         SafeGlassCheckbox.BackgroundColor3 = Color3.fromRGB(111, 106, 155)
         
-        immortalConnection = runService.RenderStepped:Connect(function()
-            if plr.Character and plr.Character:FindFirstChildOfClass("Humanoid") then
-                local humanoid = plr.Character:FindFirstChildOfClass("Humanoid")
-                humanoid.MaxHealth = math.huge
-                humanoid.Health = math.huge
-                humanoid:GetPropertyChangedSignal("Health"):Connect(function()
-                    if getgenv().settings.safeGlass then
-                        humanoid.Health = math.huge
-                    end
-                end)
-                humanoid:GetPropertyChangedSignal("MaxHealth"):Connect(function()
-                    if getgenv().settings.safeGlass then
-                        humanoid.MaxHealth = math.huge
-                    end
-                end)
-            end
+        -- Połączenie na RenderStepped dla ciągłego wykrywania
+        nearbyKillConnection = runService.RenderStepped:Connect(function()
+            killNearbyPlayers(20) -- Ustaw promień, np. 20 jednostek
         end)
-
-        glassDetectionConnection = runService.RenderStepped:Connect(detectAndHighlightGlass)
-
     else
         SafeGlassCheckbox.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
-        if immortalConnection then
-            immortalConnection:Disconnect()
-            immortalConnection = nil
-        end
-        if glassDetectionConnection then
-            glassDetectionConnection:Disconnect()
-            glassDetectionConnection = nil
-        end
-        if plr.Character and plr.Character:FindFirstChildOfClass("Humanoid") then
-            local humanoid = plr.Character:FindFirstChildOfClass("Humanoid")
-            humanoid.MaxHealth = 100 -- Przywróć domyślną wartość zdrowia
-            humanoid.Health = humanoid.MaxHealth
+        if nearbyKillConnection then
+            nearbyKillConnection:Disconnect()
+            nearbyKillConnection = nil
         end
     end
 end
+
 
 local firstGameConnection
 
