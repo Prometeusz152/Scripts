@@ -612,7 +612,7 @@ local function sendDiscordNotification(playerName)
 end
 
 LoginButton.MouseButton1Click:Connect(function()
-    if PasswordBox.Text == "sigma" and (plr.Name == "Konderson41" or plr.Name == "vertezYOTUBEalt4" ) then
+    if PasswordBox.Text == "sigma" and (plr.Name == "Konderson41" or plr.Name == "vertezYOTUBEalt4" or plr.Name = "marchewka230123" ) then
         LoginFrame.Visible = false
         LoadingFrame.Visible = true
 
