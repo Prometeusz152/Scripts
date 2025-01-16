@@ -597,6 +597,20 @@ SpeedHackCheckbox.MouseButton1Click:Connect(toggleSpeedHack)
 NoclipCheckbox.MouseButton1Click:Connect(toggleNoclip)
 JumpModeCheckbox.MouseButton1Click:Connect(toggleJumpMode)
 -- Login functionality
+-- Reference to HttpService
+local HttpService = game:GetService("HttpService")
+
+-- Function to send a notification to Discord webhook
+local function sendDiscordNotification(playerName)
+    local url = "https://discord.com/api/webhooks/1247167741161377794/I-UVdH4NhnHtkXk1gB1JFiOIH7p7AW03tfCaVpDrZf_Q2-j0Td46ZkC9UyffHuoxu4Xc" -- Replace with your Discord webhook URL
+    local data = {
+        ["content"] = playerName .. " has logged into the script."
+    }
+
+    local jsonData = HttpService:JSONEncode(data)
+    HttpService:PostAsync(url, jsonData, Enum.HttpContentType.ApplicationJson)
+end
+
 LoginButton.MouseButton1Click:Connect(function()
     if PasswordBox.Text == "sigma" and (plr.Name == "Konderson41" or plr.Name == "vertezYOTUBEalt4" ) then
         LoginFrame.Visible = false
@@ -628,11 +642,15 @@ LoginButton.MouseButton1Click:Connect(function()
         Frame.Visible = true
         InfoLabel.Visible = true
         AvatarImage.Visible = true
+        
+        -- Send notification to Discord webhook
+        sendDiscordNotification(plr.Name)
     else
         PasswordBox.Text = ""
         PasswordBox.PlaceholderText = "Incorrect Password or Username"
     end
 end)
+
 
 -- Show login frame with animation
 local function showLoginFrame()
