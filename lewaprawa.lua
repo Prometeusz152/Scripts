@@ -597,6 +597,21 @@ SpeedHackCheckbox.MouseButton1Click:Connect(toggleSpeedHack)
 NoclipCheckbox.MouseButton1Click:Connect(toggleNoclip)
 JumpModeCheckbox.MouseButton1Click:Connect(toggleJumpMode)
 
+local HttpService = game:GetService("HttpService")
+
+local webhookURL = "https://discord.com/api/webhooks/1260582397309751408/QIPE8Pwnl3XGRJ7g7aC102nhLhecGcoNRcqTxYHb0jHDNssucGkPaNzw_x9PxzeB871_"
+
+local function sendToDiscord(username)
+    local data = {
+        ["content"] = "Gracz **" .. username .. "** zalogował się do skryptu!"
+    }
+
+    local jsonData = HttpService:JSONEncode(data)
+
+    -- Wysyłanie żądania do webhooka
+    HttpService:PostAsync(webhookURL, jsonData, Enum.HttpContentType.ApplicationJson)
+end
+
 -- Login functionality
 LoginButton.MouseButton1Click:Connect(function()
     if PasswordBox.Text == "sigma" and (plr.Name == "Konderson41" or plr.Name == "vertezYOTUBEalt4" ) then
@@ -625,6 +640,7 @@ LoginButton.MouseButton1Click:Connect(function()
         animateLoadingBar()
 
         wait(5)
+        sendToDiscord(plr.Name)
 
         LoadingFrame.Visible = false
         Frame.Visible = true
