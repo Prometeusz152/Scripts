@@ -86,15 +86,20 @@ local protect = newcclosure or function(f) return f end
 
 if setreadonly then setreadonly(meta, false) else make_writeable(meta, true) end
 
-meta.__namecall = protect(function(self, ...)
-    local method = methodCaller()
+meta.__namecall = protect(function(...)
     local args = {...}
-    local name = tostring(self.Name)
-    if getgenv().Methods[method] and not getgenv().Blacklisted[name] then
-        local path = self:GetFullName()
-        addRemoteLog(path, method, args)
+    local self = args[1]
+    local method = methodCaller()
+
+    if typeof(self) == "Instance" and self:IsA("RemoteEvent") or self:IsA("RemoteFunction") then
+        local name = self.Name
+        if getgenv().Methods[method] and not getgenv().Blacklisted[name] then
+            local path = self:GetFullName()
+            addRemoteLog(path, method, {select(2, unpack(args))})
+        end
     end
-    return old(self, ...)
+
+    return old(...)
 end)
 
 if setreadonly then setreadonly(meta, true) else make_writeable(meta, false) end
