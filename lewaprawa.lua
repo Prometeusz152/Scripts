@@ -1,13 +1,35 @@
--- Konfiguracja
+-- Configuration
 local IGNORED = {
     ["SendPosition"] = true,
     ["UpdateMovement"] = true,
     ["Heartbeat"] = true
 }
-local MAX_ENTRIES = 100
-local LOG_DELAY = 0.1
 
--- Get table formatter
+local MAX_ENTRIES = 100 -- Maximum log entries to display
+local LOG_DELAY = 0.1    -- Delay between logging the same remote to avoid spam
+local LOG_TO_SCREEN = true -- Set to true to log to the screen as well
+
+-- GUI for showing logs on the screen
+local screenGui = Instance.new("ScreenGui", game.CoreGui)
+screenGui.Name = "RemoteSpyGUI"
+
+local frame = Instance.new("Frame", screenGui)
+frame.Size = UDim2.new(0, 500, 0, 400)
+frame.Position = UDim2.new(0, 50, 0, 50)
+frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+
+local scroll = Instance.new("ScrollingFrame", frame)
+scroll.Size = UDim2.new(1, -10, 1, -10)
+scroll.Position = UDim2.new(0, 5, 0, 5)
+scroll.BackgroundTransparency = 1
+scroll.ScrollBarThickness = 6
+scroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+
+local layout = Instance.new("UIListLayout", scroll)
+layout.SortOrder = Enum.SortOrder.LayoutOrder
+layout.Padding = UDim.new(0, 4)
+
+-- Function to format table to string (for argument inspection)
 local function get_table(node)
     local str = ""
     local function recur(tbl, depth)
@@ -28,55 +50,34 @@ local function get_table(node)
     return str
 end
 
--- GUI
-local gui = Instance.new("ScreenGui", game.CoreGui)
-gui.Name = "SafeRemoteSpy"
-
-local frame = Instance.new("Frame", gui)
-frame.Size = UDim2.new(0, 500, 0, 400)
-frame.Position = UDim2.new(0, 50, 0, 50)
-frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-
-local scroll = Instance.new("ScrollingFrame", frame)
-scroll.Size = UDim2.new(1, -10, 1, -10)
-scroll.Position = UDim2.new(0, 5, 0, 5)
-scroll.BackgroundTransparency = 1
-scroll.ScrollBarThickness = 6
-scroll.CanvasSize = UDim2.new(0, 0, 0, 0)
-
-local layout = Instance.new("UIListLayout", scroll)
-layout.SortOrder = Enum.SortOrder.LayoutOrder
-layout.Padding = UDim.new(0, 4)
-
--- Dodawanie wpisu
-local entries = {}
-
-local function addEntry(text, fullCall)
-    if #entries >= MAX_ENTRIES then
-        entries[1]:Destroy()
-        table.remove(entries, 1)
+-- Asynchronous function to log to the screen and console
+local function asyncLog(message)
+    -- Log to console (rconsoleprint if available)
+    if rconsoleprint then
+        rconsoleprint(message .. "\n")
     end
 
-    local btn = Instance.new("TextButton")
-    btn.Size = UDim2.new(1, -10, 0, 50)
-    btn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    btn.TextXAlignment = Enum.TextXAlignment.Left
-    btn.Text = text
-    btn.Parent = scroll
+    -- Log to screen (if enabled)
+    if LOG_TO_SCREEN then
+        local textLabel = Instance.new("TextLabel", scroll)
+        textLabel.Size = UDim2.new(1, -10, 0, 50)
+        textLabel.BackgroundTransparency = 1
+        textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+        textLabel.TextWrapped = true
+        textLabel.Text = message
+        textLabel.TextXAlignment = Enum.TextXAlignment.Left
 
-    btn.MouseButton1Click:Connect(function()
-        setclipboard(fullCall)
-        btn.Text = "✅ Skopiowano!"
-        task.wait(1)
-        btn.Text = text
-    end)
+        -- Automatically remove old logs
+        if #scroll:GetChildren() > MAX_ENTRIES then
+            scroll:GetChildren()[1]:Destroy()
+        end
 
-    table.insert(entries, btn)
-    scroll.CanvasSize = UDim2.new(0, 0, 0, layout.AbsoluteContentSize.Y + 10)
+        -- Update scroll
+        scroll.CanvasSize = UDim2.new(0, 0, 0, layout.AbsoluteContentSize.Y + 10)
+    end
 end
 
--- Hook
+-- Hook function for RemoteEvent/RemoteFunction calls
 local lastCalls = {}
 local meta = getrawmetatable(game)
 local old = meta.__namecall
@@ -97,11 +98,11 @@ meta.__namecall = protect(function(...)
             local sig = path .. method
             local now = tick()
 
-            -- anty-spam
+            -- Anti-spam: only log every LOG_DELAY seconds
             if (not lastCalls[sig]) or (now - lastCalls[sig] > LOG_DELAY) then
                 lastCalls[sig] = now
                 local callStr = ("game.%s:%s(%s)"):format(path, method, (#args > 1 and "unpack(" .. get_table({select(2, unpack(args))}) .. ")" or ""))
-                addEntry(("%s :%s(...)"):format(path, method), callStr)
+                asyncLog(("%s :%s(...)"):format(path, method))
             end
         end
     end
@@ -111,4 +112,4 @@ end)
 
 if setreadonly then setreadonly(meta, true) else make_writeable(meta, false) end
 
-print("✅ Optimized RemoteSpy GUI loaded.")
+print("✅ RemoteSpy Loaded with Async Logging and Optimized Performance.")
