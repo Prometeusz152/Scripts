@@ -1,4 +1,13 @@
--- UTILITYS
+-- Konfiguracja
+local IGNORED = {
+    ["SendPosition"] = true,
+    ["UpdateMovement"] = true,
+    ["Heartbeat"] = true
+}
+local MAX_ENTRIES = 100
+local LOG_DELAY = 0.1
+
+-- Get table formatter
 local function get_table(node)
     local str = ""
     local function recur(tbl, depth)
@@ -19,69 +28,59 @@ local function get_table(node)
     return str
 end
 
--- GUI SETUP
-local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
-ScreenGui.Name = "RemoteSpyGUI"
+-- GUI
+local gui = Instance.new("ScreenGui", game.CoreGui)
+gui.Name = "SafeRemoteSpy"
 
-local Frame = Instance.new("Frame", ScreenGui)
-Frame.Size = UDim2.new(0, 500, 0, 400)
-Frame.Position = UDim2.new(0, 50, 0, 50)
-Frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-Frame.BorderSizePixel = 0
+local frame = Instance.new("Frame", gui)
+frame.Size = UDim2.new(0, 500, 0, 400)
+frame.Position = UDim2.new(0, 50, 0, 50)
+frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 
-local UIStroke = Instance.new("UIStroke", Frame)
-UIStroke.Thickness = 2
-UIStroke.Color = Color3.fromRGB(90, 90, 90)
+local scroll = Instance.new("ScrollingFrame", frame)
+scroll.Size = UDim2.new(1, -10, 1, -10)
+scroll.Position = UDim2.new(0, 5, 0, 5)
+scroll.BackgroundTransparency = 1
+scroll.ScrollBarThickness = 6
+scroll.CanvasSize = UDim2.new(0, 0, 0, 0)
 
-local Scroll = Instance.new("ScrollingFrame", Frame)
-Scroll.Size = UDim2.new(1, -10, 1, -10)
-Scroll.Position = UDim2.new(0, 5, 0, 5)
-Scroll.BackgroundTransparency = 1
-Scroll.ScrollBarThickness = 6
-Scroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+local layout = Instance.new("UIListLayout", scroll)
+layout.SortOrder = Enum.SortOrder.LayoutOrder
+layout.Padding = UDim.new(0, 4)
 
-local UIList = Instance.new("UIListLayout", Scroll)
-UIList.SortOrder = Enum.SortOrder.LayoutOrder
-UIList.Padding = UDim.new(0, 4)
+-- Dodawanie wpisu
+local entries = {}
 
--- FUNCTION TO ADD LOG ENTRY
-local function addRemoteLog(remotePath, method, args)
-    local entry = Instance.new("TextButton")
-    entry.Size = UDim2.new(1, -10, 0, 50)
-    entry.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-    entry.TextColor3 = Color3.fromRGB(255, 255, 255)
-    entry.TextWrapped = true
-    entry.TextXAlignment = Enum.TextXAlignment.Left
-    entry.Text = ("%s :%s(...)"):format(remotePath, method)
+local function addEntry(text, fullCall)
+    if #entries >= MAX_ENTRIES then
+        entries[1]:Destroy()
+        table.remove(entries, 1)
+    end
 
-    entry.MouseButton1Click:Connect(function()
-        local copied = ("game.%s:%s(%s)"):format(
-            remotePath,
-            method,
-            #args > 0 and "unpack(" .. get_table(args) .. ")" or ""
-        )
-        setclipboard(copied)
-        entry.Text = "✅ Skopiowano!"
-        task.wait(1.5)
-        entry.Text = ("%s :%s(...)"):format(remotePath, method)
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(1, -10, 0, 50)
+    btn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    btn.TextXAlignment = Enum.TextXAlignment.Left
+    btn.Text = text
+    btn.Parent = scroll
+
+    btn.MouseButton1Click:Connect(function()
+        setclipboard(fullCall)
+        btn.Text = "✅ Skopiowano!"
+        task.wait(1)
+        btn.Text = text
     end)
 
-    entry.Parent = Scroll
-    Scroll.CanvasSize = UDim2.new(0, 0, 0, UIList.AbsoluteContentSize.Y + 10)
+    table.insert(entries, btn)
+    scroll.CanvasSize = UDim2.new(0, 0, 0, layout.AbsoluteContentSize.Y + 10)
 end
 
--- HOOK __namecall
-getgenv().Methods = {
-    FireServer = true,
-    InvokeServer = true
-}
-getgenv().Blacklisted = {
-    ["SendPosition"] = true
-}
-
+-- Hook
+local lastCalls = {}
 local meta = getrawmetatable(game)
 local old = meta.__namecall
-local methodCaller = getnamecallmethod or get_namecall_method
+local methodCall = getnamecallmethod or get_namecall_method
 local protect = newcclosure or function(f) return f end
 
 if setreadonly then setreadonly(meta, false) else make_writeable(meta, true) end
@@ -89,13 +88,21 @@ if setreadonly then setreadonly(meta, false) else make_writeable(meta, true) end
 meta.__namecall = protect(function(...)
     local args = {...}
     local self = args[1]
-    local method = methodCaller()
+    local method = methodCall()
 
-    if typeof(self) == "Instance" and self:IsA("RemoteEvent") or self:IsA("RemoteFunction") then
-        local name = self.Name
-        if getgenv().Methods[method] and not getgenv().Blacklisted[name] then
+    if typeof(self) == "Instance" and (self:IsA("RemoteEvent") or self:IsA("RemoteFunction")) then
+        local name = tostring(self.Name)
+        if not IGNORED[name] then
             local path = self:GetFullName()
-            addRemoteLog(path, method, {select(2, unpack(args))})
+            local sig = path .. method
+            local now = tick()
+
+            -- anty-spam
+            if (not lastCalls[sig]) or (now - lastCalls[sig] > LOG_DELAY) then
+                lastCalls[sig] = now
+                local callStr = ("game.%s:%s(%s)"):format(path, method, (#args > 1 and "unpack(" .. get_table({select(2, unpack(args))}) .. ")" or ""))
+                addEntry(("%s :%s(...)"):format(path, method), callStr)
+            end
         end
     end
 
@@ -104,4 +111,4 @@ end)
 
 if setreadonly then setreadonly(meta, true) else make_writeable(meta, false) end
 
-print("✅ RemoteSpy GUI Loaded.")
+print("✅ Optimized RemoteSpy GUI loaded.")
