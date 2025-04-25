@@ -1,125 +1,102 @@
--- Sprawdź czy masz podstawowe funkcje
-assert(getrawmetatable, "Your exploit doesn't support getrawmetatable")
-assert((setreadonly or make_writeable), "Your exploit doesn't support setreadonly/make_writeable")
-assert((getnamecallmethod or get_namecall_method), "Your exploit doesn't support getnamecallmethod/get_namecall_method")
-
--- get_table funkcja – konwertuje tablice na tekst
+-- UTILITYS
 local function get_table(node)
-    local cache, stack, output = {},{},{}
-    local depth = 1
-    local output_str = "{\n"
-
-    while true do
-        local size = 0
-        for k,v in pairs(node) do size = size + 1 end
-
-        local cur_index = 1
-        for k,v in pairs(node) do
-            if (cache[node] == nil) or (cur_index >= cache[node]) then
-                if string.find(output_str,"}",output_str:len()) then
-                    output_str = output_str .. ",\n"
-                elseif not string.find(output_str,"\n",output_str:len()) then
-                    output_str = output_str .. "\n"
-                end
-
-                table.insert(output,output_str)
-                output_str = ""
-
-                local key = (type(k) == "number" or type(k) == "boolean") and "["..tostring(k).."]" or "['"..tostring(k).."']"
-
-                if (type(v) == "number" or type(v) == "boolean") then
-                    output_str = output_str .. string.rep('\t',depth) .. key .. " = "..tostring(v)
-                elseif (type(v) == "table") then
-                    output_str = output_str .. string.rep('\t',depth) .. key .. " = {\n"
-                    table.insert(stack,node)
-                    table.insert(stack,v)
-                    cache[node] = cur_index+1
-                    break
-                else
-                    output_str = output_str .. string.rep('\t',depth) .. key .. " = '"..tostring(v).."'"
-                end
-
-                if (cur_index == size) then
-                    output_str = output_str .. "\n" .. string.rep('\t',depth-1) .. "}"
-                else
-                    output_str = output_str .. ","
-                end
+    local str = ""
+    local function recur(tbl, depth)
+        local indent = string.rep("  ", depth)
+        str = str .. "{\n"
+        for k, v in pairs(tbl) do
+            local key = type(k) == "string" and ("['%s']"):format(k) or ("[%s]"):format(tostring(k))
+            if type(v) == "table" then
+                str = str .. indent .. key .. " = "
+                recur(v, depth + 1)
             else
-                if (cur_index == size) then
-                    output_str = output_str .. "\n" .. string.rep('\t',depth-1) .. "}"
-                end
+                str = str .. indent .. key .. " = " .. (type(v) == "string" and ("'%s'"):format(v) or tostring(v)) .. ",\n"
             end
-
-            cur_index = cur_index + 1
         end
-
-        if (size == 0) then
-            output_str = output_str .. "\n" .. string.rep('\t',depth-1) .. "}"
-        end
-
-        if (#stack > 0) then
-            node = stack[#stack]
-            stack[#stack] = nil
-            depth = cache[node] == nil and depth + 1 or depth - 1
-        else
-            break
-        end
+        str = str .. string.rep("  ", depth - 1) .. "},\n"
     end
-
-    table.insert(output,output_str)
-    output_str = table.concat(output)
-
-    return output_str
+    recur(node, 1)
+    return str
 end
 
--- Ustawienie domyślnych filtrów
+-- GUI SETUP
+local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
+ScreenGui.Name = "RemoteSpyGUI"
+
+local Frame = Instance.new("Frame", ScreenGui)
+Frame.Size = UDim2.new(0, 500, 0, 400)
+Frame.Position = UDim2.new(0, 50, 0, 50)
+Frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+Frame.BorderSizePixel = 0
+
+local UIStroke = Instance.new("UIStroke", Frame)
+UIStroke.Thickness = 2
+UIStroke.Color = Color3.fromRGB(90, 90, 90)
+
+local Scroll = Instance.new("ScrollingFrame", Frame)
+Scroll.Size = UDim2.new(1, -10, 1, -10)
+Scroll.Position = UDim2.new(0, 5, 0, 5)
+Scroll.BackgroundTransparency = 1
+Scroll.ScrollBarThickness = 6
+Scroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+
+local UIList = Instance.new("UIListLayout", Scroll)
+UIList.SortOrder = Enum.SortOrder.LayoutOrder
+UIList.Padding = UDim.new(0, 4)
+
+-- FUNCTION TO ADD LOG ENTRY
+local function addRemoteLog(remotePath, method, args)
+    local entry = Instance.new("TextButton")
+    entry.Size = UDim2.new(1, -10, 0, 50)
+    entry.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+    entry.TextColor3 = Color3.fromRGB(255, 255, 255)
+    entry.TextWrapped = true
+    entry.TextXAlignment = Enum.TextXAlignment.Left
+    entry.Text = ("%s :%s(...)"):format(remotePath, method)
+
+    entry.MouseButton1Click:Connect(function()
+        local copied = ("game.%s:%s(%s)"):format(
+            remotePath,
+            method,
+            #args > 0 and "unpack(" .. get_table(args) .. ")" or ""
+        )
+        setclipboard(copied)
+        entry.Text = "✅ Skopiowano!"
+        task.wait(1.5)
+        entry.Text = ("%s :%s(...)"):format(remotePath, method)
+    end)
+
+    entry.Parent = Scroll
+    Scroll.CanvasSize = UDim2.new(0, 0, 0, UIList.AbsoluteContentSize.Y + 10)
+end
+
+-- HOOK __namecall
 getgenv().Methods = {
     FireServer = true,
     InvokeServer = true
 }
-getgenv().Blacklisted = {}
+getgenv().Blacklisted = {
+    ["SendPosition"] = true
+}
 
--- Funkcja logowania (do konsoli + opcjonalny notify)
-local function log(Method, Event, Args)
-    local path = Event:GetFullName()
-    print("====== REMOTE CALL ======")
-    print("Method:", Method)
-    print("Event:", tostring(Event))
-    print("Path:", path)
-    if #Args > 0 then
-        print("Args:\n", get_table(Args))
-    else
-        print("Args: {}")
-    end
-    print(("Script Call: game.%s:%s(%s)\n"):format(path, Method, #Args > 0 and "..." or ""))
-    
-    -- Opcjonalny Notify
-    pcall(function()
-        game.StarterGui:SetCore("SendNotification", {
-            Title = "Remote Spy",
-            Text = ("%s | %s"):format(Method, Event.Name),
-            Duration = 3
-        })
-    end)
-end
-
--- Hookowanie __namecall
 local meta = getrawmetatable(game)
 local old = meta.__namecall
-local callMethod = getnamecallmethod or get_namecall_method
+local methodCaller = getnamecallmethod or get_namecall_method
 local protect = newcclosure or function(f) return f end
 
 if setreadonly then setreadonly(meta, false) else make_writeable(meta, true) end
 
-meta.__namecall = protect(function(Self, ...)
-    local method = callMethod()
+meta.__namecall = protect(function(self, ...)
+    local method = methodCaller()
     local args = {...}
-    if getgenv().Methods[method] and not getgenv().Blacklisted[tostring(Self)] then
-        log(method, Self, args)
+    local name = tostring(self.Name)
+    if getgenv().Methods[method] and not getgenv().Blacklisted[name] then
+        local path = self:GetFullName()
+        addRemoteLog(path, method, args)
     end
-    return old(Self, ...)
+    return old(self, ...)
 end)
 
 if setreadonly then setreadonly(meta, true) else make_writeable(meta, false) end
 
-print("✅ RemoteSpy by ChatGPT loaded – monitoring FireServer/InvokeServer.")
+print("✅ RemoteSpy GUI Loaded.")
